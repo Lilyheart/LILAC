@@ -533,7 +533,7 @@ class DockerKappaWidget(Qg.QFrame):
         ss = float(ss)
         dp = float(dp)
         self.controller.set_kappa_point_state(ss, dp, state)
-        self.kappa_data_table.setStatus(ss, dp, self.controller.is_valid_kappa_points[(dp, ss)])
+        self.kappa_data_table.set_status(ss, dp, self.controller.is_valid_kappa_points[(dp, ss)])
 
     def update_kappa_values(self):
         """

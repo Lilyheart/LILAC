@@ -741,6 +741,7 @@ class Scan(object):
         y_list = np.asarray(y_list)
         # noinspection PyBroadException
         try:
+            # RESEARCH OptimizeWarning: Covariance of the parameters could not be estimated category=OptimizeWarning)
             result = opt.curve_fit(fn, x_list, y_list, bounds=([begin_rise, -200], [end_asymp + 1, -1]), method="trf")
             d = result[0][0]
             c = result[0][1]

@@ -227,7 +227,6 @@ class KappaTableWidget(Qg.QTableWidget):
             return
         ss = self.item(row, 1).text()
         dp = self.item(row, 2).text()
-        self.kappa_docker.select_k_point(ss, dp)
 
     def toggle_row(self, item):
         """

@@ -8,7 +8,9 @@
 /sphinx/build
 
 # cython
-/chemics/build/temp**/*.o
+/chemics/build/temp**/*
+/chemics/build/main/*
+/chemics/*.spec
 
 # Test Output
 /tests/testdata/*.chemics
