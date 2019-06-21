@@ -1,18 +1,36 @@
-.. Chemics documentation master file, created by
-   sphinx-quickstart on Wed Jun 12 19:00:37 2019.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Welcome to Chemics's documentation!
 ===================================
 
+Welcome to using Chemics!  This will have more text later so stay tuned!
+
+If you are here as a user of Chemics, please see the General and Getting Started sections.
+
+If you are here as a programmer and want to look under the hood, see the code base section.
+
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 3
+   :caption: General
 
-Indices and tables
-==================
+   general/general
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+
+.. toctree::
+   :maxdepth: 3
+   :caption: Getting Started
+
+   getstarted/installing
+   getstarted/using
+
+
+.. toctree::
+   :maxdepth: 1
+   :caption: The Code Base
+
+   code/main
+   code/secondary
+   code/custwidgets
+   code/constants
+
+* :ref:`Python Module Index <modindex>`
+* :ref:`Complete Code Index <genindex>`
+

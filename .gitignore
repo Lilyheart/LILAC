@@ -6,3 +6,9 @@
 
 # Sphinx
 /sphinx/build
+
+# cython
+/chemics/build/temp**/*.o
+
+# Test Output
+/tests/testdata/*.chemics

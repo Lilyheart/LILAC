@@ -5,6 +5,7 @@
 # This file does only contain a selection of the most common options. For a
 # full list see the documentation:
 # http://www.sphinx-doc.org/en/master/config
+# TODO issues/7 http://www.sphinx-doc.org/en/1.6/ext/autosummary.html
 
 # -- Path setup --------------------------------------------------------------
 
@@ -14,7 +15,7 @@
 
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../../.'))
+sys.path.insert(0, os.path.abspath('../../chemics/.'))
 
 
 # -- Project information -----------------------------------------------------
@@ -150,6 +151,7 @@ latex_documents = [
      u'Lily Romano', 'manual'),
 ]
 
+latex_toplevel_sectioning = "chapter"
 
 # -- Options for manual page output ------------------------------------------
 
@@ -192,3 +194,10 @@ epub_exclude_files = ['search.html']
 
 
 # -- Extension configuration -------------------------------------------------
+
+autodoc_member_order = 'bysource'
+
+# add custom files that are stored in _static
+def setup(app):
+    # app.add_javascript("custom.js")
+    app.add_stylesheet("custom.css")
