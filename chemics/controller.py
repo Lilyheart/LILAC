@@ -7,11 +7,13 @@ import datetime as dt
 import math
 import numpy as np
 import pandas as pd
+from StringIO import StringIO
 import re
 import time
 
 # Internal Packages
 import constants as const
+import data.kCal
 import helper_functions as hf
 import scan
 
@@ -235,7 +237,7 @@ class Controller(object):
         """
         # COMBAKL Kappa
         if self.kappa_excel is None:
-            self.kappa_excel = pd.read_csv("data/kCal.csv", header=None)
+            self.kappa_excel = pd.read_csv(StringIO(data.kCal.csv_codes), header=None)
         lookup = self.kappa_excel
         a_param = 0.00000869251 * self.sigma / self.temp
         # asc = (exp(sqrt(4 * a_param ** 3 / (27 * self.i_kappa_1 * (self.dd_1 * 0.000000001) ** 3))) - 1) * 100

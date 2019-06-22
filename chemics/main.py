@@ -68,7 +68,8 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
          self.central_widget_kappa] = self.create_central_widget()
         # create progress bar
         self.progress_dialog = self.create_progress_bar()
-        # Close dockers
+        # showMaximized must be at end of init
+        self.showMaximized()  # TEMP
 
     ########
     # Menu #
@@ -673,4 +674,7 @@ if __name__ == "__main__":
     app = Qg.QApplication(sys.argv)
     main_window = MainView()
     main_window.show()
+
+    app.setWindowIcon(Qg.QIcon('icon.png'))
+    main_window.setWindowIcon(Qg.QIcon('icon.png'))
     sys.exit(app.exec_())
