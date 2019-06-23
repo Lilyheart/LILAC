@@ -73,7 +73,7 @@ class DockerScanInformation(Qg.QFrame):
         self.enable_disable_button = Qg.QPushButton("Disable scan")
         # noinspection PyUnresolvedReferences
         self.enable_disable_button.clicked.connect(self.set_scan_enable_status)  # RESEARCH connect unresolved ref
-        # form_layout.addRow(self.show_data_button, self.enable_disable_button)  # FIXME Put buttons on same line
+        # form_layout.addRow(self.show_data_button, self.enable_disable_button)  # RESEARCH Put buttons on same line
         form_layout.addRow(self.enable_disable_button)
         form_layout.addRow(self.show_data_button)
         ########################################
@@ -180,10 +180,10 @@ class DockerScanInformation(Qg.QFrame):
             # Scan is originally marked good
             if curr_scan.status == 1:
                 curr_scan.status = 0
-                curr_scan.status_code = 9  # FIXME Set by method
+                curr_scan.set_status_code(9)
             else:
                 curr_scan.status = 1
-                curr_scan.status_code = 0  # FIXME Set by method
+                curr_scan.set_status_code(0)
             if curr_scan.is_valid():
                 self.scan_status.setText("VALID")
                 self.scan_status.setStyleSheet("QWidget { background-color:None}")

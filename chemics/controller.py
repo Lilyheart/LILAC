@@ -27,7 +27,7 @@ class Controller(object):
     - **scans**: A list of all scans
     - **counts_to_conc_conv**:
     - **data_files**:
-    - **ccnc_datsrca**: Data from the Cloud Condensation Nuclei Counter
+    - **ccnc_data**: Data from the Cloud Condensation Nuclei Counter
     - **smps_data**: Data from the Scanning Mobility Particle Sizer
     - **experiment_date**: The date of experiment
     - **smooth_method**: The smoothing method
@@ -45,7 +45,7 @@ class Controller(object):
     - **i_kappa_2**:
     - **solubility**:
     - **kappa_excel**:
-    - **is_valid_kappa_points**: whether kappa point is included in ave k calc (format is (dp,ss))
+    - **valid_kappa_points**: whether kappa point is included in ave k calc (format is (dp,ss))
     - **alpha_pinene_dict**:
     - **kappa_calculate_dict**:
 
@@ -84,7 +84,7 @@ class Controller(object):
         # Variables for calculating kappa set with set_attributes_default method
         self.kappa_calculate_dict = None
         self.alpha_pinene_dict = None
-        self.is_valid_kappa_points = None  # FIXME Refactor to non-boolean variable name format of key is (dp,ss)
+        self.valid_kappa_points = None
         self.set_attributes_default()
         self.smooth_method = None  # TODO issues/41
 
@@ -114,7 +114,7 @@ class Controller(object):
         self.save_name = None
         self.kappa_calculate_dict = {}
         self.alpha_pinene_dict = {}
-        self.is_valid_kappa_points = {}
+        self.valid_kappa_points = {}
 
     ###################
     # Processing Data #
@@ -143,7 +143,7 @@ class Controller(object):
         # we can't do anything without having the Counts2ConcConv constant
         self.counts_to_conc_conv = self.view.get_counts_to_conc_conv()
         if self.counts_to_conc_conv is None:
-            return  # FIXME Provide feedback of some sort to the user?
+            return  # TODO issues/30 - No feedback to user currently, but with change, may be unneccessary
         # great, now that we have the files, let's parse them
         self.view.init_progress_bar("Reading in SMPS and CCNC data files")
         # TODO issues/47 So many magic numbers in the following functions.  Find what can be constants.
@@ -275,7 +275,7 @@ class Controller(object):
                 self.kappa_calculate_dict[ss].append([dp_50, apparent_kappa, analytic_kappa, deviation_percentage])
             else:
                 self.kappa_calculate_dict[ss] = ([[dp_50, apparent_kappa, analytic_kappa, deviation_percentage]])
-            self.is_valid_kappa_points[(dp_50, ss)] = True
+            self.valid_kappa_points[(dp_50, ss)] = True
 
     def calculate_average_kappa_values(self):
         """
@@ -294,7 +294,7 @@ class Controller(object):
             mean_of_stds = []
             for aSS in a_scan:
                 dp_50s.append(aSS[0])
-                if self.is_valid_kappa_points[(aSS[0], a_key)]:
+                if self.valid_kappa_points[(aSS[0], a_key)]:
                     temp_dp50_list.append(aSS[0])
                     apparent_kappas.append(aSS[1])
                     analytical_kappas.append(aSS[2])
@@ -604,7 +604,7 @@ class Controller(object):
         :type state:
         """
         # COMBAKL Kappa
-        self.is_valid_kappa_points[(dp, ss)] = state
+        self.valid_kappa_points[(dp, ss)] = state
         self.calculate_average_kappa_values()
         self.view.update_kappa_graph()
 
@@ -766,7 +766,7 @@ class Controller(object):
         - self.kappa_calculate_dict
         - self.alpha_pinene_dict
         - self.stage
-        - self.is_valid_kappa_points
+        - self.valid_kappa_points
         - self.save_name
         """
         # TODO issues/41 Fix to remove smooth_method
@@ -776,7 +776,7 @@ class Controller(object):
             to_save = (self.scans, self.counts_to_conc_conv, self.data_files, self.ccnc_data, self.smps_data,
                        self.experiment_date, self.smooth_method, self.base_shift_factor, self.b_limits,
                        self.asym_limits, self.kappa_calculate_dict, self.alpha_pinene_dict, self.stage,
-                       self.is_valid_kappa_points,
+                       self.valid_kappa_points,
                        self.save_name)
             with open(self.save_name, 'wb') as handle:
                 cPickle.dump(to_save, handle, protocol=cPickle.HIGHEST_PROTOCOL)
@@ -795,7 +795,7 @@ class Controller(object):
                 (self.scans, self.counts_to_conc_conv, self.data_files, self.ccnc_data, self.smps_data,
                  self.experiment_date, self.smooth_method, self.base_shift_factor, self.b_limits,
                  self.asym_limits, self.kappa_calculate_dict, self.alpha_pinene_dict, self.stage,
-                 self.is_valid_kappa_points,
+                 self.valid_kappa_points,
                  self.save_name) = cPickle.load(handle)
         except TypeError as e:
             if str(e) == "__init__() takes exactly 2 arguments (1 given)":
@@ -803,7 +803,7 @@ class Controller(object):
                     (self.scans, self.counts_to_conc_conv, self.data_files, self.ccnc_data, self.smps_data,
                      self.experiment_date, self.smooth_method, self.base_shift_factor, self.b_limits,
                      self.asym_limits, self.kappa_calculate_dict, self.alpha_pinene_dict, self.stage,
-                     self.is_valid_kappa_points,
+                     self.valid_kappa_points,
                      self.save_name) = hf.CustomUnpickler(handle).load()
         except ImportError as e:
             if str(e) == "No module named Scan":  # TODO issues/40 else into error logging
@@ -811,7 +811,7 @@ class Controller(object):
                     (self.scans, self.counts_to_conc_conv, self.data_files, self.ccnc_data, self.smps_data,
                      self.experiment_date, self.smooth_method, self.base_shift_factor, self.b_limits,
                      self.asym_limits, self.kappa_calculate_dict, self.alpha_pinene_dict, self.stage,
-                     self.is_valid_kappa_points,
+                     self.valid_kappa_points,
                      self.save_name) = hf.CustomUnpickler(handle).load()
 
         # Set up the View
@@ -841,16 +841,16 @@ class Controller(object):
         :param str export_filename: The file name to export the file to
         """
         # TODO issues/20 issues/21 issues/22 issues/11
-        data = []
+        data_to_export = []
         for a_key in self.kappa_calculate_dict.keys():
             a_scan = self.kappa_calculate_dict[a_key]
             for aSS in a_scan:
-                if self.is_valid_kappa_points[(aSS[0], a_key)]:
+                if self.valid_kappa_points[(aSS[0], a_key)]:
                     a_row = [a_key] + aSS + ["Included point"]
                 else:
                     a_row = [a_key] + aSS + ["Excluded point"]
-                data.append(a_row)
-        df = pd.DataFrame(np.asarray(data), columns=["Super Saturation(%)", "dp(nm)", "K/app", "K/ana",
-                                                     "deviation(%", "Status"])
+                data_to_export.append(a_row)
+        df = pd.DataFrame(np.asarray(data_to_export),
+                          columns=["Super Saturation(%)", "dp(nm)", "K/app", "K/ana", "deviation(%", "Status"])
         df.to_csv(export_filename, index=False)
         self.view.show_information_message(title="Export Data", text="Export to " + export_filename + " successful!")

@@ -225,8 +225,9 @@ class KappaTableWidget(Qg.QTableWidget):
         row = item.row()
         if self.item(row, 1) is None or self.item(row, 2) is None:
             return
-        ss = self.item(row, 1).text()
-        dp = self.item(row, 2).text()
+        # RESEARCH Following lines of code do nothing
+        # ss = self.item(row, 1).text()
+        # dp = self.item(row, 2).text()
 
     def toggle_row(self, item):
         """

@@ -71,7 +71,7 @@ class Scan(object):
 
     def __init__(self, index):
         # TODO issues/45 combine status and code into one
-        # DOCQUESTION / RESEARCH duration = scan_up_time + scan_down_time; end time is start_time+duration. All neccessary?
+        # DOCQUESTION / RESEARCH duration = scan_up_time + scan_down_time; end time is start_time+duration. Neccessary?
         self.status = 1
         self.status_code = 0
         self.counts_to_conc = 0.0
@@ -110,7 +110,7 @@ class Scan(object):
         self.functions_params = []
         self.dps = []
         self.sigmoid_y_vals = []
-        self.asym_limits = [0.75, 1.5]  # RESEARCH Magic number  FIXME get from controller?
+        self.asym_limits = [0.75, 1.5]  # RESEARCH Magic number  RESEARCH get from controller?
 
     def __repr__(self):
         """
@@ -137,13 +137,14 @@ class Scan(object):
         return self.status == 1  # TODO issues/45 affected by proposed status code change
 
     def compare_smps(self, another_scan):
-        # noinspection PyPep8
         """
         Compares a scan to another scan by using the two-tailed p-value of Pearson's correlation coefficient
         as well as Kolmogorov-Smirnov statistic on the smps counts to determine if the scan have the same distribution.
 
-        - `Pearsons Correlation Coefficient <https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.pearsonr.html>`_
-        - `Kolmogorov-Smirnov statistic on 2 samples <https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ks_2samp.html>`_
+        - `Pearsons Correlation Coefficient \
+          <https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.pearsonr.html>`_
+        - `Kolmogorov-Smirnov statistic on 2 samples \
+          <https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ks_2samp.html>`_
 
         :param Scan another_scan: a scan object to compare to this one
         :return: Returns true if the correlation coefficient p-value is less than 0.05 **and** the Kolmogorov-Smirnov

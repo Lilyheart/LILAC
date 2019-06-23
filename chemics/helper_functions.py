@@ -175,7 +175,7 @@ def normalize_dndlogdp_list(a_list):  # DOCQUESTION naming again
 def cal_percentage_less(a_list, value, min_diff):
     """
     # REVIEW Documentation
-    # FIXME Better Function name
+    # RESEARCH Better Function name
 
     :param a_list:
     :type a_list:
@@ -448,7 +448,7 @@ def outliers_iqr(value_array, index_array):
     :rtype: list[float]|int
     """
     # COMBAKL Sigmoid
-    # FIXME better return or use Exception handling etc
+    # RESEARCH better return or use Exception handling etc
     # noinspection PyBroadException
     try:
         quartile_1, quartile_3 = np.percentile(value_array, [25, 75])

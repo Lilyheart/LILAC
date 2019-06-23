@@ -475,8 +475,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
 
         :param int percentage: The value to update the bar to.  This should be a number 0 to 100
         """
-        # FIXME force 0-100 limit
-        self.progress_dialog.setValue(percentage)
+        self.progress_dialog.setValue(min(max(0, percentage), 100))
 
     @Qc.Slot()
     def close_progress_bar(self):
@@ -651,7 +650,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
             self.window_menu.actions()[1].trigger()
         self.stacked_central_widget.setCurrentWidget(self.central_widget_kappa)
         self.kappa_graph.update_all_kappa_points(self.controller.alpha_pinene_dict,
-                                                 self.controller.is_valid_kappa_points)
+                                                 self.controller.valid_kappa_points)
         self.kappa_docker_widget.update_kappa_values()
         self.set_menu_bar_by_stage()
 

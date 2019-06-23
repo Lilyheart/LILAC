@@ -59,7 +59,7 @@ class TestInit(TestController):
         self.assertEquals(self.control.alpha_pinene_dict, {})
 
     def test_is_valid_kappa_points(self):
-        self.assertEquals(self.control.is_valid_kappa_points, {})
+        self.assertEquals(self.control.valid_kappa_points, {})
 
     def test_sigma(self):
         self.assertEquals(self.control.sigma, 0.072)
@@ -163,6 +163,6 @@ class TestSetAttributesDefault(TestController):
         self.assertEquals(self.control.alpha_pinene_dict, {})
 
     def test_is_valid_kappa_points(self):
-        self.control.is_valid_kappa_points = -1
+        self.control.valid_kappa_points = -1
         controller.Controller.set_attributes_default(self.control)
-        self.assertEquals(self.control.is_valid_kappa_points, {})
+        self.assertEquals(self.control.valid_kappa_points, {})
