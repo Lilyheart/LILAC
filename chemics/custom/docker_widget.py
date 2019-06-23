@@ -49,7 +49,7 @@ class DockerScanInformation(Qg.QFrame):
         # -- add Counts2ConcConv
         self.counts_2_conc_conv = Qg.QLabel("-")
         self.counts_2_conc_conv.setAlignment(Qc.Qt.AlignRight)
-        form_layout.addRow("Counts2ConcConv", self.counts_2_conc_conv)  # QUESTION Convert to complete sentence
+        form_layout.addRow("Counts2ConcConv", self.counts_2_conc_conv)  # DOCQUESTION Convert to complete sentence
         ########################################
         # Middle Section - Update Scan
         # -- add a title
@@ -139,7 +139,7 @@ class DockerScanInformation(Qg.QFrame):
         self.num_scan.setText(str(len(self.controller.scans)))
         self.counts_2_conc_conv.setText(str(self.controller.counts_to_conc_conv))
         # Set the Arrow Box ranges
-        # QUESTION Possible shift range correct?  [If dur=135, possible is -68-67]
+        # DOCQUESTION Possible shift range correct?  [If dur=135, possible is -68-67]
         self.shift_selector.set_range(-self.controller.scans[0].duration // 2, self.controller.scans[0].duration // 2)
         self.scan_selector.set_range(0, num_scan - 1)  # TODO issues/5
 
@@ -180,10 +180,10 @@ class DockerScanInformation(Qg.QFrame):
             # Scan is originally marked good
             if curr_scan.status == 1:
                 curr_scan.status = 0
-                curr_scan.status_code = 9
+                curr_scan.status_code = 9  # FIXME Set by method
             else:
                 curr_scan.status = 1
-                curr_scan.status_code = 0
+                curr_scan.status_code = 0  # FIXME Set by method
             if curr_scan.is_valid():
                 self.scan_status.setText("VALID")
                 self.scan_status.setStyleSheet("QWidget { background-color:None}")

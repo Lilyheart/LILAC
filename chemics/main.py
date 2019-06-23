@@ -69,7 +69,8 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         # create progress bar
         self.progress_dialog = self.create_progress_bar()
         # showMaximized must be at end of init
-        self.showMaximized()  # TEMP
+        self.showMaximized()
+        self.reset_view()
 
     ########
     # Menu #
@@ -190,7 +191,6 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         """
         Opens data files and begins the scan alignment process
         """
-        # files = Qg.QFileDialog.getOpenFileNames(self, "Open file", '', "Data files (*.csv *.txt)")[0]  # TEMP
         temp_dir = "/home/lilyheart/Dropbox/Classes/19.2.Chemics/TestData/2019_05_30-Sitin/Analysis"  # TEMP
         # noinspection PyCallByClass
         files = Qg.QFileDialog.getOpenFileNames(self, "Open file", temp_dir, "Data files (*.csv *.txt)")[0]  # TEMP
@@ -529,8 +529,8 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         """
         Display a dialog box to the user to obtain the Counts2ConcConv value
         """
-        # FIXME English?
-        # TODO issues/30
+        # DOCQUESTION English?
+        # TODO issues/30  New Counts2ConcConv formula
         # noinspection PyCallByClass
         cc = Qg.QInputDialog.getDouble(self, "Counts2ConcConv", "Counts2ConcConv", decimals=2)
         if cc[1]:

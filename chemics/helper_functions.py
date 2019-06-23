@@ -39,7 +39,7 @@ def process_csv_files(file_path):
             # process the file
             csv_file_contents = process_a_csv(i)
             date = csv_file_contents[0]
-            # QUESTION safe to assume ALWAYS same date? Or should each file be checked for error reasons?
+            # DOCQUESTION safe to assume ALWAYS same date? Or should each file be checked for error reasons?
             if csv_content is None:  # if this is the first file being processed with data
                 csv_content = csv_file_contents[1]
             else:
@@ -153,7 +153,7 @@ def safe_div_array(l1, l2):
     return result_list
 
 
-def normalize_dndlogdp_list(a_list):  # QUESTION Why labeled dndlogdp?
+def normalize_dndlogdp_list(a_list):  # DOCQUESTION naming again
     """
     Normalize the data is a_list by finding the max value of the values in the list while ignoring the first 5 values.
     The assumption is that the first few data points are probably not quite right so normalization is only based
@@ -163,8 +163,8 @@ def normalize_dndlogdp_list(a_list):  # QUESTION Why labeled dndlogdp?
     :return: The normalized list
     :rtype: list[float]
     """
-    max_value = max(a_list[5:])  # QUESTION Magic Number, can this be something else?
-    if max_value == 0:  # QUESTION Are they always postive?
+    max_value = max(a_list[5:])  # DOCQUESTION Magic Number, can this be something else?
+    if max_value == 0:  # DOCQUESTION Are they always postive?
         return a_list
     for x in range(len(a_list)):  # QUESTION BK: Is there any dis/advantagous to manually done?
         if a_list[x]:
@@ -358,18 +358,18 @@ def find_ref_index_smps(smps_data, up_time):
     left_list = smps_data[0:up_time]
     right_list = smps_data[up_time:]
     # find the left peak and right peak
-    left_max = np.argmax(left_list)
-    right_max = up_time + np.argmax(right_list)  # QUESTION Why are we adding uptime?
+    left_max_index = np.argmax(left_list)
+    right_max_index = up_time + np.argmax(right_list)
     # get the data between the peaks
-    middle_list = smps_data[left_max:right_max]
+    middle_list = smps_data[left_max_index:right_max_index]
     # then perform agressive smoothing
     middle_list = scipy.signal.savgol_filter(middle_list, 11, 2)  # RESEARCH Should all the smooths go into a function?
-    # find the min between the two peaks, which is exactly what we need  # QUESTION See Spreadsheet for test scan 10
+    # find the min between the two peaks, which is exactly what we need  # DOCQUESTION See Spreadsheet for test scan 10
     potential_mins = scipy.signal.argrelmin(middle_list, order=4)
     if len(potential_mins[0]) == 0:
         return None
-    ref_index = left_max + potential_mins[0][0]
-    # The reference point should be within a reasonable range of the up_time  # QUESTION Valid?
+    ref_index = left_max_index + potential_mins[0][0]
+    # The reference point should be within a reasonable range of the up_time  # DOCQUESTION Valid?
     if abs(up_time - ref_index) > len(smps_data) / 20:
         return None
     else:
@@ -391,13 +391,13 @@ def find_ref_index_ccnc(ccnc_list, potential_loc):
     :return: An updated potential reference index of the SMPS data
     :rtype: int
     """
-    ccnc_list = smooth(ccnc_list)  # QUESTION Smoothing an already smoothed list?
+    ccnc_list = smooth(ccnc_list)  # DOCQUESTION Smoothing an already smoothed list?
     # The the point at the potential location and the point before it.
     first_point = ccnc_list[potential_loc - 1]
     second_point = ccnc_list[potential_loc]
     # Determine slope at that point
     slope = second_point - first_point
-    if slope > max(ccnc_list) / 20:  # QUESTION Why?
+    if slope > max(ccnc_list) / 20:  # DOCQUESTION Valid?
         return potential_loc - 1
     else:
         return potential_loc

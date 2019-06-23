@@ -99,7 +99,7 @@ class Controller(object):
 
         .. attention:: This has unit tests
         """
-        # QUESTION What can be constants?
+        # DOCQUESTION What can be constants?
         self.scans = []
         self.counts_to_conc_conv = 0
         self.data_files = None
@@ -137,9 +137,9 @@ class Controller(object):
         # reset the attributes
         self.set_attributes_default()
         # got to reset the view first
-        self.view.reset_view()  # FIXME Causes visual glitch
+        self.view.reset_view()
         # take in new data and rock on!
-        self.data_files = data_files
+        self.data_files = data_files  # DOCQUESTION Allow adding additional files later?
         # we can't do anything without having the Counts2ConcConv constant
         self.counts_to_conc_conv = self.view.get_counts_to_conc_conv()
         if self.counts_to_conc_conv is None:
@@ -177,7 +177,7 @@ class Controller(object):
         self.view.init_progress_bar("Aligning SMPS and CCNC data...")
         for i in range(len(self.scans)):
             self.view.update_progress_bar(100 * (i + 1) // len(self.scans))
-            shift_factor = self.scans[i].align_smps_ccnc_data(shift_factor)
+            shift_factor = self.scans[i].align_smps_ccnc_data(shift_factor)  # RESEARCH why are we setting shift_factor?
             self.scans[i].generate_processed_data()
         self.view.close_progress_bar()
         self.post_align_sanity_check()
@@ -352,13 +352,13 @@ class Controller(object):
         # Determine scan duration which is the sum of the scan up time and the retrace time.
         scan_down_time = 0
         scan_up_time = 0
-        # -- Find first scan up time  # QUESTION Assume ALWAYS the same?
+        # -- Find first scan up time  # DOCQUESTION Assume ALWAYS the same?
         for i in range(len(self.smps_data)):
             if ''.join(self.smps_data[i][0].split()).lower() == "scanuptime(s)":
                 scan_up_time = int(self.smps_data[i][1])
                 scan_down_time = int(self.smps_data[i + 1][1])  # this is the retrace time
                 break
-        self.scan_duration = scan_up_time + scan_down_time  # QUESTION Which leads to always assuming this is the same
+        self.scan_duration = scan_up_time + scan_down_time  # DOCQUESTION Which leads to always assuming this is same
         # Get a list of all the start times
         scan_start_times = self.smps_data[0]  # TODO issues/4 Affected by the changed to storing the AIM Scan #
         # For each scan time
@@ -389,7 +389,7 @@ class Controller(object):
         see `tsi documentation
         <https://www.tsi.com/getmedia/1621329b-f410-4dce-992b-e21e1584481a/PR-001-RevA_Aerosol-Statistics-AppNote?ext=.pdf>`_.
         """
-        # QUESTION Verify comment in docstring from original code is correction "Normalized...."
+        # DOCQUESTION Verify comment in docstring from original code is correction "Normalized...."
         start_line_index = 1
         end_line_index = 0
         # Find the first line that is not a value.  This is the end of the range
@@ -414,9 +414,9 @@ class Controller(object):
         #########################################
         # Determine where data is in file
         start_line_index = 0
-        end_line_index = len(self.smps_data) - 1
+        end_line_index = len(self.smps_data) - 1  # DOCQUESTION - minus one to ignore the "Comments" line - but this ok?
         # Find where second data section begins
-        for i in range(3, len(self.smps_data)):  # QUESTION - why start with 3?
+        for i in range(3, len(self.smps_data)):  # DOCQUESTION - why start with 3?
             # Find beginning of middle text section
             if re.search('[a-zA-Z]', self.smps_data[i][0]):
                 for j in range(i + 1, len(self.smps_data)):
@@ -431,7 +431,7 @@ class Controller(object):
         sum_diameter = 0
         #########################################
         # Find values and update scans
-        # QUESTION Confirm calculations for ave_diamter are wrong
+        # DOCQUESTION Confirm calculations for ave_diamter are wrong
         while True:
             curr_time = float(self.smps_data[curr_line_index][0])
             for j in range(0, len(self.scans)):
@@ -492,7 +492,7 @@ class Controller(object):
             duration = a_scan.duration
             a_scan.set_index_in_ccnc_data(ccnc_index)
             # we do one thing at a time
-            for i in range(duration + duration // 4):  # QUESTION not evenly div by 4 - what's this?
+            for i in range(duration + duration // 4):  # DOCQUESTION Pull 125%? Okay paradigm?
                 curr_ccnc_index = ccnc_index + i
                 # if we reach out of ccnc data bound
                 if curr_ccnc_index >= len(self.ccnc_data):
@@ -555,7 +555,7 @@ class Controller(object):
         # Perform self test for each scan
         for i in range(len(self.scans)):
             self.scans[i].pre_align_self_test()
-        # QUESTION Cross validation. Basically compare the distribution of a scan with the next two
+        # DOCQUESTION Cross validation. Basically compare the distribution of a scan with the next two
         # We know that only the first few distributions have weird data, so once it becomes right, we stop
         for i in range(len(self.scans) - 2):
             # if the scan is invalid, we skip to the next one

@@ -71,7 +71,7 @@ class Scan(object):
 
     def __init__(self, index):
         # TODO issues/45 combine status and code into one
-        # QUESTION / RESEARCH duration = scan_up_time + scan_down_time; end time is start_time+duration. All neccessary?
+        # DOCQUESTION / RESEARCH duration = scan_up_time + scan_down_time; end time is start_time+duration. All neccessary?
         self.status = 1
         self.status_code = 0
         self.counts_to_conc = 0.0
@@ -110,7 +110,7 @@ class Scan(object):
         self.functions_params = []
         self.dps = []
         self.sigmoid_y_vals = []
-        self.asym_limits = [0.75, 1.5]  # RESEARCH Magic number
+        self.asym_limits = [0.75, 1.5]  # RESEARCH Magic number  FIXME get from controller?
 
     def __repr__(self):
         """
@@ -139,14 +139,14 @@ class Scan(object):
     def compare_smps(self, another_scan):
         # noinspection PyPep8
         """
-        Compares a scan to another scan by using the correlation coefficient and also Kolmogorov-Smirnov statistic
-        on the smps counts to determine if the scan have the same distribution.
+        Compares a scan to another scan by using the two-tailed p-value of Pearson's correlation coefficient
+        as well as Kolmogorov-Smirnov statistic on the smps counts to determine if the scan have the same distribution.
 
-        - `Pearsons Correlation Coefficient <https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.pearsonr.html/>`_
-        - `Kolmogorov-Smirnov statistic on 2 samples <https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ks_2samp.html/>`_
+        - `Pearsons Correlation Coefficient <https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.pearsonr.html>`_
+        - `Kolmogorov-Smirnov statistic on 2 samples <https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ks_2samp.html>`_
 
         :param Scan another_scan: a scan object to compare to this one
-        :return: Returns true if the correlation coefficient is less that 0.05 **and** the Kolmogorov-Smirnov
+        :return: Returns true if the correlation coefficient p-value is less than 0.05 **and** the Kolmogorov-Smirnov
                  statistic is greater than 0.05
         :rtype: bool
         """
@@ -155,7 +155,7 @@ class Scan(object):
         # Compare two scans using Kolmogorov-Smirnov statistic
         ks_stat_p = scipy.stats.ks_2samp(self.raw_smps_counts, another_scan.raw_smps_counts)[1]
         # Set the value
-        if corr_coef_p < 0.05 < ks_stat_p:
+        if corr_coef_p < 0.05 < ks_stat_p:  # DOCQUESTION Ranges okay?
             return True
         else:
             return False
@@ -188,7 +188,7 @@ class Scan(object):
             return "The temperature do not remain constant enough throughout the scan!"
         elif self.status_code == 9:  # RESEARCH 9 Status Code
             return "The Scan is manually disabled by the user!"
-            # QUESTION Where does the following play in?  Was commented out.  Looked like combined with 7? Split?
+            # DOCQUESTION Where does the following play in?  Was commented out.  Looked like combined with 7? Split?
             # return "The super saturation rate does not remain constant throughout the scan duration."
 
     ###############
@@ -370,8 +370,8 @@ class Scan(object):
         if len(self.raw_smps_counts) != self.duration:
             self.status = 0
             self.set_status_code(2)  # RESEARCH 2 Status Code
-            # QUESTION K: more work over here. Can always improve
-            # QUESTION K: perform Hartigan's dip test to test for bimodality
+            # DOCQUESTION K: more work over here. Can always improve
+            # DOCQUESTION K: perform Hartigan's dip test to test for bimodality
 
     def post_align_self_test(self):
         """
@@ -382,10 +382,10 @@ class Scan(object):
         - Checks for uniform values in temperatures by comparing the first value to all the values
 
         """
-        # QUESTION K: more work over here. Can always improve this one
+        # DOCQUESTION K: more work over here. Can always improve this one
         # Check for error in super saturation
         for i in range(len(self.processed_super_sats)):
-            if not hf.are_floats_equal(self.true_super_sat, self.processed_super_sats[i]):
+            if not hf.are_floats_equal(self.true_super_sat, self.processed_super_sats[i]):  # DOCQUESTION err value?
                 self.true_super_sat = None
                 self.set_status(0)
                 self.set_status_code(7)  # RESEARCH 7 Status Code
@@ -417,7 +417,6 @@ class Scan(object):
         """
         Convert lists to numpy arrays.
         """
-        # RESEARCH K comment "got to generate processed_smps_counts early"
         self.raw_T1s = np.asarray(self.raw_T1s)
         self.raw_T2s = np.asarray(self.raw_T2s)
         self.raw_T3s = np.asarray(self.raw_T3s)
@@ -446,7 +445,7 @@ class Scan(object):
         """
         # Copy the raw SMPS data to ensure no data loss
         self.processed_smps_counts = self.raw_smps_counts
-        # Process the dndlogdp list  # QUESTION naming again
+        # Process the dndlogdp list  # DOCQUESTION naming again
         self.processed_normalized_concs = hf.normalize_dndlogdp_list(self.raw_normalized_concs)
         # Copy raw CCNC values to local variables
         ccnc_counts = self.raw_ccnc_counts
@@ -456,10 +455,10 @@ class Scan(object):
         super_sats = self.raw_super_sats
         ave_ccnc_sizes = self.raw_ave_ccnc_sizes
         # Update for shift factors
-        # -- if shift factor is positive
+        # -- if shift factor is non-negative  # DOCQUESTION But, we assumed it always would be?
         if self.shift_factor >= 0:
             # if not enough ccnc counts to even shift, the scan is invalid
-            if len(ccnc_counts) < self.shift_factor:  # RESEARCH This would never happen as self.shift when set, checks
+            if len(ccnc_counts) < self.shift_factor:
                 self.set_status(0)
                 self.set_status_code(6)  # RESEARCH 6 Status Code
             # Shift the data based on the shift factor
@@ -469,7 +468,7 @@ class Scan(object):
             t3s = t3s[self.shift_factor:]
             super_sats = super_sats[self.shift_factor:]
             ave_ccnc_sizes = ave_ccnc_sizes[self.shift_factor:]
-        else:  # -- if shift factor is negative  # QUESTION anything needed of factor == 0?
+        else:  # -- if shift factor is negative
             # populate ccnc counts with 0s in the fronts
             ccnc_counts = hf.fill_zeros_to_begin(ccnc_counts, abs(self.shift_factor))
             t1s = hf.fill_zeros_to_begin(t1s, abs(self.shift_factor))
@@ -477,7 +476,7 @@ class Scan(object):
             t3s = hf.fill_zeros_to_begin(t3s, abs(self.shift_factor))
             super_sats = hf.fill_zeros_to_begin(super_sats, abs(self.shift_factor))
             ave_ccnc_sizes = hf.fill_zeros_to_begin(ave_ccnc_sizes, abs(self.shift_factor))
-        # If we still don't have enough data, populate with 0s  # QUESTION Define "enough"
+        # If the shifted data is not long enough to match duration, fill with zeros.
         ccnc_counts = hf.fill_zeros_to_end(ccnc_counts, self.duration)
         t1s = hf.fill_zeros_to_end(t1s, self.duration)
         t2s = hf.fill_zeros_to_end(t2s, self.duration)
@@ -491,7 +490,7 @@ class Scan(object):
         self.processed_T3s = t3s[:self.duration]
         self.processed_super_sats = super_sats[:self.duration]
         self.processed_ave_ccnc_sizes = ave_ccnc_sizes[:self.duration]
-        # QUESTION Why is this value?
+        # DOCQUESTION Why is this value?
         self.true_super_sat = self.processed_super_sats[0]
         # Perform self test
         self.post_align_self_test()
@@ -506,8 +505,8 @@ class Scan(object):
         :rtype: int
         """
         # TODO issues/27 is this where the new auto align code should go?
-        # QUESTION why do we assume it's always postive? Is that safe?
-        # QUESTION why do we assume it's always 1 index apart?  Does my code fix this?
+        # DOCQUESTION why do we assume it's always postive? Is that safe?
+        # DOCQUESTION why do we assume it's always 1 index apart?  Does my code fix this?
         # Set the base shift factor of the scan with new factor
         self.shift_factor = base_shift_factor
         # Pull the raw counts
@@ -516,7 +515,7 @@ class Scan(object):
         # if we have an invalid scan, then do nothing.
         if not self.is_valid():
             return base_shift_factor
-        # Normalize ccnc counts if there are more than three counts  # QUESTION why 3?
+        # Normalize ccnc counts if there are more than three counts  # DOCQUESTION why 3?
         if len(self.raw_ccnc_counts) > 3:
             ccnc_counts = hf.smooth(ccnc_counts)
         # Find the ref index in the SMPS data. This is almost always accurate.
@@ -528,7 +527,7 @@ class Scan(object):
         # try to find the ref index in ccnc data. Very difficult
         self.ref_index_ccnc = hf.find_ref_index_ccnc(ccnc_counts, self.ref_index_smps + base_shift_factor)
         # if we did not manage to find and point that fits our target
-        if self.ref_index_ccnc is None:
+        if self.ref_index_ccnc is None:  # RESEARCH find_ref_index_ccnc never returns None
             self.status = 0
             self.set_status_code(5)  # RESEARCH 5 Status Code
             return base_shift_factor
