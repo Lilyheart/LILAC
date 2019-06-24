@@ -349,14 +349,14 @@ class KappaGraph(FigureCanvas):
         self.draw_idle()
         self.flush_events()
 
-    def update_all_kappa_points(self, alpha_pinene_dict, is_valid_kappa_points):
+    def update_all_kappa_points(self, alpha_pinene_dict, valid_kappa_points):
         """
         # REVIEW Documentation
 
         :param alpha_pinene_dict:
         :type alpha_pinene_dict:
-        :param is_valid_kappa_points:
-        :type is_valid_kappa_points:
+        :param valid_kappa_points:
+        :type valid_kappa_points:
         """
         # COMBAKL Kappa
         x_valid_ks = []
@@ -366,7 +366,7 @@ class KappaGraph(FigureCanvas):
         # print valid_kappa_points
         for a_key in alpha_pinene_dict.keys():
             for i in alpha_pinene_dict[a_key][-1]:
-                if is_valid_kappa_points[i, a_key]:
+                if valid_kappa_points[i, a_key]:
                     x_valid_ks.append(i)
                     y_valid_ks.append(a_key)
                 else:

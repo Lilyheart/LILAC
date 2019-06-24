@@ -6,6 +6,7 @@ import cPickle
 import datetime as dt
 import math
 import numpy as np
+import os
 import pandas as pd
 from StringIO import StringIO
 import re
@@ -37,6 +38,7 @@ class Controller(object):
     - **asym_limits**: threshold for top assym
     - **stage**: The stage the program is in
     - **save_name**:
+    - **project_folder**:
     - **sigma**:
     - **temp**:
     - **dd_1**:
@@ -71,6 +73,7 @@ class Controller(object):
         self.asym_limits = None
         self.stage = "init"
         self.save_name = None
+        self.project_folder = None
         # variables for calculating kappa
         # QUESTION What can be constants?
         self.sigma = 0.072
@@ -134,6 +137,7 @@ class Controller(object):
 
         :param list[str] data_files: The full path names of the filed selected in the new project from files dialog box
         """
+        self.project_folder = os.path.dirname(os.path.dirname(data_files[0]))
         # reset the attributes
         self.set_attributes_default()
         # got to reset the view first
@@ -657,6 +661,19 @@ class Controller(object):
         self.view.close_progress_bar()
 
     ##############
+    # Get values #
+    ##############
+
+    def get_project_name(self):
+        """
+        Takes the absolute project folder path and returns the last folder as the project name.
+
+        :return: The parent folder name
+        :rtype: str
+        """
+        return os.path.basename(self.project_folder)
+
+    ##############
     # Set values #
     ##############
 
@@ -785,11 +802,12 @@ class Controller(object):
         """
         Begins a project with new project files
 
-        :param project_file: The list of files to open and process
-        :type project_file: List[str]
+        :param unicode project_file: The project file to reopen
         """
         # TODO issues/41 Fix to remove smooth_method
         # RESEARCH Any other variables that need to be handled, cleared, etc?
+        # Get project folder
+        self.project_folder = os.path.dirname(project_file)
         try:
             with open(project_file, 'rb') as handle:
                 (self.scans, self.counts_to_conc_conv, self.data_files, self.ccnc_data, self.smps_data,

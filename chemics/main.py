@@ -221,8 +221,10 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         Allows the user to select a save name and saves the current open project to the disk
         """
         # Get file name
+        file_name = self.controller.project_folder + "/"
+        file_name += self.controller.get_project_name() + ".chemics"
         # noinspection PyCallByClass
-        project_file = Qg.QFileDialog.getSaveFileName(self, "Save file", '', "Project files (*.chemics)")[0]
+        project_file = Qg.QFileDialog.getSaveFileName(self, "Save file", file_name, "Project files (*.chemics)")[0]
         if project_file:
             # append file extention if neccessary
             if not project_file.endswith(".chemics"):
@@ -243,7 +245,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         """
         # TODO issues/11
         # noinspection PyCallByClass
-        file_name = "kappa_" + self.controller.experiment_date.replace("/", ".") + ".csv"
+        file_name = self.controller.project_folder + "/kappa_" + self.controller.experiment_date.replace("/", ".") + ".csv"
         # noinspection PyCallByClass
         export_file = Qg.QFileDialog.getSaveFileName(self, "Save file", file_name, "*.csv")[0]
         if export_file:

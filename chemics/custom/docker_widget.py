@@ -499,7 +499,7 @@ class DockerKappaWidget(Qg.QFrame):
         """
         # COMBAKL Kappa
         self.kappa_graph.update_all_kappa_points(self.controller.alpha_pinene_dict,
-                                                 self.controller.is_valid_kappa_points)
+                                                 self.controller.valid_kappa_points)
 
     def show_ave_k_points(self):
         """
@@ -533,7 +533,7 @@ class DockerKappaWidget(Qg.QFrame):
         ss = float(ss)
         dp = float(dp)
         self.controller.set_kappa_point_state(ss, dp, state)
-        self.kappa_data_table.set_status(ss, dp, self.controller.is_valid_kappa_points[(dp, ss)])
+        self.kappa_data_table.set_status(ss, dp, self.controller.valid_kappa_points[(dp, ss)])
 
     def update_kappa_values(self):
         """
@@ -546,4 +546,4 @@ class DockerKappaWidget(Qg.QFrame):
                 ss = a_key
                 dp_50 = aSS[0]
                 app_k = aSS[1]
-                self.kappa_data_table.add_row(ss, dp_50, app_k, self.controller.is_valid_kappa_points[(dp_50, ss)])
+                self.kappa_data_table.add_row(ss, dp_50, app_k, self.controller.valid_kappa_points[(dp_50, ss)])
