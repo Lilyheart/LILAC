@@ -26,6 +26,7 @@ If you are here as a programmer and want to look under the hood, see the code ba
    :maxdepth: 1
    :caption: The Code Base
 
+   code/changelog
    code/main
    code/secondary
    code/custwidgets

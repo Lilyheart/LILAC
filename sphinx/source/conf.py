@@ -42,6 +42,7 @@ release = u'2.1'
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.githubpages',
+    'm2r'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -115,6 +116,10 @@ html_static_path = ['_static']
 # 'searchbox.html']``.
 #
 # html_sidebars = {}
+
+# -- Options for m2r ---------------------------------------------
+
+source_suffix = ['.rst', '.md']
 
 
 # -- Options for HTMLHelp output ---------------------------------------------
