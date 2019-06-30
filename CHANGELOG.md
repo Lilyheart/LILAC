@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - For an old project, the folder the .chemics file was located
     in is saved.
 - When saving a project or exporting Kappa data, the folder stored from above is presented as the default folder.
+- requirements-linux64.txt for dev environment installs
 
 ### Changed
 - Hid all side widgets with the exception of the Scan Information 
