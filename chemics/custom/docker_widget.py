@@ -115,7 +115,7 @@ class DockerScanInformation(Qg.QFrame):
         end_time = dt.date.strftime(curr_scan.end_time, "%H:%M:%S")
         scan_time = start_time + " - " + end_time
         self.scan_time.setText(scan_time)
-        self.super_saturation.setText(','.join(map(str, np.unique(curr_scan.processed_super_sats))))
+        self.super_saturation.setText(', '.join(map(str, np.unique(curr_scan.processed_super_sats))))
         if curr_scan.is_valid():
             self.scan_status.setText("VALID")
             self.scan_status.setStyleSheet("QWidget { background-color:None}")
@@ -230,11 +230,27 @@ class DockerSigmoidWidget(Qg.QFrame):
         self.setPalette(palette)
         self.setFrameShape(Qg.QFrame.StyledPanel)
         self.setFrameShadow(Qg.QFrame.Plain)
-        # Layout sigmoid parameters section
+        ########################################
+        # Top Section - Experiment Information
+        # -- add a title
+        form_layout.addRow(c_widget.TitleHLine("Experiment Information"))
+        # -- add date
+        self.experiment_date = Qg.QLabel("-")
+        self.experiment_date.setAlignment(Qc.Qt.AlignRight)
+        form_layout.addRow("Date (m/d/y)", self.experiment_date)
+        # -- add the scan time
+        self.scan_time = Qg.QLabel("-")
+        self.scan_time.setAlignment(Qc.Qt.AlignRight)
+        form_layout.addRow("Scan Time (h:m:s)", self.scan_time)
         # -- add the super saturation indicator
         self.super_saturation = Qg.QLabel("-")
         self.super_saturation.setAlignment(Qc.Qt.AlignRight)
         form_layout.addRow("Super Saturation (%)", self.super_saturation)
+        ########################################
+        # Middle Section - Update Scan
+        # -- add a title
+        form_layout.addRow(c_widget.TitleHLine("Update Sigmoid Parameters"))
+        # Layout sigmoid parameters section
         # -- add the scan selector
         self.scan_selector = c_widget.ArrowSpinBox(forward=True)
         self.scan_selector.set_callback(self.scan_index_changed)
@@ -286,7 +302,12 @@ class DockerSigmoidWidget(Qg.QFrame):
         # RESEARCH Find out why this method is being called twice every time a new scan is selected
         curr_scan = self.controller.scans[self.controller.curr_scan_index]
         num_scan = len(self.controller.scans)
-        self.super_saturation.setText(','.join(map(str, np.unique(curr_scan.processed_super_sats))))
+        self.experiment_date.setText(self.controller.experiment_date)
+        start_time = dt.date.strftime(curr_scan.start_time, "%H:%M:%S")
+        end_time = dt.date.strftime(curr_scan.end_time, "%H:%M:%S")
+        scan_time = start_time + " - " + end_time
+        self.scan_time.setText(scan_time)
+        self.super_saturation.setText(', '.join(map(str, np.unique(curr_scan.processed_super_sats))))
         # Update the Sigmoid Parameters section
         self.scan_selector.set_range(0, num_scan - 1)
         self.scan_selector.set_value(self.controller.curr_scan_index)

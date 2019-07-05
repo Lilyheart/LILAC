@@ -11,22 +11,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated for soon-to-be removed features.
 ### Removed for now removed features.
 ### Security in case of vulnerabilities.
+([#](https://gitlab.bucknell.edu/nrr004/Chemics/issues/))
 -->
 
 ## [Unreleased]
 ### Added
-- The name of the folder is stored when opening a new or old project
+- The name of the folder is stored when opening a new or old project ([#11](https://gitlab.bucknell.edu/nrr004/Chemics/issues/11))
   - For a new project, the parent of the folder of the 
     source files is saved.
   - For an old project, the folder the .chemics file was located
     in is saved.
-- When saving a project or exporting Kappa data, the folder stored from above is presented as the default folder.
+- When saving a project or exporting Kappa data, the folder stored from above is presented as the default folder.([#11](https://gitlab.bucknell.edu/nrr004/Chemics/issues/11))
 - requirements-linux64.txt for dev environment installs
-- Supersaturation to Sigmoid Parameters screen
+- Supersaturation to Sigmoid Parameters screen ([#1](https://gitlab.bucknell.edu/nrr004/Chemics/issues/1))
+- Scan identifying information to sigmoid parameters screen ([#17](https://gitlab.bucknell.edu/nrr004/Chemics/issues/17))
 
 ### Fixed
-- Bug where end asymp truncates to 99.99
-- Bug where supersaturation did not display correctly on the Scan Information screen
+- Bug where end asymp truncates to 99.99 ([#29](https://gitlab.bucknell.edu/nrr004/Chemics/issues/29))
+- Bug where supersaturation did not display correctly on the Scan Information screen ([#2](https://gitlab.bucknell.edu/nrr004/Chemics/issues/2))
 
 ### Changed
 - Hid all side widgets with the exception of the Scan Information 
@@ -34,18 +36,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.1.0] - 2019-06-21
 ### Added
-- Packaged in onefile
-- Export Kappa now askes you where you want to save the csv file.
+- Packaged in onefile ([#9](https://gitlab.bucknell.edu/nrr004/Chemics/issues/9))
+- Export Kappa now askes you where you want to save the csv file. ([#11 partial](https://gitlab.bucknell.edu/nrr004/Chemics/issues/11))
 
 ### Fixed
-- Date, Scan duration, number of scans, const2concconv, scan time, super saturation and scan status no longer show default values when application is first opened
+- Date, Scan duration, number of scans, const2concconv, scan time, super saturation and scan status no longer show default values when application is first opened ([#5](https://gitlab.bucknell.edu/nrr004/Chemics/issues/5))
+- Date, Scan duration, number of scans, const2concconv, scan time, super saturation and scan status update correctly when cycling through scans ([#5](https://gitlab.bucknell.edu/nrr004/Chemics/issues/5))
 
 ### Changed
 - Scan information section tweaked for button flow
 - Settings moved to help menu.
 
 ### Removed
-- Uncoded help menu items disabled
-- Select smoothing algorithm removed from opening new project.
-- Smooth Data removed from Action dropdown menu
+- Uncoded help menu items disabled ([#23 partial](https://gitlab.bucknell.edu/nrr004/Chemics/issues/23))
+- Select smoothing algorithm removed from opening new project. ([#41](https://gitlab.bucknell.edu/nrr004/Chemics/issues/41))
+- Smooth Data removed from Action dropdown menu ([#41](https://gitlab.bucknell.edu/nrr004/Chemics/issues/41))
 
