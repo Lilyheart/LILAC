@@ -361,8 +361,8 @@ class DockerSigmoidWidget(Qg.QFrame):
         begin_asymp_dp.set_maximum(maximum)
         begin_asymp_dp.set_value(sigmoid_params[2])
         end_asymp_dp = c_widget.LabeledDoubleSpinbox("end asymp dp")  # QUESTION Better label wording
-        end_asymp_dp.set_value(sigmoid_params[3])
         end_asymp_dp.set_maximum(maximum)
+        end_asymp_dp.set_value(sigmoid_params[3])
         v_layout = Qg.QVBoxLayout()
         v_layout.addWidget(begin_rise_dp)
         v_layout.addWidget(end_rise_dp)

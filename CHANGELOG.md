@@ -23,6 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - When saving a project or exporting Kappa data, the folder stored from above is presented as the default folder.
 - requirements-linux64.txt for dev environment installs
 
+### Fixed
+- Bug where end asymp truncates to 99.99
+
 ### Changed
 - Hid all side widgets with the exception of the Scan Information 
   widget on load.
