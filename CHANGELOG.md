@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Bug where end asymp truncates to 99.99
+- Bug where supersaturation did not display correctly on the Scan Information screen
 
 ### Changed
 - Hid all side widgets with the exception of the Scan Information 

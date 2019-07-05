@@ -3,6 +3,7 @@ Creates the various widgets that display in the docker section of the display
 """
 # External Packages
 import datetime as dt
+import numpy as np
 import PySide.QtCore as Qc
 import PySide.QtGui as Qg
 
@@ -85,7 +86,7 @@ class DockerScanInformation(Qg.QFrame):
         self.scan_time.setAlignment(Qc.Qt.AlignRight)
         form_layout.addRow("Scan Time (h:m:s)", self.scan_time)
         # -- add the super saturation indicator
-        self.super_saturation = Qg.QLabel("-")  # TODO issues/2 Update label when changing scans
+        self.super_saturation = Qg.QLabel("-")
         self.super_saturation.setAlignment(Qc.Qt.AlignRight)
         form_layout.addRow("Super Saturation (%)", self.super_saturation)
         # -- add the status of the scan
@@ -114,8 +115,7 @@ class DockerScanInformation(Qg.QFrame):
         end_time = dt.date.strftime(curr_scan.end_time, "%H:%M:%S")
         scan_time = start_time + " - " + end_time
         self.scan_time.setText(scan_time)
-        # TODO issues/2 Update the Super Saturation
-        self.super_saturation = curr_scan.processed_super_sats
+        self.super_saturation.setText(','.join(map(str, np.unique(curr_scan.processed_super_sats))))
         if curr_scan.is_valid():
             self.scan_status.setText("VALID")
             self.scan_status.setStyleSheet("QWidget { background-color:None}")

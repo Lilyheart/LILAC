@@ -491,7 +491,6 @@ class Scan(object):
         self.processed_T3s = t3s[:self.duration]
         self.processed_super_sats = super_sats[:self.duration]
         self.processed_ave_ccnc_sizes = ave_ccnc_sizes[:self.duration]
-        # DOCQUESTION Why is this value?
         self.true_super_sat = self.processed_super_sats[0]
         # Perform self test
         self.post_align_self_test()
