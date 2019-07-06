@@ -93,13 +93,10 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         save_action = Qg.QAction('&Save Project', self, shortcut="Ctrl+S", triggered=self.save_project)
         save_as_action = Qg.QAction('&Save Project As', self, triggered=self.save_project_as)
         export_data_action = Qg.QAction('&Export Kappa Data', self, triggered=self.export_project_data)
-        reset_action = Qg.QAction('&Reset Project', self, triggered=self.reset_project)
-        exit_action = Qg.QAction('&Exit', self, triggered=app.quit)
+        exit_action = Qg.QAction('&Exit', self, triggered=self.exit_run)
         file_menu.addAction(new_action)
         file_menu.addSeparator()
         file_menu.addActions([open_action, save_action, save_as_action, export_data_action])
-        file_menu.addSeparator()
-        file_menu.addAction(reset_action)
         file_menu.addSeparator()
         file_menu.addAction(exit_action)
         self.menuBar().addMenu(file_menu)
@@ -156,7 +153,6 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
             file_action_list[3].setDisabled(True)  # Disable Save Project
             file_action_list[4].setDisabled(True)  # Disable Save Project As
             file_action_list[5].setDisabled(True)  # Disable Export Kappa Data
-            file_action_list[7].setDisabled(True)  # Disable Reset Project
             # action menu
             self.action_menu.setDisabled(True)
             # window menu
@@ -233,12 +229,6 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
             self.controller.set_save_name(project_file)
             self.controller.save_project()
 
-    def reset_project(self):
-        """
-        Resets the project with the original data files
-        """
-        self.controller.reset_project()
-
     def export_project_data(self):
         """
         Exports the final kappa project data
@@ -254,6 +244,29 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
                 export_file += ".csv"
             # Save files
             self.controller.export_project_data(export_file)
+
+    def closeEvent(self, event):
+        self.exit_run()
+
+    def exit_run(self):
+        """
+        Displays the dialog box asing if the user wishes to truly exit the program.  The
+        QT app is quit if the user selects yes.  Otherwise, no action is taken.
+        """
+        if self.controller.data_files is None:
+            app.quit()
+        dialog = Qg.QMessageBox()
+        dialog.setText("Do you really wish to exit the program")
+        dialog.setIcon(Qg.QMessageBox.Question)
+        yes_button = dialog.addButton("Exit", Qg.QMessageBox.AcceptRole)
+        save_button = dialog.addButton("Save then exit", Qg.QMessageBox.AcceptRole)
+        dialog.addButton("Cancel", Qg.QMessageBox.RejectRole)
+        dialog.exec_()
+        if dialog.clickedButton() == yes_button:
+            app.quit()
+        elif dialog.clickedButton() == save_button:
+            self.save_project()
+            app.quit()
 
     # Action menu items
 

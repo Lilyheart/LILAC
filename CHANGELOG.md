@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - requirements-linux64.txt for dev environment installs
 - Supersaturation to Sigmoid Parameters screen ([#1](https://gitlab.bucknell.edu/nrr004/Chemics/issues/1))
 - Scan identifying information to sigmoid parameters screen ([#17](https://gitlab.bucknell.edu/nrr004/Chemics/issues/17))
+- When chosing to exit, either from the file menu or the main window's exit button, prompt the user if they want to exit or save **if** a run has been started. ([#53](https://gitlab.bucknell.edu/nrr004/Chemics/issues/53))
 
 ### Fixed
 - Bug where end asymp truncates to 99.99 ([#29](https://gitlab.bucknell.edu/nrr004/Chemics/issues/29))
@@ -33,6 +34,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Hid all side widgets with the exception of the Scan Information 
   widget on load.
+  
+### Removed
+- Removed run reset code ([#53](https://gitlab.bucknell.edu/nrr004/Chemics/issues/53))
 
 ## [2.1.0] - 2019-06-21
 ### Added

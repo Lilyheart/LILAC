@@ -846,12 +846,6 @@ class Controller(object):
         # QUESTION Show first valid scan or first scan?
         self.switch_to_scan(0)
 
-    def reset_project(self):
-        """
-        Resets the project with the original data files
-        """
-        self.start(self.data_files)
-
     def export_project_data(self, export_filename):
         """
         Export the Kappa data to csv.
