@@ -266,6 +266,37 @@ class KappaGraph(FigureCanvas):
         self.invalid_kappa_points, = self.ax.plot([], [], "x", label="Invalid K-points")
         self.average_kappa_points, = self.ax.plot([], [], "o", label="Average K-points")
         self.klines = []
+
+        annotation = self.ax.annotate("", xy=(0, 0), xytext=(20, 20), textcoords="offset points",
+                                      bbox=dict(boxstyle="round", fc="0.8"),
+                                      arrowprops=dict(arrowstyle="fancy", connectionstyle="angle3,angleA=0,angleB=-90"))
+        annotation.set_visible(False)
+
+        def update_annotation(details, a_line):
+            x_line, y_line = a_line.get_data()
+            annotation.xy = (x_line[details["ind"][0]], y_line[details["ind"][0]])
+            if a_line.get_gid() is not None:
+                annotation.set_text(a_line.get_gid())
+            else:
+                text = format("DP50: %.1f  SS:%.1f" % (x_line[details["ind"][0]], y_line[details["ind"][0]]))
+                annotation.set_text(text)
+
+        def on_plot_hover(event):
+            if event.inaxes == self.ax:
+                is_annotation_visable = annotation.get_visible()
+                for a_line in self.ax.get_lines():
+                    contains, details = a_line.contains(event)
+                    if contains:
+                        update_annotation(details, a_line)
+                        annotation.set_visible(True)
+                        self.fig.canvas.draw_idle()
+                    else:
+                        if is_annotation_visable:
+                            annotation.set_visible(False)
+                            self.fig.canvas.draw_idle()
+
+        self.fig.canvas.mpl_connect('motion_notify_event', on_plot_hover)
+
         # COMBAKL Kappa
         self.update_all_klines()
         # plot graph
@@ -344,7 +375,9 @@ class KappaGraph(FigureCanvas):
         self.klines = []
         for i in range(kline_start_column, kline_end_column):
             y = self.klines_data[self.header[i]]
-            self.klines.append(self.ax.loglog(self.klines_diameters, y, label=str(self.header[i]), linewidth=1)[0])
+            self.klines.append(self.ax.loglog(self.klines_diameters, y,
+                                              gid=str(self.header[i]), label=str(self.header[i]), linewidth=1)[0])
+
         self.ax.legend()
         self.draw_idle()
         self.flush_events()
@@ -410,53 +443,5 @@ class KappaGraph(FigureCanvas):
         self.invalid_kappa_points.set_ydata([])
         self.ax.set_title("Activation Diameter for average Kappa points and Lines of Constant Kappa (K)")
         self.ax.legend()
-        self.draw()
-        self.flush_events()
-
-
-class SelectSmoothingAlgorithmGraph(FigureCanvas):  # RESEARCH How is this diff than above code?
-    """
-    Creates and updates the Raw SMPS and CCNC concentration over time graph.
-    """
-    def __init__(self):
-        self.fig, self.ax = plt.subplots()
-        super(self.__class__, self).__init__(self.fig)
-        # set up the figure and axes
-        self.ax.set_title("Raw SMPS and CCNC concentration over time")
-        self.ax.set_xlabel("Scan time(s)")
-        self.ax.set_ylabel("Concentration (1/cm3)")
-        self.ax.legend()
-        # set up empty data lines
-        self.smps_points, = self.ax.plot([], [], label="Raw SMPS", alpha=0.2)
-        self.ccnc_points, = self.ax.plot([], [], label="Raw CCNC")
-
-    def update_graph(self, a_scan, smooth_ccnc=False):
-        """
-        Updates the graph with the data in the scan provided.
-
-        :param Scan a_scan: The scan object to update the graph with
-        :param bool smooth_ccnc: If the graph should smooth or not.  Default is `False`
-        """
-        # Get data from the scan
-        smps_counts = a_scan.raw_smps_counts
-        ccnc_counts = a_scan.raw_ccnc_counts
-        # Get the number of data points
-        num_data_pts = max(len(smps_counts), len(ccnc_counts))
-        # make up for the lost data points
-        smps_counts = hf.fill_zeros_to_end(smps_counts, num_data_pts)
-        ccnc_counts = hf.fill_zeros_to_end(ccnc_counts, num_data_pts)
-        smps_counts = smps_counts[:num_data_pts]
-        ccnc_counts = ccnc_counts[:num_data_pts]
-        # Smooth the CCNC data
-        if smooth_ccnc:
-            ccnc_counts = hf.smooth(ccnc_counts)
-        # set new data
-        x_axis = np.arange(num_data_pts)
-        self.smps_points.set_xdata(x_axis)
-        self.smps_points.set_ydata(smps_counts)
-        self.ccnc_points.set_xdata(x_axis)
-        self.ccnc_points.set_ydata(ccnc_counts)
-        self.ax.relim(visible_only=True)
-        self.ax.autoscale_view(True, True, True)
         self.draw()
         self.flush_events()

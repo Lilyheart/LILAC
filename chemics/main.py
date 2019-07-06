@@ -187,7 +187,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         """
         Opens data files and begins the scan alignment process
         """
-        temp_dir = "/home/lilyheart/Dropbox/Classes/19.2.Chemics/TestData/2019_05_30-Sitin/Analysis"  # TEMP
+        temp_dir = "../../TestData/2019_05_30-Sitin/Analysis"  # TEMP
         # noinspection PyCallByClass
         files = Qg.QFileDialog.getOpenFileNames(self, "Open file", temp_dir, "Data files (*.csv *.txt)")[0]  # TEMP
         if files:
@@ -200,8 +200,9 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
 
         See :class:`~controller.Controller.save_project` in the Controller class.
         """
+        temp_dir = "../../TestData"  # TEMP
         # noinspection PyCallByClass
-        project_file = Qg.QFileDialog.getOpenFileName(self, "Open file", '', "Project files (*.chemics)")[0]
+        project_file = Qg.QFileDialog.getOpenFileName(self, "Open file", temp_dir, "Project files (*.chemics)")[0]
         if project_file:
             # read in new files
             self.controller.load_project(project_file)

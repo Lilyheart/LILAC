@@ -26,6 +26,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Supersaturation to Sigmoid Parameters screen ([#1](https://gitlab.bucknell.edu/nrr004/Chemics/issues/1))
 - Scan identifying information to sigmoid parameters screen ([#17](https://gitlab.bucknell.edu/nrr004/Chemics/issues/17))
 - When chosing to exit, either from the file menu or the main window's exit button, prompt the user if they want to exit or save **if** a run has been started. ([#53](https://gitlab.bucknell.edu/nrr004/Chemics/issues/53))
+- Added hover details on Kappa chart ([#19 partial](https://gitlab.bucknell.edu/nrr004/Chemics/issues/19))
+  - Hovering over a line tell you which kappa line
+  - Hovering over a point tells you the DP50 and supersaturation
 
 ### Fixed
 - Bug where end asymp truncates to 99.99 ([#29](https://gitlab.bucknell.edu/nrr004/Chemics/issues/29))
