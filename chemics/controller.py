@@ -13,6 +13,7 @@ import re
 import time
 
 # Internal Packages
+import auto_shift_algorithm
 import constants as const
 import data.kCal
 import helper_functions as hf
@@ -168,20 +169,24 @@ class Controller(object):
         self.view.close_progress_bar()
         # Update the experiment info in the view
         self.view.update_experiment_info()
-        self.view.show_auto_or_manual_question_dialog()
+        self.auto_align_scans()
         self.stage = "align"
         # update the menu
         self.view.set_menu_bar_by_stage()
 
-    def align_smps_ccnc_data(self):
+    def auto_align_scans(self):
         """
-        Aligns the SMPS and CCNC data throughout all the scans.
+        # REVIEW Documentation
+
+        :return:
+        :rtype:
         """
-        shift_factor = self.base_shift_factor
         self.view.init_progress_bar("Aligning SMPS and CCNC data...")
         for i in range(len(self.scans)):
+            a_scan = self.scans[i]
             self.view.update_progress_bar(100 * (i + 1) // len(self.scans))
-            shift_factor = self.scans[i].align_smps_ccnc_data(shift_factor)  # RESEARCH why are we setting shift_factor?
+            shift_factor = auto_shift_algorithm.get_auto_shift(a_scan.raw_smps_counts, a_scan.raw_ccnc_counts)
+            self.scans[i].set_shift_factor(shift_factor)
             self.scans[i].generate_processed_data()
         self.view.close_progress_bar()
         self.post_align_sanity_check()
@@ -464,8 +469,6 @@ class Controller(object):
 
          * :class:`~scan.Scan.set_status` Based on status of scan  # REVIEW - Add reasons to documentation
          * :class:`~scan.Scan.set_status_code` Based on status of scan  # REVIEW - Add reasons to documentation
-         * :class:`~scan.Scan.set_index_in_ccnc_data` The index of the first CCNC record in the full data set
-           that matches the current scan
          * :class:`~scan.Scan.add_to_raw_super_sats`  The super saturation values
          * :class:`~scan.Scan.add_to_raw_ccnc_counts`  The CCNC counts
          * :class:`~scan.Scan.add_to_raw_ave_ccnc_sizes`  The average CCNC size
@@ -494,7 +497,6 @@ class Controller(object):
             finish_scanning_ccnc_data = False
             a_scan = self.scans[curr_scan]
             duration = a_scan.duration
-            a_scan.set_index_in_ccnc_data(ccnc_index)
             # we do one thing at a time
             for i in range(duration + duration // 4):  # DOCQUESTION Pull 125%? Okay paradigm?
                 curr_ccnc_index = ccnc_index + i
@@ -584,18 +586,6 @@ class Controller(object):
     # Data Manipulation by the user  #
     ##################################
 
-    def prepare_data_for_manual_inputs(self):
-        """
-        Sets all shift factor values to zero using scan's :class:`~scan.Scan.generate_processed_data` method.
-        """
-        self.view.init_progress_bar("Processing SMPS and CCNC data...")
-        for i in range(len(self.scans)):
-            self.view.update_progress_bar(100 * (i + 1) // len(self.scans))
-            self.scans[i].set_shift_factor(0)
-            self.scans[i].generate_processed_data()  # RESEARCH Should this code go into the set shift factor code?
-        self.view.close_progress_bar()
-        self.switch_to_scan(0)
-
     def set_kappa_point_state(self, ss, dp, state):
         """
         # REVIEW Documentation
@@ -676,14 +666,6 @@ class Controller(object):
     ##############
     # Set values #
     ##############
-
-    def set_base_shift_factor(self, new_factor):
-        """
-        Updates the base shift factor in the controller
-
-        :param int new_factor: The new base shift factor
-        """
-        self.base_shift_factor = new_factor
 
     def set_save_name(self, name):
         """

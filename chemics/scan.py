@@ -22,7 +22,6 @@ class Scan(object):
         - **status_code**: The reason why the scan is not good
         - **counts_to_conc**: the flow rate
         - **index**: the scan #
-        - **index_in_ccnc_data**:  the position of the scan in ccnc data
         - **start_time**: what time the scan starts. Format is hh:mm:ss
         - **end_time**: what time the scan ends. Format is hh:mm:ss
         - **duration**: duration of the scan
@@ -39,10 +38,6 @@ class Scan(object):
         - **raw_normalized_concs**: normalized concentration. Also called dN/dlogDp.
         - **diameter_midpoints**: diameter midpoints.
         - **ave_smps_diameters**: ave diameter from smps file
-        - **ref_index_smps**: Used to align smps and ccnc data. The reference point of smps and ccnc data.
-          Normally, this is the local minimum between the peaks
-        - **ref_index_ccnc**: Used to align smps and ccnc data. The reference point of smps and ccnc data.
-          Normally, this is the local minimum between the peaks
         - **shift_factor**:
         - **processed_smps_counts**:  Processed data. Since we only need a portion of the raw data and work with it,
           we don't use all the raw data.  Furthermore, we need to perform certain processing techniques on the data
@@ -76,12 +71,11 @@ class Scan(object):
         self.status_code = 0
         self.counts_to_conc = 0.0
         self.index = index
-        self.index_in_ccnc_data = 0
         self.start_time = None
         self.end_time = None
         self.duration = 0
-        self.scan_up_time = 0
-        self.scan_down_time = 0
+        self.scan_up_time = 0  # RESEARCH Unused
+        self.scan_down_time = 0  # RESEARCH Unused
         self.raw_super_sats = []
         self.raw_T1s = []
         self.raw_T2s = []
@@ -92,8 +86,6 @@ class Scan(object):
         self.raw_normalized_concs = []
         self.diameter_midpoints = []
         self.ave_smps_diameters = []
-        self.ref_index_smps = 0
-        self.ref_index_ccnc = 0
         self.shift_factor = 0
         self.processed_smps_counts = []
         self.processed_ccnc_counts = []
@@ -111,6 +103,10 @@ class Scan(object):
         self.dps = []
         self.sigmoid_y_vals = []
         self.asym_limits = [0.75, 1.5]  # RESEARCH Magic number  RESEARCH get from controller?
+
+        self.index_in_ccnc_data = 0  # RESEARCH Unused now?
+        self.ref_index_smps = 0  # RESEARCH Unused now?
+        self.ref_index_ccnc = 0  # RESEARCH Unused now?
 
     def __repr__(self):
         """
@@ -287,14 +283,6 @@ class Scan(object):
         self.raw_T1s.append(float(t1))
         self.raw_T2s.append(float(t2))
         self.raw_T3s.append(float(t3))
-
-    def set_index_in_ccnc_data(self, index):
-        """
-        Sets the index_in_ccnc_data value in the scan object.
-
-        :param int index: The position of the scan in ccnc data
-        """
-        self.index_in_ccnc_data = index
 
     def set_status(self, status):
         """
@@ -494,46 +482,6 @@ class Scan(object):
         self.true_super_sat = self.processed_super_sats[0]
         # Perform self test
         self.post_align_self_test()
-
-    def align_smps_ccnc_data(self, base_shift_factor):
-        """
-        Assumes the shift factor is positive.  The base shift factor is used as a reference.  The shift factors
-        of the two scans should be within 1 index of each other.
-
-        :param int base_shift_factor: The potential shift factor from the auto alignment process.
-        :return: The desired shift_factor
-        :rtype: int
-        """
-        # TODO issues/27 is this where the new auto align code should go?
-        # DOCQUESTION why do we assume it's always postive? Is that safe?
-        # DOCQUESTION why do we assume it's always 1 index apart?  Does my code fix this?
-        # Set the base shift factor of the scan with new factor
-        self.shift_factor = base_shift_factor
-        # Pull the raw counts
-        ccnc_counts = self.raw_ccnc_counts
-        smps_counts = self.raw_smps_counts
-        # if we have an invalid scan, then do nothing.
-        if not self.is_valid():
-            return base_shift_factor
-        # Normalize ccnc counts if there are more than three counts  # DOCQUESTION why 3?
-        if len(self.raw_ccnc_counts) > 3:
-            ccnc_counts = hf.smooth(ccnc_counts)
-        # Find the ref index in the SMPS data. This is almost always accurate.
-        self.ref_index_smps = hf.find_ref_index_smps(smps_counts, self.scan_up_time)
-        if self.ref_index_smps is None:
-            self.status = 0
-            self.set_status_code(4)  # RESEARCH 4 Status Code
-            return base_shift_factor
-        # try to find the ref index in ccnc data. Very difficult
-        self.ref_index_ccnc = hf.find_ref_index_ccnc(ccnc_counts, self.ref_index_smps + base_shift_factor)
-        # if we did not manage to find and point that fits our target
-        if self.ref_index_ccnc is None:  # RESEARCH find_ref_index_ccnc never returns None
-            self.status = 0
-            self.set_status_code(5)  # RESEARCH 5 Status Code
-            return base_shift_factor
-        else:
-            self.shift_factor = self.ref_index_ccnc - self.ref_index_smps
-        return self.shift_factor
 
     def correct_charges(self):
         """

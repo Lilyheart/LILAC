@@ -20,6 +20,7 @@ import graphs
 ##############
 
 # Determine if running in pyinstaller bundle or python environment
+# RESEARCH Used?
 if getattr(sys, 'frozen', False):
     # we are running in a |PyInstaller| bundle
     # noinspection PyProtectedMember
@@ -49,7 +50,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         # Create the controller that handles all of the functionalities of the program
         self.controller = controller.Controller(self)
         # create menu bar
-        self.file_menu, self.action_menu, self.window_menu, self.help_menu = self.create_menus()
+        self.file_menu, self.action_menu, self.window_menu = self.create_menus()
         self.set_menu_bar_by_stage()
         # Create graph objects
         self.raw_conc_time_graph = graphs.ConcOverTimeRawDataGraph()
@@ -58,7 +59,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         self.ratio_dp_graph = graphs.RatioOverDiameterGraph()
         self.kappa_graph = graphs.KappaGraph()
         # create left dock widget for information related stuff
-        [self.scaninfo_docker, self.scaninfo_docker_widget, self.sigmoid_docker, self.sigmoid_docker_widget,
+        [self.scaninfo_docker_widget, self.sigmoid_docker_widget,
          self.kappa_docker, self.kappa_docker_widget] = self.create_left_docker()
         # set options for left doc
         dock_options = Qg.QMainWindow.VerticalTabs | Qg.QMainWindow.AnimatedDocks | Qg.QMainWindow.ForceTabbedDocks
@@ -130,7 +131,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         # user_manual_action = Qg.QAction('&User Manual', self, triggered=self.submit_feedback)
         help_menu.addActions([setting_action])
         self.menuBar().addMenu(help_menu)
-        return file_menu, action_menu, window_menu, help_menu
+        return file_menu, action_menu, window_menu
 
     def set_menu_bar_by_stage(self):
         """
@@ -247,6 +248,9 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
             self.controller.export_project_data(export_file)
 
     def closeEvent(self, event):
+        """
+        Overwrites base closeEvent function to execute the :class:`~main.MainView.exit_run` method.
+        """
         self.exit_run()
 
     def exit_run(self):
@@ -292,8 +296,17 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         if len(self.controller.scans) == 0:
             self.show_error_by_type("no_data")
             return
-        align_dlg = c_modal_dialogs.SetBaseShiftDialog(self.controller)
-        return align_dlg.exec_()
+        message = Qg.QMessageBox()
+        message.setWindowTitle("Attempt to calculate shift values")
+        message.setIcon(Qg.QMessageBox.Question)
+        message.setText("Are you sure you want to attempt to find shift values for all scans?")
+        message.setInformativeText(
+            "This will overwrite any existing values!")
+        message.setStandardButtons(Qg.QMessageBox.Yes | Qg.QMessageBox.No)
+        message.setDefaultButton(Qg.QMessageBox.No)
+        ret = message.exec_()
+        if ret == Qg.QMessageBox.Yes:
+            self.controller.auto_align_scans()
 
     def correct_charges(self):
         """
@@ -420,7 +433,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         show_window_action = Qg.QAction("&Show Alignment Graphs", self, triggered=self.switch_central_widget)
         show_window_action.setCheckable(True)
         self.window_menu.addAction(show_window_action)
-        return [scaninfo_docker, scan_docker_widget, sigmoid_docker, sigmoid_docker_widget, kappa_docker,
+        return [scan_docker_widget, sigmoid_docker_widget, kappa_docker,
                 kappa_docker_widget]
 
     def create_central_widget(self):
@@ -509,6 +522,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
 
         :param str err_type: The type of error
         """
+        # RESEARCH Unused?
         (title, text, subtext) = (None, None, None)
         # Get text information for message box
         if err_type == "no_data":
@@ -552,23 +566,6 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
             return float(cc[0])
         else:
             return None
-
-    def show_auto_or_manual_question_dialog(self):
-        """
-        Displays the dialog box asing if the user wishes to manually align all the data or select a shift value and let
-        the program align all scans to match that value.
-        """
-        dialog = Qg.QMessageBox()
-        dialog.setText("Select your preferred way to align the data")
-        dialog.setInformativeText("Do you want to manually align the data, or let the program do it for you?")
-        dialog.setIcon(Qg.QMessageBox.Question)
-        manual_button = dialog.addButton("Manual", Qg.QMessageBox.RejectRole)
-        auto_button = dialog.addButton("Auto", Qg.QMessageBox.AcceptRole)
-        dialog.exec_()
-        if dialog.clickedButton() == auto_button:
-            self.show_auto_align_dialog()
-        elif dialog.clickedButton() == manual_button:
-            self.controller.prepare_data_for_manual_inputs()
 
     def show_auto_manual_fit_sigmoid_dialog(self):
         """

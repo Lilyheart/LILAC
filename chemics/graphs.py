@@ -19,7 +19,6 @@ class ConcOverTimeRawDataGraph(FigureCanvas):
     Creates and updates the Raw SMPS and CCNC concentration over time graph.
     """
     def __init__(self):
-        self.scan = None
         self.fig, self.ax = plt.subplots()
         super(self.__class__, self).__init__(self.fig)
         # set up the figure and axes
@@ -273,6 +272,16 @@ class KappaGraph(FigureCanvas):
         annotation.set_visible(False)
 
         def update_annotation(details, a_line):
+            """
+            # REVIEW Documentation
+
+            :param details:
+            :type details:
+            :param a_line:
+            :type a_line:
+            :return:
+            :rtype:
+            """
             x_line, y_line = a_line.get_data()
             annotation.xy = (x_line[details["ind"][0]], y_line[details["ind"][0]])
             if a_line.get_gid() is not None:
@@ -282,6 +291,14 @@ class KappaGraph(FigureCanvas):
                 annotation.set_text(text)
 
         def on_plot_hover(event):
+            """
+            # REVIEW Documentation
+
+            :param event:
+            :type event:
+            :return:
+            :rtype:
+            """
             if event.inaxes == self.ax:
                 is_annotation_visable = annotation.get_visible()
                 for a_line in self.ax.get_lines():

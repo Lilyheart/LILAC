@@ -12,3 +12,11 @@ EPSILON = 0.000001
 
 #: # QUESTION What the background behind this constant?
 NUM_OF_CHARGES_CORR = 8
+
+#: Used during calculating the shift amount in a scan.  The total area between SMPS and CCNC data, when the SMPS data
+# is greater, is multipled by this weight.  This value was determined empirically.
+HIGH_SMPS_WEIGHT = 1
+
+#: Used during calculating the shift amount in a scan.  The total area between SMPS and CCNC data, when the CCNC data
+# is greater, is multipled by this weight.  This value was determined empirically.
+HIGH_CCNC_WEIGHT = 2.2
