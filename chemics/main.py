@@ -6,6 +6,7 @@ import os
 import PySide.QtCore as Qc
 import PySide.QtGui as Qg
 import sys
+import webbrowser
 
 # Internal Packages
 import controller
@@ -90,11 +91,11 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         # Add file menu
         file_menu = Qg.QMenu("&File")
         new_action = Qg.QAction('&New Project from Files...', self, shortcut="Ctrl+N", triggered=self.open_files)
-        open_action = Qg.QAction('&Open Existing Project...', self, shortcut="Ctrl+O", triggered=self.open_project)
+        open_action = Qg.QAction('&Open Existing Project...', self, triggered=self.open_project)
         save_action = Qg.QAction('&Save Project', self, shortcut="Ctrl+S", triggered=self.save_project)
-        save_as_action = Qg.QAction('&Save Project As', self, triggered=self.save_project_as)
-        export_data_action = Qg.QAction('&Export Kappa Data', self, triggered=self.export_project_data)
-        exit_action = Qg.QAction('&Exit', self, triggered=self.exit_run)
+        save_as_action = Qg.QAction('Save Project &As', self, triggered=self.save_project_as)
+        export_data_action = Qg.QAction('Export &Kappa Data', self, triggered=self.export_project_data)
+        exit_action = Qg.QAction('&Exit', self, shortcut="Ctrl+E", triggered=self.exit_run)
         file_menu.addAction(new_action)
         file_menu.addSeparator()
         file_menu.addActions([open_action, save_action, save_as_action, export_data_action])
@@ -103,11 +104,11 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         self.menuBar().addMenu(file_menu)
         # Add action menu
         action_menu = Qg.QMenu("&Actions")
-        preview_all_action = Qg.QAction('Preview all scans', self, triggered=self.preview_all_scans)
-        auto_align_action = Qg.QAction('&Auto Align', self, triggered=self.show_auto_align_dialog)
-        correct_charges = Qg.QAction('Correct Charges All Scans', self, triggered=self.correct_charges)
-        correct_charges_one = Qg.QAction('Correct Charges One Scan', self, triggered=self.correct_charges_one)
-        auto_fit_action = Qg.QAction('&Auto Fit Sigmoid', self, triggered=self.show_auto_fit_sigmoid_dialog)
+        preview_all_action = Qg.QAction('&Preview all scans', self, triggered=self.preview_all_scans)
+        auto_align_action = Qg.QAction('Auto &Shift', self, triggered=self.show_auto_align_dialog)
+        correct_charges = Qg.QAction('Correct Charges &All Scans', self, triggered=self.correct_charges)
+        correct_charges_one = Qg.QAction('Correct Charges &One Scan', self, triggered=self.correct_charges_one)
+        auto_fit_action = Qg.QAction('Auto &Fit Sigmoid', self, triggered=self.show_auto_fit_sigmoid_dialog)
         cal_kappa_action = Qg.QAction('&Calculate Kappa', self, triggered=self.show_kappa_params_dialog)
         action_menu.addAction(preview_all_action)
         action_menu.addSeparator()
@@ -121,15 +122,18 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         # Add Help menu
         help_menu = Qg.QMenu("&Help")
         setting_action = Qg.QAction('&Settings', self, triggered=self.show_setting_dialog)
+        # TODO issues/23 User Manual help menu item
+        user_manual_action = Qg.QAction('&User Manual', self, triggered=self.open_user_manual)
+        about_action = Qg.QAction('&About', self, triggered=self.open_about)
         # TODO issues/23 Feedback help menu item
         # feedback_action = Qg.QAction('&Send Feedback', self, triggered=self.submit_feedback)
         # TODO issues/23 Check for Updates help menu item
         # check_for_update_action = Qg.QAction('&Check for Updates', self, triggered=self.submit_feedback)
         # TODO issues/23 Contact Creator help menu item
         # contact_creator_action = Qg.QAction('&Contact Creator', self, triggered=self.submit_feedback)
-        # TODO issues/23 User Manual help menu item
-        # user_manual_action = Qg.QAction('&User Manual', self, triggered=self.submit_feedback)
-        help_menu.addActions([setting_action])
+        help_menu.addActions([setting_action, user_manual_action])
+        help_menu.addSeparator()
+        help_menu.addAction(about_action)
         self.menuBar().addMenu(help_menu)
         return file_menu, action_menu, window_menu
 
@@ -190,7 +194,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         """
         temp_dir = "../../TestData/2019_05_30-Sitin/Analysis"  # TEMP
         # noinspection PyCallByClass
-        files = Qg.QFileDialog.getOpenFileNames(self, "Open file", temp_dir, "Data files (*.csv *.txt)")[0]  # TEMP
+        files = Qg.QFileDialog.getOpenFileNames(self, "Open files", temp_dir, "Data files (*.csv *.txt)")[0]  # TEMP
         if files:
             # read in new files
             self.controller.start(files)
@@ -377,6 +381,32 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         setting_dialog = c_modal_dialogs.SettingDialog(self)
         setting_dialog.exec_()
 
+    def open_about(self):
+        """
+        Launches a webpage that a user can use to submit feedback
+        """
+        # TODO issues/23 https://gitlab.bucknell.edu/nrr004/Chemics/issues/23
+        # noinspection PyCallByClass
+        Qg.QMessageBox.about(self, "About", "Chemics\n\nVersion 2.1.0")
+
+    @staticmethod
+    def open_user_manual():
+        """
+        Launches a webpage that shows the user manual as well as the code documentation
+        """
+        # TODO issues/8 https://gitlab.bucknell.edu/nrr004/Chemics/issues/8
+        # TODO issues/40 https://gitlab.bucknell.edu/nrr004/Chemics/issues/40
+        org_stdout = os.dup(1)
+        org_stderr = os.dup(2)
+        os.close(1)
+        os.close(2)
+        os.open(os.devnull, os.O_RDWR)
+        try:
+            webbrowser.open("https://lilyheart.github.io/chemics_documentation/")
+        finally:
+            os.dup2(org_stdout, 1)
+            os.dup2(org_stderr, 2)
+
     def submit_feedback(self):
         """
         Launches a webpage that a user can use to submit feedback
@@ -406,7 +436,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
               Values screen
         """
         # create left docker
-        scaninfo_docker = Qg.QDockWidget("Scan Information", self)
+        scaninfo_docker = Qg.QDockWidget("Scan &Information", self)
         scan_docker_widget = c_dock_widget.DockerScanInformation(self.controller)
         scaninfo_docker.setWidget(scan_docker_widget)
         scaninfo_docker.setAllowedAreas(Qc.Qt.RightDockWidgetArea | Qc.Qt.LeftDockWidgetArea)
@@ -414,7 +444,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         self.window_menu.addAction(scaninfo_docker.toggleViewAction())
         self.addDockWidget(Qc.Qt.LeftDockWidgetArea, scaninfo_docker)
         # create sigmoid docker
-        sigmoid_docker = Qg.QDockWidget("Sigmoid Parameters", self)
+        sigmoid_docker = Qg.QDockWidget("Sigmoid &Parameters", self)
         sigmoid_docker_widget = c_dock_widget.DockerSigmoidWidget(self.controller)
         sigmoid_docker.setWidget(sigmoid_docker_widget)
         sigmoid_docker.setAllowedAreas(Qc.Qt.RightDockWidgetArea | Qc.Qt.LeftDockWidgetArea)
@@ -423,7 +453,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         self.addDockWidget(Qc.Qt.LeftDockWidgetArea, sigmoid_docker)
         self.tabifyDockWidget(sigmoid_docker, scaninfo_docker)
         # create kappa docker
-        kappa_docker = Qg.QDockWidget("Kappa Values", self)
+        kappa_docker = Qg.QDockWidget("&Kappa Values", self)
         kappa_docker_widget = c_dock_widget.DockerKappaWidget(self.controller, self.kappa_graph)
         kappa_docker.setWidget(kappa_docker_widget)
         kappa_docker.setAllowedAreas(Qc.Qt.RightDockWidgetArea | Qc.Qt.LeftDockWidgetArea)
