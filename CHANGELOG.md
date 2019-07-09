@@ -14,18 +14,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ([#](https://gitlab.bucknell.edu/nrr004/Chemics/issues/))
 -->
 
-## [Unreleased]
+## [2.1.1] - 2019-07-09
 ### Added
 - The name of the folder is stored when opening a new or old project ([#11](https://gitlab.bucknell.edu/nrr004/Chemics/issues/11))
   - For a new project, the parent of the folder of the 
     source files is saved.
   - For an old project, the folder the .chemics file was located
     in is saved.
-- When saving a project or exporting Kappa data, the folder stored from above is presented as the default folder.([#11](https://gitlab.bucknell.edu/nrr004/Chemics/issues/11))
-                            - requirements-linux64.txt for dev environment installs
+- When saving a project or exporting Kappa data, the folder stored from above is presented as the default folder. ([#11](https://gitlab.bucknell.edu/nrr004/Chemics/issues/11))
+- requirements-linux64.txt for dev environment installs
 - Supersaturation to Sigmoid Parameters screen ([#1](https://gitlab.bucknell.edu/nrr004/Chemics/issues/1))
 - Scan identifying information to sigmoid parameters screen ([#17](https://gitlab.bucknell.edu/nrr004/Chemics/issues/17))
-- When chosing to exit, either from the file menu or the main window's exit button, prompt the user if they want to exit or save **if** a run has been started. ([#53](https://gitlab.bucknell.edu/nrr004/Chemics/issues/53))
+- When choosing to exit, either from the file menu or the main window's exit button, prompt the user if they want to exit or save **if** a run has been started. ([#53](https://gitlab.bucknell.edu/nrr004/Chemics/issues/53))
 - Added hover details on Kappa chart ([#19 partial](https://gitlab.bucknell.edu/nrr004/Chemics/issues/19))
   - Hovering over a line tell you which kappa line
   - Hovering over a point tells you the DP50 and supersaturation
@@ -41,7 +41,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changes to Help menu ([#23 Partial](https://gitlab.bucknell.edu/nrr004/Chemics/issues/23))
   - New link to temporary user manual
   - New link to About window to display current version
-      
       
 ### Removed
 - Removed run reset code ([#53](https://gitlab.bucknell.edu/nrr004/Chemics/issues/53))
@@ -62,5 +61,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - Uncoded help menu items disabled ([#23 partial](https://gitlab.bucknell.edu/nrr004/Chemics/issues/23))
 - Select smoothing algorithm removed from opening new project. ([#41](https://gitlab.bucknell.edu/nrr004/Chemics/issues/41))
-                            - Smooth Data removed from Action dropdown menu ([#41](https://gitlab.bucknell.edu/nrr004/Chemics/issues/41))
+- Smooth Data removed from Action dropdown menu ([#41](https://gitlab.bucknell.edu/nrr004/Chemics/issues/41))
 
