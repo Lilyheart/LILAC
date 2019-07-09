@@ -345,7 +345,7 @@ class DockerSigmoidWidget(Qg.QFrame):
         # If there are still dp_widgets
         if len(self.dp_widgets) > 0:
             # RESEARCH This is too hardcoded to be flexible
-            to_del = self.layout().takeAt(len(self.dp_widgets)+6)
+            to_del = self.layout().takeAt(len(self.dp_widgets)+14)
             del self.dp_widgets[-1]
             to_del.widget().deleteLater()
 
@@ -428,7 +428,7 @@ class DockerSigmoidWidget(Qg.QFrame):
         params_group_box.setLayout(v_layout)
         self.dp_widgets.append([begin_rise_dp, end_rise_dp, begin_asymp_dp, end_asymp_dp])
         # RESEARCH Hard code-y values again for first parameter
-        self.layout().insertRow(len(self.dp_widgets)+2, params_group_box)
+        self.layout().insertRow(len(self.dp_widgets)+7, params_group_box)
 
     def apply_sigmoid_params(self):
         """
