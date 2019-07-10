@@ -12,7 +12,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed for now removed features.
 ### Security in case of vulnerabilities.
 ([#](https://gitlab.bucknell.edu/nrr004/Chemics/issues/))
+## [Unreleased]
 -->
+
+## [Unreleased]
+### Changed
+- Updated end asymp for sigmoid to the minimum of 100 or the largest average SMPS diameter
 
 ## [2.1.1] - 2019-07-09
 ### Added

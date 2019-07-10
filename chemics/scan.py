@@ -579,7 +579,7 @@ class Scan(object):
             else:
                 high_index_list = high_index_list[:-1]
         end_rise = self.ave_smps_diameters[top_inflation_index]
-        end_asymp = self.ave_smps_diameters[last_dp_index]
+        end_asymp = min(100.0, self.ave_smps_diameters[last_dp_index])
         self.sigmoid_params.append([begin_rise, end_rise, end_rise, end_asymp])
 
     def helper_get_ratio_corrected_smooth(self):
