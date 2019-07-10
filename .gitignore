@@ -8,11 +8,8 @@
 /sphinx/build
 
 # cython
-/chemics/build/temp**/
-/chemics/build/chemics/
+/chemics/build/chemics_win/
 /chemics/dist/
-# currently don't keep specs but this might change.
-*.spec
 
 # Test Output
 /tests/testdata/*.chemics
