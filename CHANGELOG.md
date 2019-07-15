@@ -17,8 +17,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+### Added
+- Instructions on README on how to use the vulture package to find unused code
+
+### Fixed
+- Kappa Parameters issue ([#65](https://gitlab.bucknell.edu/nrr004/Chemics/issues/65))
+
 ### Changed
-- Sigmoid Fit Algorithm
+- Sigmoid Fit Algorithm ([#42](https://gitlab.bucknell.edu/nrr004/Chemics/issues/42))
 
 
 ## [2.1.2] - 2019-07-10
@@ -26,7 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Instructions in README on how to update version numbers and build on windows.
 
 ### Changed
-- Updated end asymp for sigmoid to the minimum of 100 or the largest average SMPS diameter
+- Updated end asymp for sigmoid to the minimum of 100 or the largest average SMPS diameter ([#62](https://gitlab.bucknell.edu/nrr004/Chemics/issues/62))
 
 ## [2.1.1] - 2019-07-09
 ### Added

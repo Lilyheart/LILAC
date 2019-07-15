@@ -121,27 +121,51 @@ class SelectParamsKappaDialog(Qg.QDialog):
         super(self.__class__, self).__init__()
         self.controller = controller
         self.setWindowTitle("Select parameters for kappa calculation!")
+        # QUESTION - Decimal Places
+        # QUESTION - Max Values
+        # --- Sigma
         self.sigma_spinbox = Qg.QDoubleSpinBox()
-        self.sigma_spinbox.setValue(self.controller.sigma)
+        self.sigma_spinbox.setDecimals(3)
+        self.sigma_spinbox.setMaximum(1)
         self.sigma_spinbox.setButtonSymbols(Qg.QAbstractSpinBox.NoButtons)
+        self.sigma_spinbox.setValue(self.controller.sigma)
+        # --- Temp
         self.temp_spinbox = Qg.QDoubleSpinBox()
-        self.temp_spinbox.setValue(self.controller.temp)
+        self.temp_spinbox.setDecimals(2)
+        self.temp_spinbox.setMaximum(self.controller.temp * 2)
         self.temp_spinbox.setButtonSymbols(Qg.QAbstractSpinBox.NoButtons)
+        self.temp_spinbox.setValue(self.controller.temp)
+        # --- Dry Diameter 1
         self.dd_1_spinbox = Qg.QDoubleSpinBox()
-        self.dd_1_spinbox.setValue(self.controller.dd_1)
+        self.dd_1_spinbox.setDecimals(2)
+        self.dd_1_spinbox.setMaximum(self.controller.dd_1 * 2)
         self.dd_1_spinbox.setButtonSymbols(Qg.QAbstractSpinBox.NoButtons)
+        self.dd_1_spinbox.setValue(self.controller.dd_1)
+        # --- Dry Diameter 2
         self.dd_2_spinbox = Qg.QDoubleSpinBox()
-        self.dd_2_spinbox.setValue(self.controller.dd_2)
+        self.dd_2_spinbox.setDecimals(2)
+        self.dd_2_spinbox.setMaximum(self.controller.dd_1 * 2)
         self.dd_2_spinbox.setButtonSymbols(Qg.QAbstractSpinBox.NoButtons)
+        self.dd_2_spinbox.setValue(self.controller.dd_2)
+        # --- iKappa1
         self.i_kappa_1_spinbox = Qg.QDoubleSpinBox()
+        self.i_kappa_1_spinbox.setDecimals(5)
+        self.i_kappa_1_spinbox.setMaximum(1)
         self.i_kappa_1_spinbox.setValue(self.controller.i_kappa_1)
         self.i_kappa_1_spinbox.setButtonSymbols(Qg.QAbstractSpinBox.NoButtons)
+        # --- iKappa2
         self.i_kappa_2_spinbox = Qg.QDoubleSpinBox()
+        self.i_kappa_2_spinbox.setDecimals(5)
+        self.i_kappa_2_spinbox.setMaximum(self.controller.i_kappa_2 * 2)
         self.i_kappa_2_spinbox.setValue(self.controller.i_kappa_2)
         self.i_kappa_2_spinbox.setButtonSymbols(Qg.QAbstractSpinBox.NoButtons)
+        # --- solubility
         self.solubility_spinbox = Qg.QDoubleSpinBox()
+        self.solubility_spinbox.setDecimals(5)
+        self.solubility_spinbox.setMaximum(1)
         self.solubility_spinbox.setValue(self.controller.solubility)
         self.solubility_spinbox.setButtonSymbols(Qg.QAbstractSpinBox.NoButtons)
+        # -- Layout
         form_layout = Qg.QFormLayout()
         form_layout.addRow(self.tr("&Sigma"), self.sigma_spinbox)
         form_layout.addRow(self.tr("&Temperature"), self.temp_spinbox)
