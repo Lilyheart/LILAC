@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import scipy.optimize
 import scipy.signal
+import sys
 
 import constants as const
 import helper_functions as hf
@@ -94,9 +95,9 @@ def find_derv_peaks(a_scan):
     del index, count, rle
 
     # Compute delta
-    x = hf.smooth(df.corr_cs_ratio, window_length=7, polyorder=2)
-    delta_corr_cs_ratio = np.subtract(x[1:], x[0:-1])
-    delta_logd = np.subtract(df.log_ave_smps_diameters[1:], df.log_ave_smps_diameters[0:-1])
+    x = hf.smooth(df.corr_cs_ratio, window_length=5, polyorder=1)
+    delta_corr_cs_ratio = np.subtract(x[1:], x[:-1])
+    delta_logd = np.subtract(df.log_ave_smps_diameters[1:], df.log_ave_smps_diameters[:-1])
     delta = np.divide(delta_corr_cs_ratio, delta_logd)
     delta = hf.smooth(delta, window_length=15, polyorder=2)
 
@@ -177,11 +178,19 @@ def logistic_fit_func(xx, x_0, curve_max, k, y_0):
     """
     with np.errstate(all='raise'):
         try:
-            result = curve_max / (1.0 + np.exp(-k * (xx - x_0))) + y_0
-            return result
+            eulers = -k * (xx - x_0)
+            if isinstance(xx, pd.Series):
+                for i, v in eulers.items():
+                    eulers[i] = min(np.log(sys.float_info.max), v)
+                    eulers[i] = max(np.log(sys.float_info.min), eulers[i])
+            else:
+                eulers = min(np.log(sys.float_info.max), eulers)
+                eulers = max(np.log(sys.float_info.min), eulers)
+            return curve_max / (1.0 + np.exp(eulers)) + y_0
         except Exception as ee:
             if isinstance(xx, pd.Series):
-                raise RuntimeWarning("logistic_fit_func series: Unhandled RuntimeWarning (%s)" % str(ee))
+                raise RuntimeWarning("logistic_fit_func series: Unhandled RuntimeWarning with "
+                                     "(-%.4f * (xx - %.4f) (%s)" % (k, x_0, str(ee)))
             else:
                 if str(ee).startswith("overflow encountered in exp"):
                     raise OverflowError("logistic_fit_func: exp overflow with (-%.4f * (%.4f - %.4f))" % (k, xx, x_0))
