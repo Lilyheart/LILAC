@@ -13,7 +13,9 @@ import re
 import time
 
 # Internal Packages
-import auto_shift_algorithm
+from algorithm import auto_shift
+from algorithm import sigmoid_fit
+
 import constants as const
 import data.kCal
 import helper_functions as hf
@@ -185,7 +187,7 @@ class Controller(object):
         for i in range(len(self.scans)):
             a_scan = self.scans[i]
             self.view.update_progress_bar(100 * (i + 1) // len(self.scans))
-            shift_factor = auto_shift_algorithm.get_auto_shift(a_scan.raw_smps_counts, a_scan.raw_ccnc_counts)
+            shift_factor = auto_shift.get_auto_shift(a_scan.raw_smps_counts, a_scan.raw_ccnc_counts)
             self.scans[i].set_shift_factor(shift_factor)
             self.scans[i].generate_processed_data()
         self.view.close_progress_bar()
@@ -225,8 +227,20 @@ class Controller(object):
         self.view.init_progress_bar("Auto fitting sigmoid...")
         for i in range(len(self.scans)):
             self.view.update_progress_bar(100 * (i + 1) // len(self.scans))
-            self.scans[i].cal_params_for_sigmoid_fit()
-            self.scans[i].fit_sigmoids()
+
+            a_scan = self.scans[i]
+            if a_scan.status_code == 0:
+                try:
+                    sigmoid_fit.get_sigmoid_info(a_scan)
+                except NotImplementedError as e:
+                    print("Scan: %d - NotImplementedError: %s" % (i, str(e)))  # TEMP
+                except OverflowError as e:
+                    print("Scan: %d - OverflowError: %s" % (i, str(e)))  # TEMP
+                except RuntimeWarning as e:
+                    print("Scan: %d - RuntimeWarning Error: %s" % (i, str(e)))  # TEMP
+                except RuntimeError as e:
+                    print("Scan: %d - RuntimeError Error: %s" % (i, str(e)))  # TEMP
+
         self.view.close_progress_bar()
         self.switch_to_scan(0)
 
@@ -257,8 +271,8 @@ class Controller(object):
             if not a_scan.is_valid() or a_scan.true_super_sat is None:
                 continue
             ss = a_scan.true_super_sat
-            for j in range(len(a_scan.dps)):
-                dp_50 = a_scan.dps[j][0]
+            for j in range(len(a_scan.dp50)):
+                dp_50 = a_scan.dp50[j]
                 ss_and_dps.append([ss, dp_50])
         for i in range(len(ss_and_dps)):
             ss = float(ss_and_dps[i][0])

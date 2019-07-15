@@ -100,6 +100,8 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         file_menu.addActions([open_action, save_action, save_as_action, export_data_action])
         file_menu.addSeparator()
         file_menu.addAction(exit_action)
+        export_scans = Qg.QAction('Export Scans', self, triggered=self.export_scans)  # TEMP
+        file_menu.addAction(export_scans)  # TEMP
         self.menuBar().addMenu(file_menu)
         # Add action menu
         action_menu = Qg.QMenu("&Actions")
@@ -125,11 +127,6 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         user_manual_action = Qg.QAction('&User Manual', self, triggered=self.open_user_manual)
         about_action = Qg.QAction('&About', self, triggered=self.open_about)
         # TODO issues/23 Feedback help menu item
-        # feedback_action = Qg.QAction('&Send Feedback', self, triggered=self.submit_feedback)
-        # TODO issues/23 Check for Updates help menu item
-        # check_for_update_action = Qg.QAction('&Check for Updates', self, triggered=self.submit_feedback)
-        # TODO issues/23 Contact Creator help menu item
-        # contact_creator_action = Qg.QAction('&Contact Creator', self, triggered=self.submit_feedback)
         help_menu.addActions([setting_action, user_manual_action])
         help_menu.addSeparator()
         help_menu.addAction(about_action)
@@ -191,10 +188,10 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         """
         Opens data files and begins the scan alignment process
         """
-        # temp_dir = "../../TestData/2019_05_30-Sitin/Analysis"  # TEMP
+        temp_dir = "../../TestData/O3 (150), VOC (150), TRIAL 11 at 500 cc amd 4 SS/Analysis"  # TEMP
         # noinspection PyCallByClass
-        # files = Qg.QFileDialog.getOpenFileNames(self, "Open files", temp_dir, "Data files (*.csv *.txt)")[0]  # TEMP
-        files = Qg.QFileDialog.getOpenFileNames(self, "Open files", "", "Data files (*.csv *.txt)")[0]
+        files = Qg.QFileDialog.getOpenFileNames(self, "Open files", temp_dir, "Data files (*.csv *.txt)")[0]  # TEMP
+        # files = Qg.QFileDialog.getOpenFileNames(self, "Open files", "", "Data files (*.csv *.txt)")[0]
         if files:
             # read in new files
             self.controller.start(files)
@@ -205,10 +202,10 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
 
         See :class:`~controller.Controller.save_project` in the Controller class.
         """
-        # temp_dir = "../../TestData"  # TEMP
+        temp_dir = "../../TestData/Saved Chemics Files"  # TEMP
         # noinspection PyCallByClass
-        # run_file = Qg.QFileDialog.getOpenFileName(self, "Open file", temp_dir, "Project files (*.chemics)")[0] # TEMP
-        run_file = Qg.QFileDialog.getOpenFileName(self, "Open file", "", "Project files (*.chemics)")[0]
+        run_file = Qg.QFileDialog.getOpenFileName(self, "Open file", temp_dir, "Project files (*.chemics)")[0]  # TEMP
+        # run_file = Qg.QFileDialog.getOpenFileName(self, "Open file", "", "Project files (*.chemics)")[0]
         if run_file:
             # read in new files
             self.controller.load_project(run_file)
@@ -277,6 +274,13 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         elif dialog.clickedButton() == save_button:
             self.save_project()
             app.quit()
+
+    def export_scans(self):  # TEMP
+        """
+        # REVIEW Documentation
+        """
+        filename = os.path.basename(os.path.normpath(self.controller.project_folder)) + "-exported"
+        self.controller.export_scans(filename)
 
     # Action menu items
 
@@ -384,7 +388,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
 
     def open_about(self):
         """
-        Launches a webpage that a user can use to submit feedback
+        Shows dialog box that displays current Chemics version.
         """
         # TODO issues/23 https://gitlab.bucknell.edu/nrr004/Chemics/issues/23
         # noinspection PyCallByClass
@@ -407,14 +411,6 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         finally:
             os.dup2(org_stdout, 1)
             os.dup2(org_stderr, 2)
-
-    def submit_feedback(self):
-        """
-        Launches a webpage that a user can use to submit feedback
-        """
-        # TODO issues/23 https://gitlab.bucknell.edu/nrr004/Chemics/issues/23
-        # webbrowser.open("https://goo.gl/forms/X9OB6AQSJSiKScBs2")
-        pass
 
     ##############################
     # Create Widgets and Dockers #
@@ -554,6 +550,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         :param str err_type: The type of error
         """
         # RESEARCH Unused?
+        # Once used: update docstring and ../configs/vulture_whitelist.py
         (title, text, subtext) = (None, None, None)
         # Get text information for message box
         if err_type == "no_data":
@@ -592,7 +589,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         # DOCQUESTION English?
         # TODO issues/30  New Counts2ConcConv formula
         # noinspection PyCallByClass
-        cc = Qg.QInputDialog.getDouble(self, "Counts2ConcConv", "Counts2ConcConv", decimals=2)
+        cc = Qg.QInputDialog.getDouble(self, "Counts2ConcConv", "Counts2ConcConv", value=1.2, decimals=2)
         if cc[1]:
             return float(cc[0])
         else:
@@ -660,6 +657,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         :class:`~custom.docker_widget.DockerScanInformation` custom docker_widget.
         """
         self.scaninfo_docker_widget.update_experiment_info()
+        self.sigmoid_docker_widget.update_experiment_info()
 
     def update_scan_info_and_graphs(self):
         """

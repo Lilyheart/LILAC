@@ -3,10 +3,10 @@ This class creates a scan object stores the data from a single scan.
 """
 # External Packages
 import numpy as np
-import scipy.optimize as opt
 import scipy.stats
 
 # Internal Packages
+from algorithm import sigmoid_fit
 import constants as const
 import fast_dp_calculator as fast_dp_calculator
 import helper_functions as hf
@@ -16,7 +16,12 @@ class Scan(object):
     """
     This class creates a scan object stores the data from a single scan.
 
-        The following variables are stored:  # RESEARCH Confirm variable descriptions
+    Raw: Original Data
+    Processed: Data after shifts are processed
+    Corrected: Data after charge corrections
+    Cleaned: Data after sigmoid cleaning
+
+    The following variables are stored:  # RESEARCH Confirm variable descriptions
 
         - **status**: status of the scan
         - **status_code**: The reason why the scan is not good
@@ -27,38 +32,7 @@ class Scan(object):
         - **duration**: duration of the scan
         - **scan_up_time**: up and down scan time. Very useful to align the data
         - **scan_down_time**:
-        - **raw_super_sats**: the list of super saturation rate.
-        - **raw_T1s**: T1 Read
-        - **raw_T2s**: T2 Read
-        - **raw_T3s**: T3 Read
-        - **raw_smps_counts**: SMPS and CCNC counts. SMPS count is calculated from smps file and ccnc count is
-          calculated from ccnc file
-        - **raw_ccnc_counts**:
-        - **raw_ave_ccnc_sizes**: calculated average size of ccnc particles from ccnc file
-        - **raw_normalized_concs**: normalized concentration. Also called dN/dlogDp.
-        - **diameter_midpoints**: diameter midpoints.
-        - **ave_smps_diameters**: ave diameter from smps file
-        - **shift_factor**:
-        - **processed_smps_counts**:  Processed data. Since we only need a portion of the raw data and work with it,
-          we don't use all the raw data.  Furthermore, we need to perform certain processing techniques on the data
-        - **processed_ccnc_counts**:
-          we don't use all the raw data.  Furthermore, we need to perform certain processing techniques on the data
-        - **processed_T1s**:
-        - **processed_T2s**:
-        - **processed_T3s**:
-        - **processed_super_sats**:
-        - **true_super_sat**:
-        - **processed_ave_ccnc_sizes**:
-        - **processed_normalized_concs**:
-        - **corrected_smps_counts**: smps and ccnc data after we correct for the charges
-        - **corrected_ccnc_counts**:
-        - **sigmoid_params**: necessary parameters for sigmoid fit.  the main reason we need this is because we have to
-          handle fitting in two sigmoid lines [begin rise. end rise, begin asymp, end asymp]
-        - **functions_params**: b,d and c
-        - **dps**: dps of interest: dp50, dp50wet, dp50+20
-        - **sigmoid_y_vals**: sigmoid line y values
-        - **asym_limits**:  the asym limits to fit sigmoid lines and predict params for sigmoid line.
-          the reason we need a class variable for this is because we use them for two different functions.
+        - etc... # REVIEW Documentation
 
     :param int index: The scan number from the SMPS file.  # TODO issues/4 [Current is sequential #s from zero]
 
@@ -67,6 +41,8 @@ class Scan(object):
     def __init__(self, index):
         # TODO issues/45 combine status and code into one
         # DOCQUESTION / RESEARCH duration = scan_up_time + scan_down_time; end time is start_time+duration. Neccessary?
+        # Controller#start.create_scans()
+        self.version = "2.1.2"
         self.status = 1
         self.status_code = 0
         self.counts_to_conc = 0.0
@@ -74,19 +50,24 @@ class Scan(object):
         self.start_time = None
         self.end_time = None
         self.duration = 0
-        self.scan_up_time = 0  # RESEARCH Unused
-        self.scan_down_time = 0  # RESEARCH Unused
+        self.scan_up_time = 0
+        self.scan_down_time = 0
+        # Controller#start.get_smps_counts()
+        self.raw_normalized_concs = []
+        self.diameter_midpoints = []
+        # Controller#start.get_smps_counts()
+        self.raw_smps_counts = []
+        self.ave_smps_diameters = []
+        # Controller#start.get_ccnc_counts()
         self.raw_super_sats = []
         self.raw_T1s = []
         self.raw_T2s = []
         self.raw_T3s = []
-        self.raw_smps_counts = []
         self.raw_ccnc_counts = []
         self.raw_ave_ccnc_sizes = []
-        self.raw_normalized_concs = []
-        self.diameter_midpoints = []
-        self.ave_smps_diameters = []
+        # Scan#align_smps_ccnc_data
         self.shift_factor = 0
+        # Scan#generate_processed_data
         self.processed_smps_counts = []
         self.processed_ccnc_counts = []
         self.processed_T1s = []
@@ -96,17 +77,22 @@ class Scan(object):
         self.true_super_sat = 0
         self.processed_ave_ccnc_sizes = []
         self.processed_normalized_concs = []
+        # Scan#correct_charges
         self.corrected_smps_counts = []
         self.corrected_ccnc_counts = []
-        self.sigmoid_params = []
-        self.functions_params = []
-        self.dps = []
-        self.sigmoid_y_vals = []
-        self.asym_limits = [0.75, 1.5]  # RESEARCH Magic number  RESEARCH get from controller?
 
-        self.index_in_ccnc_data = 0  # RESEARCH Unused now?
-        self.ref_index_smps = 0  # RESEARCH Unused now?
-        self.ref_index_ccnc = 0  # RESEARCH Unused now?
+        # RESEARCH Following variables for continued use
+        # TODO issues/10
+        # Controller#auto_fit_sigmoid
+        self.sig_df = ""  # TODO issues/64  Will be unneccessary after dataframe switch
+        self.sig_peaks_indices = []
+        self.sig_selection = []
+        self.sigmoid_params = []
+        self.dp50 = []
+        self.sigmoid_curve_x = []
+        self.sigmoid_curve_y = []
+
+        self.asym_limits = [0.75, 1.5]  # RESEARCH Magic number  RESEARCH get from controller?
 
     def __repr__(self):
         """
@@ -513,110 +499,6 @@ class Scan(object):
         self.corrected_smps_counts = corrected_smps
         self.corrected_ccnc_counts = corrected_ccnc
 
-    def cal_params_for_sigmoid_fit(self):
-        """
-        # REVIEW Documentation
-        """
-        # COMBAKL Sigmoid
-        while True:
-            # noinspection PyBroadException
-            try:
-                self.cal_params_for_sigmoid_fit_single_loop()
-                break
-            except Exception:  # RESEARCH error logging to determine what causes
-                # widen the gap between the limits so that we can cover a larger area
-                self.asym_limits = [self.asym_limits[0] - 0.1, self.asym_limits[1] + 0.1]
-
-    def cal_params_for_sigmoid_fit_single_loop(self):
-        """
-        # REVIEW Documentation
-        """
-        # COMBAKL Sigmoid
-        if not self.is_valid():
-            return
-        # Create clean lists
-        self.sigmoid_params = []
-        self.functions_params = []
-        self.dps = []
-        self.sigmoid_y_vals = []
-        # Obtain an approximate ratio
-        ratio_corrected = self.helper_get_ratio_corrected_smooth()
-        # next, find min_dp by finding first point where all points before it are less than 0.1, with an error of 5%
-        begin_rise = 0
-        # Get the bottom inflation point. Great!
-        for i in range(len(ratio_corrected) - 1, 1, -1):
-            value = ratio_corrected[i]
-            pre_values = ratio_corrected[:i]
-            pre_percent = hf.cal_percentage_less(pre_values, value, 0.05)
-            if value < 0.15 and pre_percent > 0.80:
-                begin_rise = self.ave_smps_diameters[i]
-                break
-        # Get the top inflation point
-        # -- get the top 10% of the data
-        high_index_list = []
-        for i in range(len(ratio_corrected)):
-            if self.asym_limits[0] <= ratio_corrected[i] <= self.asym_limits[1]:
-                high_index_list.append(i)
-        high_list = ratio_corrected[high_index_list]
-        high_index_list = hf.outliers_iqr(high_list, high_index_list)
-        # if the return is an error/meaning we can't detect any outliers  # TODO issues/40 Better error handling
-        # then we simply get the highest possible value from the array
-        if high_index_list == -1:
-            high_index_list = np.argmax(ratio_corrected)
-        high_index_list = np.sort(high_index_list)
-        # next, remove outliers
-        top_inflation_index = high_index_list[0]
-        last_dp_index = high_index_list[-1]
-        # now, chose the last dp so that the std of the remaining data is within 0.1
-        while True:
-            if len(high_index_list) <= 2:
-                break
-            last_dp_index = high_index_list[-1]
-            interested_list = ratio_corrected[top_inflation_index:last_dp_index]
-            std = np.std(interested_list)
-            if std <= (self.asym_limits[1] - self.asym_limits[0]) / 2:
-                break
-            else:
-                high_index_list = high_index_list[:-1]
-        end_rise = self.ave_smps_diameters[top_inflation_index]
-        end_asymp = min(100.0, self.ave_smps_diameters[last_dp_index])
-        self.sigmoid_params.append([begin_rise, end_rise, end_rise, end_asymp])
-
-    def helper_get_ratio_corrected_smooth(self):
-        """
-        # REVIEW Documentation
-
-        :return: # REVIEW Documentation
-        :rtype: # REVIEW Documentation
-        """
-        # COMBAKL Sigmoid
-        ratio_corrected = []
-        ccnc = self.corrected_ccnc_counts
-        smps = self.corrected_smps_counts
-        # Smooth the corrections
-        ccnc = hf.heavy_smooth(ccnc)
-        smps = hf.heavy_smooth(smps)
-        is_the_beginning = True
-        # Take care of the case where there can be unreasonable ccnc data at the beginning
-        for i in range(len(self.corrected_smps_counts)):
-            if smps[i] > max(smps) // 20:
-                is_the_beginning = False
-            if is_the_beginning:
-                ratio_corrected.append(0)
-            else:
-                ratio_corrected.append(hf.safe_div(ccnc[i], smps[i]))
-        ratio_corrected = ratio_corrected[:len(self.ave_smps_diameters)]
-        # Smooth the data
-        ratio_corrected = hf.heavy_smooth(ratio_corrected)
-        # Remove huge data points
-        for i in range(len(ratio_corrected)):
-            if ratio_corrected[i] > self.asym_limits[1]:
-                if i > 0:
-                    ratio_corrected[i] = ratio_corrected[i - 1]
-                else:
-                    ratio_corrected[i] = 0
-        return ratio_corrected
-
     def fit_sigmoids(self):
         """
         # REVIEW Documentation
@@ -624,99 +506,4 @@ class Scan(object):
         # COMBAKL Sigmoid
         if not self.is_valid():
             return
-        self.functions_params = []
-        self.sigmoid_y_vals = []
-        self.dps = []
-        for i in range(len(self.sigmoid_params)):
-            self.fit_one_sigmoid(i)
-
-    def fit_one_sigmoid(self, params_set_index):
-        """
-        # REVIEW Documentation
-
-        :param params_set_index: # REVIEW Documentation
-        :type params_set_index: # REVIEW Documentation
-        """
-        # COMBAKL Sigmoid
-        begin_rise = self.sigmoid_params[params_set_index][0]
-        end_rise = self.sigmoid_params[params_set_index][1]
-        begin_asymp = self.sigmoid_params[params_set_index][2]
-        end_asymp = self.sigmoid_params[params_set_index][3]
-        ratio_corrected = hf.safe_div_array(self.corrected_ccnc_counts, self.corrected_smps_counts)
-        # smooth the hell out of the data
-        ratio_corrected = hf.heavy_smooth(ratio_corrected)
-        # get b
-        ave_list = []
-        for i in range(len(self.ave_smps_diameters)):
-            if begin_asymp < self.ave_smps_diameters[i] < end_asymp and self.asym_limits[0] < ratio_corrected[i] < \
-                    self.asym_limits[1]:
-                ave_list.append(ratio_corrected[i])
-        b = hf.get_ave_none_zero(ave_list)
-        if not self.asym_limits[0] <= b <= self.asym_limits[1]:
-            b = 1
-
-        def fn(x, dd, cc):
-            """
-            # REVIEW Documentation the function for which we will fit the sigmoid line for
-            # RESEARCH Better variable names and function name
-
-            :param x:
-            :type x:
-            :param dd:
-            :type dd:
-            :param cc:
-            :type cc:
-            :return:
-            :rtype:
-            """
-            # COMBAKL Sigmoid
-            return b / (1 + (x / dd) ** cc)
-
-        x_list = []
-        y_list = []
-        # get all data points on the rise
-        for i in range(len(self.ave_smps_diameters)):
-            if begin_rise < self.ave_smps_diameters[i] < end_rise:
-                x_list.append(self.ave_smps_diameters[i])
-                y_list.append(ratio_corrected[i])
-        # get all data points on the asymp
-        for i in range(len(self.ave_smps_diameters)):
-            if begin_asymp < self.ave_smps_diameters[i] < end_asymp:
-                x_list.append(self.ave_smps_diameters[i])
-                y_list.append(ratio_corrected[i])
-        x_list = np.asarray(x_list)
-        y_list = np.asarray(y_list)
-        # noinspection PyBroadException
-        try:
-            # RESEARCH OptimizeWarning: Covariance of the parameters could not be estimated category=OptimizeWarning)
-            result = opt.curve_fit(fn, x_list, y_list, bounds=([begin_rise, -200], [end_asymp + 1, -1]), method="trf")
-            d = result[0][0]
-            c = result[0][1]
-        except Exception:  # RESEARCH error logging to determine what causes
-            d = 60
-            c = -2
-        self.functions_params.append([b, d, c])
-        dp_50 = d
-        dp_50_wet = 0
-        dp_50_20_wet = 0
-        # find dp50 and dp50 wet
-        for i in range(1, len(self.ave_smps_diameters)):
-            if self.ave_smps_diameters[i] > d:
-                dp_50_wet = self.processed_ave_ccnc_sizes[i - 1]
-                break
-        # find dp50 +20 (wet)
-        for i in range(1, len(self.ave_smps_diameters)):
-            if self.ave_smps_diameters[i] > d + 20:
-                dp_50_20_wet = self.processed_ave_ccnc_sizes[i - 1]
-                break
-        sigmoid_points = [0]
-        for i in range(1, len(self.ave_smps_diameters)):
-            if begin_rise <= self.ave_smps_diameters[i] <= end_asymp:
-                sigmoid_points.append(fn(self.ave_smps_diameters[i], d, c))
-            else:
-                sigmoid_points.append(sigmoid_points[i - 1])
-        self.sigmoid_y_vals.append(sigmoid_points)
-        dp_50 = round(dp_50, 3)
-        dp_50_wet = round(dp_50_wet, 3)
-        dp_50_20_wet = round(dp_50_20_wet, 3)
-        self.dps.append([dp_50, dp_50_wet, dp_50_20_wet])
+        sigmoid_fit.get_all_fit_curves(self)

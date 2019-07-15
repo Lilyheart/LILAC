@@ -20,3 +20,12 @@ HIGH_SMPS_WEIGHT = 1
 #: Used during calculating the shift amount in a scan.  The total area between SMPS and CCNC data, when the CCNC data
 # is greater, is multipled by this weight.  This value was determined empirically.
 HIGH_CCNC_WEIGHT = 2.2
+
+#:
+SIGMOID_MIN_DIAMETER = 9.0
+SIGMOID_MAX_DIAMETER = 200.0
+SIGMOID_ZERO_COUNT_THRESH = 0.01
+SIGMOID_MIN_VALID_RATIO = 0.0
+SIGMOID_MAX_VALID_RATIO = 1.2
+SIGMOID_MIN_PEAK_PROMINENCE = 0.75
+SIGMOID_MIN_PEAK_WIDTH = 4

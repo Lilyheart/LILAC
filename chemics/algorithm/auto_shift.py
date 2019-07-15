@@ -2,10 +2,12 @@
 Tests the automatically shifting algorithm which matches the SMPS and CCNC data
 Version 2.0
 """
-import constants as const
 import numpy as np
 import scipy.signal
 import warnings
+
+import constants as const
+import helper_functions as hf
 
 
 def get_auto_shift(smps_count, ccnc_count):
@@ -22,13 +24,9 @@ def get_auto_shift(smps_count, ccnc_count):
     high_ccnc_weight = const.HIGH_CCNC_WEIGHT
 
     # RESEARCH best way?
-    with warnings.catch_warnings():
-        warnings.simplefilter(action="ignore", category=FutureWarning)
-        smooth_smps_count = scipy.signal.savgol_filter(smps_count, 7, 2)
+    smooth_smps_count = hf.smooth(smps_count, window_length=7, polyorder=2)
 
-    with warnings.catch_warnings():
-        warnings.simplefilter(action="ignore", category=FutureWarning)
-        smooth_ccnc_count = scipy.signal.savgol_filter(ccnc_count, 7, 2)
+    smooth_ccnc_count = hf.smooth(ccnc_count, window_length=7, polyorder=2)
 
     # Get peak information
     # RESEARCH better peak method?

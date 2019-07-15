@@ -15,7 +15,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.1.2] - 2019-07-10
 -->
 
+
+## [Unreleased]
+### Changed
+- Sigmoid Fit Algorithm
+
+
 ## [2.1.2] - 2019-07-10
+### Added 
+- Instructions in README on how to update version numbers and build on windows.
+
 ### Changed
 - Updated end asymp for sigmoid to the minimum of 100 or the largest average SMPS diameter
 

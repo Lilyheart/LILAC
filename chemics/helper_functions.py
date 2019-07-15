@@ -137,22 +137,6 @@ def safe_div(x, y):
     return 0 if y == 0 else x / y
 
 
-def safe_div_array(l1, l2):
-    """
-    Divides the values in two arrays. # REVIEW Documentation
-
-    :param list[float] l1: The list containing the numerators.
-    :param list[float] l2: The list containing the denominators.
-    :return:
-    :rtype: list[float]
-    """
-    length = min(len(l1), len(l2))
-    result_list = []
-    for i in range(length):
-        result_list.append(safe_div(l1[i], l2[i]))
-    return result_list
-
-
 def normalize_dndlogdp_list(a_list):  # DOCQUESTION naming again
     """
     Normalize the data is a_list by finding the max value of the values in the list while ignoring the first 5 values.
@@ -170,49 +154,6 @@ def normalize_dndlogdp_list(a_list):  # DOCQUESTION naming again
         if a_list[x]:
             a_list[x] /= max_value
     return np.asarray(a_list)
-
-
-def cal_percentage_less(a_list, value, min_diff):
-    """
-    # REVIEW Documentation
-    # RESEARCH Better Function name
-
-    :param a_list:
-    :type a_list:
-    :param value:
-    :type value:
-    :param min_diff:
-    :type min_diff:
-    :return:
-    :rtype:
-    """
-    # COMBAKL Sigmoid
-    count = 0
-    for a_val in a_list:
-        if value > a_val or abs(value - a_val) < min_diff:
-            count += 1
-    return safe_div(count, len(a_list))
-
-
-def get_ave_none_zero(a_list):
-    """
-    # REVIEW Documentation
-
-    :param list[float] a_list:
-    :return:
-    :rtype: float
-    """
-    # COMBAKL Sigmoid
-    sum_val = 0
-    count = 0
-    for i in a_list:
-        if i != 0:
-            sum_val += i
-            count += 1
-    if count != 0:
-        return sum_val / count
-    else:
-        return 0
 
 
 ############################
@@ -283,7 +224,7 @@ def resolve_small_ccnc_vals(ccnc_vals):
     return ccnc_vals
 
 
-def smooth(a_list):
+def smooth(a_list, window_length, polyorder):
     """
     Takes a list and smooths it using a Savitzky-Golay filter.  If an error occurs, the original list is returned.
 
@@ -293,43 +234,23 @@ def smooth(a_list):
     - The order of the polynomial used to fit the samples: 2
 
     :param list[float] a_list: The list to smooth
+    :param int window_length: The length of the filter window (i.e. the number of coefficients).
+                              `window_length` must be a positive odd integer. If `mode` is 'interp',
+                              `window_length` must be less than or equal to the size of `x`.
+    :param int polyorder: The order of the polynomial used to fit the samples.
+                          `polyorder` must be less than `window_length`.
     :return: The smoothed list if it could be smoothed
-    :rtype: list[float]
+    :rtype: ndarray
     """
-    # TODO issues/48 if a_list is short than 5, there will be an error
+    # TODO issues/48 if a_list is short than 5, there will be an error - Put in tests for all the restrictions above
     # noinspection PyBroadException
     try:
         with warnings.catch_warnings():
             warnings.simplefilter(action="ignore", category=FutureWarning)
-            a_list = scipy.signal.savgol_filter(a_list,  5, 2)
+            a_list = scipy.signal.savgol_filter(a_list,  window_length, polyorder)
         # TODO issues/49 FutureWarning: Using a non-tuple sequence for multidimensional indexing is deprecated;
         # use `arr[tuple(seq)]` instead of `arr[seq]`. In the future this will be interpreted as an array
         # index, `arr[np.array(seq)]`, which will result either in an error or a different result.  = a[a_slice]
-    except Exception:  # TODO issues/40 error logging to determine what causes
-        pass
-    return a_list
-
-
-def heavy_smooth(a_list):
-    """
-    Takes a list and smooths it using a Savitzky-Golay filter.  If an error occurs, the original list is returned.
-
-    Filter settings are:
-
-    - The length of the filter window: 15
-    - The order of the polynomial used to fit the samples: 2
-
-    :param list[float] a_list: The list to smooth
-    :return: The smoothed list if it could be smoothed
-    :rtype: list[float]
-    """
-    # TODO issues/48 if a_list is short than 15, there will be an error
-    # noinspection PyBroadException
-    try:
-        # TODO issues/49
-        with warnings.catch_warnings():
-            warnings.simplefilter(action="ignore", category=FutureWarning)
-            a_list = scipy.signal.savgol_filter(a_list, 15, 2)
     except Exception:  # TODO issues/40 error logging to determine what causes
         pass
     return a_list
@@ -371,33 +292,6 @@ def get_correct_num(a_list, number, bigger=True):
         else:
             num = a_list[i]
     return a_list[-1], len(a_list) - 1
-
-
-def outliers_iqr(value_array, index_array):
-    """
-    Determines the outliers of an array.  If none, returns -1
-    # REVIEW Documentation
-
-    :param list[float] value_array: # REVIEW Documentation
-    :param list[float] index_array: # REVIEW Documentation
-    :return: returns a list of outliers if they exist, otherwise it returns -1
-    :rtype: list[float]|int
-    """
-    # COMBAKL Sigmoid
-    # RESEARCH better return or use Exception handling etc
-    # noinspection PyBroadException
-    try:
-        quartile_1, quartile_3 = np.percentile(value_array, [25, 75])
-        iqr = quartile_3 - quartile_1
-        lower_bound = quartile_1 - (iqr * 1.25)
-        upper_bound = quartile_3 + (iqr * 1.25)
-        indexes = []
-        for i in range(len(value_array)):
-            if lower_bound <= value_array[i] <= upper_bound:
-                indexes.append(index_array[i])
-        return indexes
-    except Exception:  # TODO issues/40 error logging to determine what causes
-        return -1
 
 
 class CustomUnpickler(object, pickle.Unpickler):

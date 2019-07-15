@@ -7,7 +7,7 @@ from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from StringIO import StringIO
+import StringIO
 
 # Internal Packages
 import data.klines
@@ -96,7 +96,7 @@ class ConcOverTimeSmoothGraph(FigureCanvas):
         smps_counts = smps_counts[:num_data_pts]
         ccnc_counts = ccnc_counts[:num_data_pts]
         # Smooth the CCNC data
-        ccnc_counts = hf.smooth(ccnc_counts)
+        ccnc_counts = hf.smooth(ccnc_counts, window_length=5, polyorder=2)
         # set new data
         x_axis = np.arange(num_data_pts)
         self.smps_points.set_xdata(x_axis)
@@ -181,7 +181,9 @@ class RatioOverDiameterGraph(FigureCanvas):
         self.ccn_cn_ratio_corrected_points, = self.ax.plot([0], [0], 'o', label="CCNC/SMPS corrected")
         self.normalized_conc, = self.ax.plot([0], [0], label="normalized conc (dNdlogDp)")
         self.sigmoid_lines = []
+        self.sigmoid_cross_lines = []
         self.ax.axhline(1, linestyle='dashed')
+        self.ax.axhline(0.5, color="gray")
         self.ax.legend()
         # plot graph
         plt.tight_layout()
@@ -232,12 +234,16 @@ class RatioOverDiameterGraph(FigureCanvas):
         # -- Remove old lines
         for i in range(len(self.sigmoid_lines)):
             self.ax.lines.remove(self.sigmoid_lines[i])
+            self.ax.lines.remove(self.sigmoid_cross_lines[i])
         # -- Determine new lines
-        sigmoid_y_vals = a_scan.sigmoid_y_vals
+        sigmoid_y_vals = a_scan.sigmoid_curve_y
         self.sigmoid_lines = []
+        self.sigmoid_cross_lines = []
         for i in range(len(sigmoid_y_vals)):
-            y_vals = sigmoid_y_vals[i]
-            self.sigmoid_lines.append(self.ax.plot(ave_smps_dp, y_vals, label="Sigmoid Line #" + str(i + 1))[0])
+            cross = np.interp(.5, a_scan.sigmoid_curve_y[i], a_scan.sigmoid_curve_x[i])
+            self.sigmoid_cross_lines.append(self.ax.axvline(cross, color='grey'))
+            self.sigmoid_lines.append(self.ax.plot(a_scan.sigmoid_curve_x[i], a_scan.sigmoid_curve_y[i],
+                                                   label="Sigmoid Line #" + str(i))[0])
         # Other graph details
         self.ax.legend()
         self.draw()
@@ -257,7 +263,7 @@ class KappaGraph(FigureCanvas):
         self.ax.set_ylabel("Super Saturation(%)")
         self.ax.legend()
         # set up klines  # TODO See if csv file is an issue for standalone exe
-        self.klines_data = pd.read_csv(StringIO(data.klines.csv_codes), header=1)
+        self.klines_data = pd.read_csv(StringIO.StringIO(data.klines.csv_codes), header=1)
         self.header = self.klines_data.columns
         self.klines_diameters = self.klines_data[self.header[1]]
         # set up empty data lines

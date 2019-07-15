@@ -324,15 +324,22 @@ class DockerSigmoidWidget(Qg.QFrame):
         # Set up for current scan's parameters
         self.num_sigmoid_lines = 0
         sigmoid_params = curr_scan.sigmoid_params
-        dp_params = curr_scan.dps
+        dp50s = curr_scan.dp50
         # For each set of sigmoid parameters, create a widget and increase num_of_sigmoid_lines by one
         for i in range(len(sigmoid_params)):
             a_sigmoid_param = sigmoid_params[i]
             a_dp_param = None
             # If dp parameters already exist, set with known values
-            if i < len(dp_params):
-                a_dp_param = dp_params[i]
+            if i < len(dp50s):
+                a_dp_param = dp50s[i]
             self.add_params_group_box(a_sigmoid_param, a_dp_param)
+
+    def update_experiment_info(self):
+        """
+        Updates the experiment information section of the Sigmoid Parameters widget
+        """
+        # Update the values
+        self.experiment_date.setText(self.controller.experiment_date)
 
     def rem_params_group_box(self):
         """
@@ -349,84 +356,60 @@ class DockerSigmoidWidget(Qg.QFrame):
             del self.dp_widgets[-1]
             to_del.widget().deleteLater()
 
-    def add_params_group_box(self, sigmoid_params=None, dp_params=None):
+    def add_params_group_box(self, sigmoid_params=None, dp50s=None):
         """
         Adds a sigmoid parameter set box which allows the user to adjust the sidmoid parameters lines and
         view the Dp50 values.
 
         :param list[int] sigmoid_params: A list containing the four interger values needed for the sigmoid parameters.
 
-                                         - begin_rise_dp
-                                         - end_rise_dp
-                                         - begin_asymp_dp
-                                         - end_asymp_dp)
-        :param list[int] dp_params: A list containing the three interger values needed for the sigmoid parameters.
-
-                                    - Dp50
-                                    - Dp50_wet
-                                    - Dp50+20 wet
+                                         - x_0
+                                         - curve_max
+                                         - k
+                                         - y_0
+        :param int dp50s: The DP50 value
         """
         # Set variable values
         if sigmoid_params is None:
             sigmoid_params = [0, 0, 0, 0]
-        if dp_params is None:
-            dp_params = [0, 0, 0]
+        if dp50s is None:
+            dp50s = 0
+        else:
+            dp50s = round(dp50s, 4)
         self.num_sigmoid_lines += 1
         maximum = max(self.controller.scans[self.curr_scan_index].ave_smps_diameters)  # QUESTION What should it be?
         # Update existing widgets
         self.sigmoid_line_spinbox.set_value(self.num_sigmoid_lines)
         # Create new sigmoid parameters widgets
         params_group_box = Qg.QGroupBox("Parameter Set #" + str(self.num_sigmoid_lines))
-        begin_rise_dp = c_widget.LabeledDoubleSpinbox("begin rise dp")  # QUESTION Better label wording
-        begin_rise_dp.set_maximum(maximum)
-        begin_rise_dp.set_value(sigmoid_params[0])
-        end_rise_dp = c_widget.LabeledDoubleSpinbox("end rise dp")  # QUESTION Better label wording
-        end_rise_dp.set_maximum(maximum)
-        end_rise_dp.set_value(sigmoid_params[1])
-        begin_asymp_dp = c_widget.LabeledDoubleSpinbox("begin asymp dp")  # QUESTION Better label wording
-        begin_asymp_dp.set_maximum(maximum)
-        begin_asymp_dp.set_value(sigmoid_params[2])
-        end_asymp_dp = c_widget.LabeledDoubleSpinbox("end asymp dp")  # QUESTION Better label wording
-        end_asymp_dp.set_maximum(maximum)
-        end_asymp_dp.set_value(sigmoid_params[3])
+        sig_mid = c_widget.LabeledDoubleSpinbox("Sigmoid Midpoint")  # QUESTION Better label wording
+        sig_mid.set_maximum(maximum)
+        sig_mid.set_value(np.exp(sigmoid_params[0]))
+        curve_max = c_widget.LabeledDoubleSpinbox("Curve Max")  # QUESTION Better label wording
+        curve_max.set_maximum(maximum)
+        curve_max.set_value(sigmoid_params[1])
+        log_grow_rate = c_widget.LabeledDoubleSpinbox("Curve Steepness")  # QUESTION Better label wording
+        log_grow_rate.set_maximum(maximum)
+        log_grow_rate.set_value(sigmoid_params[2])
+        # Create a widget for y_0 but do not display.  Needed for "apply"  # RESEARCH
+        y_0 = c_widget.LabeledDoubleSpinbox("y_0")
+        y_0.set_maximum(maximum)
+        y_0.set_value(sigmoid_params[3])
         v_layout = Qg.QVBoxLayout()
-        v_layout.addWidget(begin_rise_dp)
-        v_layout.addWidget(end_rise_dp)
-        v_layout.addWidget(begin_asymp_dp)
-        v_layout.addWidget(end_asymp_dp)
-        # Create the DP50 parameters widgets
-        h_layout = Qg.QHBoxLayout()
-        dp_group_box = Qg.QGroupBox("Dp50 parameters")
+        v_layout.addWidget(sig_mid)
+        v_layout.addWidget(curve_max)
+        v_layout.addWidget(log_grow_rate)
         # -- dp50
         dp_50_label = Qg.QLabel("Dp50")
-        dp_50_box = Qg.QLineEdit(str(dp_params[0]))
+        dp_50_box = Qg.QLineEdit(str(dp50s))
         dp_50_box.setReadOnly(True)
-        another_v_layout = Qg.QVBoxLayout()
-        another_v_layout.addWidget(dp_50_label)
-        another_v_layout.addWidget(dp_50_box)
-        h_layout.addLayout(another_v_layout)
-        # TODO issues/16 Remove extra DP values
-        # -- dp50 wet
-        dp_50_wet_label = Qg.QLabel("Dp50_wet")
-        dp_50_wet_box = Qg.QLineEdit(str(dp_params[1]))
-        dp_50_wet_box.setReadOnly(True)
-        another_v_layout = Qg.QVBoxLayout()
-        another_v_layout.addWidget(dp_50_wet_label)
-        another_v_layout.addWidget(dp_50_wet_box)
-        h_layout.addLayout(another_v_layout)
-        # -- dp50+20 wet
-        dp_50_20_label = Qg.QLabel("Dp50+20 wet")
-        dp_50_20_box = Qg.QLineEdit(str(dp_params[2]))
-        dp_50_20_box.setReadOnly(True)
-        another_v_layout = Qg.QVBoxLayout()
-        another_v_layout.addWidget(dp_50_20_label)
-        another_v_layout.addWidget(dp_50_20_box)
-        h_layout.addLayout(another_v_layout)
+        dp50_h_layout = Qg.QHBoxLayout()
+        dp50_h_layout.addWidget(dp_50_label)
+        dp50_h_layout.addWidget(dp_50_box)
+        v_layout.addLayout(dp50_h_layout)
         # Add various widgets to display
-        dp_group_box.setLayout(h_layout)
-        v_layout.addWidget(dp_group_box)
         params_group_box.setLayout(v_layout)
-        self.dp_widgets.append([begin_rise_dp, end_rise_dp, begin_asymp_dp, end_asymp_dp])
+        self.dp_widgets.append([sig_mid, curve_max, log_grow_rate, y_0])
         # RESEARCH Hard code-y values again for first parameter
         self.layout().insertRow(len(self.dp_widgets)+7, params_group_box)
 
@@ -437,11 +420,11 @@ class DockerSigmoidWidget(Qg.QFrame):
         param_list = []
 
         for a_param_set in self.dp_widgets:
-            begin_rise = a_param_set[0].content_box.value()
-            end_rise = a_param_set[1].content_box.value()
-            begin_asymp = a_param_set[2].content_box.value()
-            end_asymp = a_param_set[3].content_box.value()
-            param_list.append([begin_rise, end_rise, begin_asymp, end_asymp])
+            sig_mid = np.log(a_param_set[0].content_box.value())
+            curve_max = a_param_set[1].content_box.value()
+            log_grow_rate = a_param_set[2].content_box.value()
+            y_0 = a_param_set[3].content_box.value()
+            param_list.append([sig_mid, curve_max, log_grow_rate, y_0])
         # set the sigmoid parameters and fit new sigmoid lines
         self.controller.scans[self.controller.curr_scan_index].set_sigmoid_params(param_list)
         self.controller.switch_to_scan(self.controller.curr_scan_index)

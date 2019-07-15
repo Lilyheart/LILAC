@@ -116,11 +116,13 @@ class LabeledDoubleSpinbox(Qg.QWidget):
     """
     def __init__(self, title):
         super(self.__class__, self).__init__()
+        self.title = title
         h_layout = Qg.QHBoxLayout()
-        label = Qg.QLabel(title)
+        label = Qg.QLabel(self.title)
         self.content_box = Qg.QDoubleSpinBox()
-        self.content_box.setMinimumWidth(100)
+        self.content_box.setMinimumWidth(150)
         self.content_box.setAlignment(Qc.Qt.AlignCenter)
+        self.content_box.setDecimals(4)
         h_layout.addWidget(label)
         h_layout.addWidget(self.content_box)
         h_layout.setAlignment(Qc.Qt.AlignRight)

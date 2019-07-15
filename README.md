@@ -18,6 +18,12 @@
 - [ ] Push changes to remote
 - [ ] Update [Gitlab tag description](https://gitlab.bucknell.edu/nrr004/Chemics/tags) with Changelog comments
 
+## Steps for testing dead code
+
+This uses the [vulture package](https://github.com/jendrikseipp/vulture).
+
+- [ ] From the CLI while in the top level folder, execture `vulture chemics/ configs/vulture_whitelist.py`
+
 ## Programming Environment
 
 ### Using requirements.txt
@@ -27,8 +33,7 @@
 ##### Linux
 
 ```bash
-conda create -y -n Chemics27 python==2.7.16
-conda install -n Chemics27 --override-channels -c conda-forge anaconda --file requirements-linux64.txt
+conda create --name Chemics27 --file requirements-linux64.txt
 ```
 
 <!--
@@ -51,13 +56,17 @@ Python version: **2.7.16**
 - [ ] PySide:  1.2.0
 - [ ] scipy:  1.1.0
 - [ ] sphinx:  1.8.5
-- [ ] sphinx_rtd_theme: 0.4.3
+- [ ] sphinx_rtd_theme:  0.4.3
 
 #### Dev Specific [Depends on IDE Choice]:
 - [ ] bumpversion: 0.5.3
 - [ ] ipykernel:  4.10.0
 - [ ] python-language-server:  0.26.1
-- [ ] xlwt=1.3.0
+- [ ] xlrd:  1.3.0
+- [ ] xlwt:  1.3.0
+
+#### Dev Specific [Code Testing etc]:
+- [ ] vulture:  1.0
 
 #### Windows Specific:
 - [ ] pywin32:  223
