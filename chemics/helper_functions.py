@@ -3,6 +3,7 @@ Functions and classes that are used by other parts of the application
 """
 # External Packages
 import csv
+import logging
 import numpy as np
 import pickle
 import scipy.signal
@@ -12,6 +13,9 @@ import warnings  # TODO issues/49 Remove after fixing issue
 
 # Internal Packages
 import constants as const
+
+# Set logger for this module
+logger = logging.getLogger("helper_functions")
 
 ################
 # Parse Files  #
@@ -244,7 +248,6 @@ def smooth(a_list, window_length, polyorder):
     :rtype: ndarray
     """
     # TODO issues/48 if a_list is short than 5, there will be an error - Put in tests for all the restrictions above
-    # noinspection PyBroadException
     try:
         with warnings.catch_warnings():
             warnings.simplefilter(action="ignore", category=FutureWarning)
@@ -252,7 +255,8 @@ def smooth(a_list, window_length, polyorder):
         # TODO issues/49 FutureWarning: Using a non-tuple sequence for multidimensional indexing is deprecated;
         # use `arr[tuple(seq)]` instead of `arr[seq]`. In the future this will be interpreted as an array
         # index, `arr[np.array(seq)]`, which will result either in an error or a different result.  = a[a_slice]
-    except Exception:  # TODO issues/40 error logging to determine what causes
+    except Exception as e:
+        logger.error(e, exc_info=True)
         pass
     return a_list
 
@@ -342,7 +346,7 @@ class CustomUnpickler(object, pickle.Unpickler):
         if not instantiated:
             try:
                 value = klass(0, *args)
-            except TypeError, err:
+            except TypeError as err:
                 raise TypeError("in constructor for %s: %s" % (klass.__name__, str(err)), sys.exc_info()[2])
         self.append(value)
 

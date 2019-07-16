@@ -2,12 +2,16 @@
 Tests the automatically shifting algorithm which matches the SMPS and CCNC data
 Version 2.0
 """
+import logging
 import numpy as np
 import scipy.signal
 import warnings
 
 import constants as const
 import helper_functions as hf
+
+# Set logger for this module
+logger = logging.getLogger("controller")
 
 
 def get_auto_shift(smps_count, ccnc_count):
@@ -114,11 +118,12 @@ def get_auto_shift(smps_count, ccnc_count):
             areas_of_isects_r = 0.5 * abs(s_subt_c[1:]) * (1 - x_line_isects) * ccnc_weight * smps_weight
             areas_of_isects = areas_of_isects_l + areas_of_isects_r
             total_area.append(np.sum(np.where(data_crosses > 0, areas_no_isects, areas_of_isects)))
-        except RuntimeWarning:
+        except RuntimeWarning as e:
             # Catch divide by zero errors
             if len(total_area) == 0:
                 total_area.append(999999999999)
-            else:  # TODO issues/40 error logging to determine what causes
+            else:
+                logger.error(e, exc_info=True)
                 total_area.append(total_area[-1])
 
     if len(total_area) == 0:

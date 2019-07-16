@@ -2,6 +2,9 @@
 The main entry point of the program
 """
 # External Packages
+import datetime
+import logging
+from logging.config import fileConfig
 import os
 import PySide.QtCore as Qc
 import PySide.QtGui as Qg
@@ -20,15 +23,19 @@ import graphs
 # Setup Code #
 ##############
 
+
 # Determine if running in pyinstaller bundle or python environment
-# RESEARCH Used?
-if getattr(sys, 'frozen', False):
-    # we are running in a |PyInstaller| bundle
-    # noinspection PyProtectedMember
-    basedir = sys._MEIPASS
-else:
-    # we are running in a normal Python environment
-    basedir = os.path.dirname(__file__)
+if getattr(sys, 'frozen', False):  # we are running in a |PyInstaller| bundle
+    # setup debugger
+    fileConfig("../configs/logging-frz.conf", disable_existing_loggers=False,
+               defaults={'logfilename': "Chemicslog-" + datetime.datetime.now().strftime("%Y-%m-%d") + ".log"})
+else:  # we are running in a normal Python environment
+    # setup debugger
+    fileConfig("../configs/logging-env.conf", disable_existing_loggers=False,
+               defaults={'logfilename': "Chemicslog-" + datetime.datetime.now().strftime("%Y-%m-%d") + ".log"})
+
+# Set logger for this module
+logger = logging.getLogger("main")
 
 ########
 # Main #
@@ -400,7 +407,6 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         Launches a webpage that shows the user manual as well as the code documentation
         """
         # TODO issues/8 https://gitlab.bucknell.edu/nrr004/Chemics/issues/8
-        # TODO issues/40 https://gitlab.bucknell.edu/nrr004/Chemics/issues/40
         org_stdout = os.dup(1)
         org_stderr = os.dup(2)
         os.close(1)
@@ -408,6 +414,8 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         os.open(os.devnull, os.O_RDWR)
         try:
             webbrowser.open("https://lilyheart.github.io/chemics_documentation/")
+        except Exception as e:
+            logger.error(e, exc_info=True)
         finally:
             os.dup2(org_stdout, 1)
             os.dup2(org_stderr, 2)
@@ -712,6 +720,11 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
 
 
 if __name__ == "__main__":
+    # setup debugger
+    logger.info("=================================================")
+    logger.info("=================================================")
+    logger.debug("Chemics started")
+
     app = Qg.QApplication(sys.argv)
     main_window = MainView(app)
     main_window.show()

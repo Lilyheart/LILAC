@@ -2,24 +2,28 @@
 This class handles most of the programs actions.
 """
 # External Packages
-import cPickle
 import datetime as dt
+import logging
 import math
 import numpy as np
 import os
 import pandas as pd
-from StringIO import StringIO
+import pickle
 import re
+# noinspection PyCompatibility
+from StringIO import StringIO
 import time
 
 # Internal Packages
 from algorithm import auto_shift
 from algorithm import sigmoid_fit
-
 import constants as const
 import data.kCal
 import helper_functions as hf
 import scan
+
+# Set logger for this module
+logger = logging.getLogger("controller")
 
 
 class Controller(object):
@@ -233,13 +237,13 @@ class Controller(object):
                 try:
                     sigmoid_fit.get_sigmoid_info(a_scan)
                 except NotImplementedError as e:
-                    print("Scan: %d - NotImplementedError: %s" % (i, str(e)))  # TEMP
+                    logger.warn("Scan: %d - NotImplementedError: %s" % (i, str(e)))  # TEMP
                 except OverflowError as e:
-                    print("Scan: %d - OverflowError: %s" % (i, str(e)))  # TEMP
+                    logger.warn("Scan: %d - OverflowError: %s" % (i, str(e)))  # TEMP
                 except RuntimeWarning as e:
-                    print("Scan: %d - RuntimeWarning Error: %s" % (i, str(e)))  # TEMP
+                    logger.warn("Scan: %d - RuntimeWarning Error: %s" % (i, str(e)))  # TEMP
                 except RuntimeError as e:
-                    print("Scan: %d - RuntimeError Error: %s" % (i, str(e)))  # TEMP
+                    logger.warn("Scan: %d - RuntimeError Error: %s" % (i, str(e)))  # TEMP
 
         self.view.close_progress_bar()
         self.switch_to_scan(0)
@@ -792,7 +796,7 @@ class Controller(object):
                        self.valid_kappa_points,
                        self.save_name)
             with open(self.save_name, 'wb') as handle:
-                cPickle.dump(to_save, handle, protocol=cPickle.HIGHEST_PROTOCOL)
+                pickle.dump(to_save, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     def load_project(self, project_file):
         """
@@ -810,7 +814,7 @@ class Controller(object):
                  self.experiment_date, self.smooth_method, self.base_shift_factor, self.b_limits,
                  self.asym_limits, self.kappa_calculate_dict, self.alpha_pinene_dict, self.stage,
                  self.valid_kappa_points,
-                 self.save_name) = cPickle.load(handle)
+                 self.save_name) = pickle.load(handle)
         except TypeError as e:
             if str(e) == "__init__() takes exactly 2 arguments (1 given)":
                 with open(project_file, 'rb') as handle:
@@ -820,7 +824,8 @@ class Controller(object):
                      self.valid_kappa_points,
                      self.save_name) = hf.CustomUnpickler(handle).load()
         except ImportError as e:
-            if str(e) == "No module named Scan":  # TODO issues/40 else into error logging
+            if str(e) == "No module named Scan":
+                logger.warn("run import but no module named Scan - CustomUnpickler")
                 with open(project_file, 'rb') as handle:
                     (self.scans, self.counts_to_conc_conv, self.data_files, self.ccnc_data, self.smps_data,
                      self.experiment_date, self.smooth_method, self.base_shift_factor, self.b_limits,

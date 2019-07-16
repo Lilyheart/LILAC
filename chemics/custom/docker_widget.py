@@ -208,6 +208,7 @@ class DockerScanInformation(Qg.QFrame):
             dialog = c_modal_dialogs.ScanDataDialog(a_scan)
             dialog.exec_()
 
+    # noinspection PyUnusedLocal
     def update_super_saturation(self, event):
         """
         # REVIEW Documentation

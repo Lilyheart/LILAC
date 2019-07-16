@@ -7,7 +7,8 @@ from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import StringIO
+# noinspection PyCompatibility
+from StringIO import StringIO
 
 # Internal Packages
 import data.klines
@@ -262,7 +263,7 @@ class KappaGraph(FigureCanvas):
         self.ax.set_xlabel("Dry diameter(nm)")
         self.ax.set_ylabel("Super Saturation(%)")
         # set up klines  # TODO See if csv file is an issue for standalone exe
-        self.klines_data = pd.read_csv(StringIO.StringIO(data.klines.csv_codes), header=1)
+        self.klines_data = pd.read_csv(StringIO(data.klines.csv_codes), header=1)
         self.header = self.klines_data.columns
         self.klines_diameters = self.klines_data[self.header[1]]
         # set up empty data lines
