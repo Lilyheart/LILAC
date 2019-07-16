@@ -24,12 +24,12 @@ class ConcOverTimeRawDataGraph(FigureCanvas):
         # set up the figure and axes
         self.ax.set_title("Raw SMPS and CCNC concentration over time")
         self.ax.set_xlabel("Scan time(s)")
-        self.ax.set_ylabel("Concentration (1/cm3)")
-        self.ax.legend()
+        self.ax.set_ylabel("Concentration ($\\mathregular{1/cm^3}$)")
         # set up empty data lines
         self.smps_points, = self.ax.plot([], [], label="Raw SMPS")
         self.ccnc_points, = self.ax.plot([], [], label="Raw CCNC")
         # plot graph
+        self.ax.legend()
         plt.tight_layout()
 
     def update_graph(self, a_scan):
@@ -71,12 +71,12 @@ class ConcOverTimeSmoothGraph(FigureCanvas):
         # set up the figure and axes
         self.ax.set_title("Smoothed SMPS and CCNC concentration over scan time")
         self.ax.set_xlabel("Scan time(s)")
-        self.ax.set_ylabel("Concentration (1/cm3)")
-        self.ax.legend()
+        self.ax.set_ylabel("Concentration ($\\mathregular{1/cm^3}$)")
         # set up empty data lines
         self.smps_points, = self.ax.plot([], [], label="SMPS")
         self.ccnc_points, = self.ax.plot([], [], label="CCNC")
         # plot graph
+        self.ax.legend()
         plt.tight_layout()
 
     def update_graph(self, a_scan):
@@ -119,13 +119,13 @@ class TemperatureGraph(FigureCanvas):
         # set up the figure and axes
         self.ax.set_title("Temperature over scan time")
         self.ax.set_xlabel("Scan time(s)")
-        self.ax.set_ylabel("Temperature")
-        self.ax.legend()
+        self.ax.set_ylabel("Temperature (C)")
         # set up empty data lines
-        self.t1_line, = self.ax.plot([0], [0], label="T1")
-        self.t2_line, = self.ax.plot([0], [0], label="T2")
         self.t3_line, = self.ax.plot([0], [0], label="T3")
+        self.t2_line, = self.ax.plot([0], [0], label="T2")
+        self.t1_line, = self.ax.plot([0], [0], label="T1")
         # plot graph
+        self.ax.legend()
         plt.tight_layout()
 
     def update_graph(self, a_scan):
@@ -155,12 +155,12 @@ class TemperatureGraph(FigureCanvas):
         self.ax.axes.set_xlim([0, num_data_pts])
         # Set new data
         x_axis = np.arange(num_data_pts)
-        self.t1_line.set_xdata(x_axis)
-        self.t1_line.set_ydata(t1s)
-        self.t2_line.set_xdata(x_axis)
-        self.t2_line.set_ydata(t2s)
         self.t3_line.set_xdata(x_axis)
         self.t3_line.set_ydata(t3s)
+        self.t2_line.set_xdata(x_axis)
+        self.t2_line.set_ydata(t2s)
+        self.t1_line.set_xdata(x_axis)
+        self.t1_line.set_ydata(t1s)
         self.draw()
         self.flush_events()
 
@@ -179,13 +179,13 @@ class RatioOverDiameterGraph(FigureCanvas):
         # set up empty data lines
         self.ccn_cn_ratio_points, = self.ax.plot([0], [0], 'o', label="CCNC/SMPS")
         self.ccn_cn_ratio_corrected_points, = self.ax.plot([0], [0], 'o', label="CCNC/SMPS corrected")
-        self.normalized_conc, = self.ax.plot([0], [0], label="normalized conc (dNdlogDp)")
+        self.normalized_conc, = self.ax.plot([0], [0], label="normalized conc (dN/dlogDp)", linestyle='dashed')
         self.sigmoid_lines = []
         self.sigmoid_cross_lines = []
         self.ax.axhline(1, linestyle='dashed')
         self.ax.axhline(0.5, color="gray")
-        self.ax.legend()
         # plot graph
+        self.ax.legend(loc=4)
         plt.tight_layout()
 
     def update_graph(self, a_scan):
@@ -243,9 +243,9 @@ class RatioOverDiameterGraph(FigureCanvas):
             cross = np.interp(.5, a_scan.sigmoid_curve_y[i], a_scan.sigmoid_curve_x[i])
             self.sigmoid_cross_lines.append(self.ax.axvline(cross, color='grey'))
             self.sigmoid_lines.append(self.ax.plot(a_scan.sigmoid_curve_x[i], a_scan.sigmoid_curve_y[i],
-                                                   label="Sigmoid Line #" + str(i))[0])
+                                                   label="Sigmoid Line #" + (str(i + 1)), color="C"+str(i+3))[0])
         # Other graph details
-        self.ax.legend()
+        self.ax.legend(loc=4)
         self.draw()
         self.flush_events()
 
@@ -261,7 +261,6 @@ class KappaGraph(FigureCanvas):
         # self.ax.set_title("")  # TODO
         self.ax.set_xlabel("Dry diameter(nm)")
         self.ax.set_ylabel("Super Saturation(%)")
-        self.ax.legend()
         # set up klines  # TODO See if csv file is an issue for standalone exe
         self.klines_data = pd.read_csv(StringIO.StringIO(data.klines.csv_codes), header=1)
         self.header = self.klines_data.columns
@@ -322,6 +321,8 @@ class KappaGraph(FigureCanvas):
 
         # COMBAKL Kappa
         self.update_all_klines()
+        plt.subplots_adjust(right=0.8)
+        plt.legend(loc="upper left", bbox_to_anchor=(1, 1))
         # plot graph
         # plt.tight_layout()
 
@@ -401,7 +402,8 @@ class KappaGraph(FigureCanvas):
             self.klines.append(self.ax.loglog(self.klines_diameters, y,
                                               gid=str(self.header[i]), label=str(self.header[i]), linewidth=1)[0])
 
-        self.ax.legend()
+        plt.subplots_adjust(right=0.8)
+        plt.legend(loc="upper left", bbox_to_anchor=(1, 1))
         self.draw_idle()
         self.flush_events()
 
@@ -438,7 +440,8 @@ class KappaGraph(FigureCanvas):
         self.average_kappa_points.set_xdata([])
         self.average_kappa_points.set_ydata([])
         self.ax.set_title("Activation Diameter for all Kappa points and Lines of Constant Kappa (K)")
-        self.ax.legend()
+        plt.subplots_adjust(right=0.8)
+        plt.legend(loc="upper left", bbox_to_anchor=(1, 1))
         self.draw()
         self.flush_events()
 
@@ -465,6 +468,7 @@ class KappaGraph(FigureCanvas):
         self.invalid_kappa_points.set_xdata([])
         self.invalid_kappa_points.set_ydata([])
         self.ax.set_title("Activation Diameter for average Kappa points and Lines of Constant Kappa (K)")
-        self.ax.legend()
+        plt.subplots_adjust(right=0.8)
+        plt.legend(loc="upper left", bbox_to_anchor=(1, 1))
         self.draw()
         self.flush_events()
