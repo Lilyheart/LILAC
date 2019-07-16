@@ -59,7 +59,8 @@ Python version: **2.7.16**
 - [ ] sphinx_rtd_theme:  0.4.3
 
 #### Dev Specific [Depends on IDE Choice]:
-- [ ] bumpversion: 0.5.3
+- [ ] bumpversion:  0.5.3
+- [ ] pycallgraph:  1.0.1 (--channel auto)
 - [ ] ipykernel:  4.10.0
 - [ ] python-language-server:  0.26.1
 - [ ] xlrd:  1.3.0

@@ -40,13 +40,13 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
     Initialzes the main window of the program.
     """
 
-    def __init__(self):
+    def __init__(self, main_app):
         # Initalize the window
         Qg.QMainWindow.__init__(self)
         # Basic window settings
         self.setWindowTitle('Chemics')
         self.font = Qg.QFont("Calibri")
-        app.setFont(self.font)
+        main_app.setFont(self.font)
         # Create the controller that handles all of the functionalities of the program
         self.controller = controller.Controller(self)
         # create menu bar
@@ -713,7 +713,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
 
 if __name__ == "__main__":
     app = Qg.QApplication(sys.argv)
-    main_window = MainView()
+    main_window = MainView(app)
     main_window.show()
 
     app.setWindowIcon(Qg.QIcon('icon.png'))
