@@ -75,6 +75,7 @@ class Scan(object):
         self.processed_T3s = []
         self.processed_super_sats = []
         self.true_super_sat = 0
+        self.super_sat_label = None
         self.processed_ave_ccnc_sizes = []
         self.processed_normalized_concs = []
         # Scan#correct_charges

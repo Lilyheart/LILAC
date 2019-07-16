@@ -115,7 +115,10 @@ class DockerScanInformation(Qg.QFrame):
         end_time = dt.date.strftime(curr_scan.end_time, "%H:%M:%S")
         scan_time = start_time + " - " + end_time
         self.scan_time.setText(scan_time)
-        self.super_saturation.setText(', '.join(map(str, np.unique(curr_scan.processed_super_sats))))
+        if not hasattr(curr_scan, "super_sat_label") or curr_scan.super_sat_label is None:
+            curr_scan.super_sat_label = ', '.join(map(str, np.unique(curr_scan.processed_super_sats)))
+        self.super_saturation.setText(curr_scan.super_sat_label)
+        self.super_saturation.mousePressEvent = self.update_super_saturation
         if curr_scan.is_valid():
             self.scan_status.setText("VALID")
             self.scan_status.setStyleSheet("QWidget { background-color:None}")
@@ -204,6 +207,26 @@ class DockerScanInformation(Qg.QFrame):
             a_scan = self.controller.scans[self.controller.curr_scan_index]
             dialog = c_modal_dialogs.ScanDataDialog(a_scan)
             dialog.exec_()
+
+    def update_super_saturation(self, event):
+        """
+        # REVIEW Documentation
+        :return:
+        :rtype:
+        """
+        curr_scan = self.controller.scans[self.controller.curr_scan_index]
+        curr_ss = curr_scan.true_super_sat
+        if curr_ss is None:
+            curr_ss = curr_scan.raw_super_sats[0]
+        if curr_ss is None:
+            curr_ss = 0.0
+        # noinspection PyCallByClass
+        ss = Qg.QInputDialog.getDouble(self, "Update Supersaturation", "What is the correct supersaturation level",
+                                       value=float(curr_ss), decimals=2)
+        if ss[1]:
+            curr_scan.true_super_sat = float(ss[0])
+            curr_scan.super_sat_label = str(ss[0])
+            self.super_saturation.setText(curr_scan.super_sat_label)
 
 
 class DockerSigmoidWidget(Qg.QFrame):

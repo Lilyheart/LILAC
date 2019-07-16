@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Instructions on README on how to use the vulture package to find unused code
+- Ability to override Supersaturation ([#13](https://gitlab.bucknell.edu/nrr004/Chemics/issues/13))
 
 ### Fixed
 - Kappa Parameters issue ([#65](https://gitlab.bucknell.edu/nrr004/Chemics/issues/65))
