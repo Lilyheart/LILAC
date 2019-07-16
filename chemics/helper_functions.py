@@ -27,6 +27,7 @@ def process_csv_files(file_path):
     :return: The date from the first record in the first csv followed by the contents of the all the cvs files as a list
     :rtype: (str, list[list[str]])
     """
+    file_path.sort()
     if len(file_path) < 1:
         raise IOError("File not found")  # TODO issues/25 Error not handled well
     elif len(file_path) == 1:

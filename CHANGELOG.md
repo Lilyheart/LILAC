@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Sigmoid Fit Algorithm ([#42](https://gitlab.bucknell.edu/nrr004/Chemics/issues/42))
 - Various graph tweaks  ([#54](https://gitlab.bucknell.edu/nrr004/Chemics/issues/54)) ([#26 Partial](https://gitlab.bucknell.edu/nrr004/Chemics/issues/26))
+- File names are sorted alphabetically to ensure files are parsed in correct order ([#44](https://gitlab.bucknell.edu/nrr004/Chemics/issues/44))
 
 
 ## [2.1.2] - 2019-07-10
