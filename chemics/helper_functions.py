@@ -5,10 +5,7 @@ Functions and classes that are used by other parts of the application
 import csv
 import logging
 import numpy as np
-import pickle
 import scipy.signal
-import sys
-import types
 import warnings  # TODO issues/49 Remove after fixing issue
 
 # Internal Packages
@@ -298,62 +295,62 @@ def get_correct_num(a_list, number, bigger=True):
             num = a_list[i]
     return a_list[-1], len(a_list) - 1
 
-
-class CustomUnpickler(object, pickle.Unpickler):
-    """
-    Extends the pickle package.  Creates a custom unpickler.  This is neccessary for backporting to prior versions of
-    chemics.
-
-    :param filename: The file like object that the pickler will be unpickling
-    """
-    def __init__(self, filename):
-        # noinspection PyTypeChecker
-        pickle.Unpickler.__init__(self, filename)
-
-    def find_class(self, module, name):
-        """
-        Updates the module name to the new package structure for backwards compatibility.
-
-        :param str module: The original module name
-        :param str name: The class or next level neecessary to return to the super class.
-        """
-        if module == 'Scan':
-            module = 'scan'
-        return super(CustomUnpickler, self).find_class(module, name)
-
-    def _instantiate(self, klass, k):
-        """
-        Extends the pickle package's _instantiate method to account for the new variable in scan.
-
-        :param Class klass: The class to instantiate
-        :param int k:
-        """
-        value = None
-        args = tuple(self.stack[k+1:])
-        del self.stack[k:]
-        instantiated = 0
-        if (not args and
-                isinstance(type(klass), types.ClassType) and
-                not hasattr(klass, "__getinitargs__")):
-            try:
-                value = _EmptyClass()
-                value.__class__ = klass
-                instantiated = 1
-            except RuntimeError:
-                # In restricted execution, assignment to inst.__class__ is
-                # prohibited
-                pass
-        if not instantiated:
-            try:
-                value = klass(0, *args)
-            except TypeError as err:
-                raise TypeError("in constructor for %s: %s" % (klass.__name__, str(err)), sys.exc_info()[2])
-        self.append(value)
-
-
-# noinspection PyClassHasNoInit,PyClassicStyleClass
-class _EmptyClass:
-    """
-    Helper class for load_inst/load_obj of CustomUnpickler
-    """
-    pass
+# Breaking backwards compatibility until the new workflow arrives
+# class CustomUnpickler(object, pickle.Unpickler):
+#     """
+#     Extends the pickle package.  Creates a custom unpickler.  This is neccessary for backporting to prior versions of
+#     chemics.
+#
+#     :param filename: The file like object that the pickler will be unpickling
+#     """
+#     def __init__(self, filename):
+#         # noinspection PyTypeChecker
+#         pickle.Unpickler.__init__(self, filename)
+#
+#     def find_class(self, module, name):
+#         """
+#         Updates the module name to the new package structure for backwards compatibility.
+#
+#         :param str module: The original module name
+#         :param str name: The class or next level neecessary to return to the super class.
+#         """
+#         if module == 'Scan':
+#             module = 'scan'
+#         return super(CustomUnpickler, self).find_class(module, name)
+#
+#     def _instantiate(self, klass, k):
+#         """
+#         Extends the pickle package's _instantiate method to account for the new variable in scan.
+#
+#         :param Class klass: The class to instantiate
+#         :param int k:
+#         """
+#         value = None
+#         args = tuple(self.stack[k+1:])
+#         del self.stack[k:]
+#         instantiated = 0
+#         if (not args and
+#                 isinstance(type(klass), types.ClassType) and
+#                 not hasattr(klass, "__getinitargs__")):
+#             try:
+#                 value = _EmptyClass()
+#                 value.__class__ = klass
+#                 instantiated = 1
+#             except RuntimeError:
+#                 # In restricted execution, assignment to inst.__class__ is
+#                 # prohibited
+#                 pass
+#         if not instantiated:
+#             try:
+#                 value = klass(0, *args)
+#             except TypeError as err:
+#                 raise TypeError("in constructor for %s: %s" % (klass.__name__, str(err)), sys.exc_info()[2])
+#         self.append(value)
+#
+#
+# # noinspection PyClassHasNoInit,PyClassicStyleClass
+# class _EmptyClass:
+#     """
+#     Helper class for load_inst/load_obj of CustomUnpickler
+#     """
+#     pass

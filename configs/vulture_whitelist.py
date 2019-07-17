@@ -33,8 +33,6 @@ helper_functions.CustomUnpickler._instantiate  # False positive - Used for unpic
 
 # noinspection PyStatementEffect
 main.MainView.closeEvent  # False postive - Is actually overloading when the close button in the app is pressed
-# noinspection PyStatementEffect
-main.MainView.show_error_message  # Currently unused function
 
 
 # noinspection PyStatementEffect,PyUnresolvedReferences

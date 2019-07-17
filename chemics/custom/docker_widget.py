@@ -85,10 +85,14 @@ class DockerScanInformation(Qg.QFrame):
         self.scan_time = Qg.QLabel("-")
         self.scan_time.setAlignment(Qc.Qt.AlignRight)
         form_layout.addRow("Scan Time (h:m:s)", self.scan_time)
-        # -- add the super saturation indicator
-        self.super_saturation = Qg.QLabel("-")
-        self.super_saturation.setAlignment(Qc.Qt.AlignRight)
-        form_layout.addRow("Super Saturation (%)", self.super_saturation)
+        # -- add the supersaturation indicator
+        self.supersaturation = Qg.QLabel("-")
+        self.supersaturation.setAlignment(Qc.Qt.AlignRight)
+        form_layout.addRow("Supersaturation (%)", self.supersaturation)
+        # -- add the activation indicator
+        self.activationpercent = Qg.QLabel("-%")
+        self.activationpercent.setAlignment(Qc.Qt.AlignRight)
+        form_layout.addRow("Activation (%)", self.activationpercent)
         # -- add the status of the scan
         self.scan_status = Qg.QLabel("-")
         self.scan_status.setAlignment(Qc.Qt.AlignRight)
@@ -117,8 +121,9 @@ class DockerScanInformation(Qg.QFrame):
         self.scan_time.setText(scan_time)
         if not hasattr(curr_scan, "super_sat_label") or curr_scan.super_sat_label is None:
             curr_scan.super_sat_label = ', '.join(map(str, np.unique(curr_scan.processed_super_sats)))
-        self.super_saturation.setText(curr_scan.super_sat_label)
-        self.super_saturation.mousePressEvent = self.update_super_saturation
+        self.supersaturation.setText(curr_scan.super_sat_label)
+        self.supersaturation.mousePressEvent = self.update_supersaturation
+        self.activationpercent.setText(str(curr_scan.get_activation()))
         if curr_scan.is_valid():
             self.scan_status.setText("VALID")
             self.scan_status.setStyleSheet("QWidget { background-color:None}")
@@ -209,7 +214,7 @@ class DockerScanInformation(Qg.QFrame):
             dialog.exec_()
 
     # noinspection PyUnusedLocal
-    def update_super_saturation(self, event):
+    def update_supersaturation(self, event):
         """
         # REVIEW Documentation
         :return:
@@ -227,7 +232,7 @@ class DockerScanInformation(Qg.QFrame):
         if ss[1]:
             curr_scan.true_super_sat = float(ss[0])
             curr_scan.super_sat_label = str(ss[0])
-            self.super_saturation.setText(curr_scan.super_sat_label)
+            self.supersaturation.setText(curr_scan.super_sat_label)
 
 
 class DockerSigmoidWidget(Qg.QFrame):
@@ -266,10 +271,10 @@ class DockerSigmoidWidget(Qg.QFrame):
         self.scan_time = Qg.QLabel("-")
         self.scan_time.setAlignment(Qc.Qt.AlignRight)
         form_layout.addRow("Scan Time (h:m:s)", self.scan_time)
-        # -- add the super saturation indicator
-        self.super_saturation = Qg.QLabel("-")
-        self.super_saturation.setAlignment(Qc.Qt.AlignRight)
-        form_layout.addRow("Super Saturation (%)", self.super_saturation)
+        # -- add the supersaturation indicator
+        self.supersaturation = Qg.QLabel("-")
+        self.supersaturation.setAlignment(Qc.Qt.AlignRight)
+        form_layout.addRow("Supersaturation (%)", self.supersaturation)
         ########################################
         # Middle Section - Update Scan
         # -- add a title
@@ -331,7 +336,7 @@ class DockerSigmoidWidget(Qg.QFrame):
         end_time = dt.date.strftime(curr_scan.end_time, "%H:%M:%S")
         scan_time = start_time + " - " + end_time
         self.scan_time.setText(scan_time)
-        self.super_saturation.setText(', '.join(map(str, np.unique(curr_scan.processed_super_sats))))
+        self.supersaturation.setText(', '.join(map(str, np.unique(curr_scan.processed_super_sats))))
         # Update the Sigmoid Parameters section
         self.scan_selector.set_range(0, num_scan - 1)
         self.scan_selector.set_value(self.controller.curr_scan_index)

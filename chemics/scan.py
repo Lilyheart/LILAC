@@ -64,12 +64,16 @@ class Scan(object):
         self.raw_T2s = []
         self.raw_T3s = []
         self.raw_ccnc_counts = []
+        self.raw_ccnc_count_sums = []
+        self.raw_ccnc_sample_flow = []
         self.raw_ave_ccnc_sizes = []
         # Scan#align_smps_ccnc_data
         self.shift_factor = 0
         # Scan#generate_processed_data
         self.processed_smps_counts = []
         self.processed_ccnc_counts = []
+        self.processed_ccnc_count_sums = []
+        self.processed_ccnc_sample_flow = []
         self.processed_T1s = []
         self.processed_T2s = []
         self.processed_T3s = []
@@ -167,13 +171,13 @@ class Scan(object):
         elif self.status_code == 6:  # RESEARCH 6 Status Code
             return "The scan do not have enough CCNC or SMPS data. Most likely because we shift the data too much"
         elif self.status_code == 7:  # RESEARCH 7 Status Code
-            return "The super saturation rate or temperature do not remain constant throughout the scan!"
+            return "The supersaturation rate or temperature do not remain constant throughout the scan!"
         elif self.status_code == 8:  # RESEARCH 8 Status Code
             return "The temperature do not remain constant enough throughout the scan!"
         elif self.status_code == 9:  # RESEARCH 9 Status Code
             return "The Scan is manually disabled by the user!"
             # DOCQUESTION Where does the following play in?  Was commented out.  Looked like combined with 7? Split?
-            # return "The super saturation rate does not remain constant throughout the scan duration."
+            # return "The supersaturation rate does not remain constant throughout the scan duration."
 
     ###############
     # Set Values  #
@@ -291,17 +295,21 @@ class Scan(object):
         """
         Adds the new_data value to the raw_super_sats list in the scan object.
 
-        :param str|int|float ss: The raw super saturation value to add to the list
+        :param str|int|float ss: The raw supersaturation value to add to the list
         """
         self.raw_super_sats.append(float(ss))
 
-    def add_to_raw_ccnc_counts(self, new_data):
+    def add_to_raw_ccnc_counts(self, new_count_data, new_count_sum, new_sample_flow):
         """
         Adds the new_data value to the raw_ccnc_counts list in the scan object.
 
-        :param str|int|float new_data: The raw_ccnc_count to add to the list
+        :param str|int|float new_count_data: The raw_ccnc_count to add to the list
+        :param int new_count_sum: The raw_ccnc_count to add to the list
+        :param str|int|float new_sample_flow: The raw_ccnc_count to add to the list
         """
-        self.raw_ccnc_counts.append(float(new_data))
+        self.raw_ccnc_counts.append(float(new_count_data))
+        self.raw_ccnc_count_sums.append(float(new_count_sum))
+        self.raw_ccnc_sample_flow.append(float(new_sample_flow))
 
     def add_to_raw_ave_ccnc_sizes(self, new_data):
         """
@@ -353,13 +361,13 @@ class Scan(object):
         """
         Checks for invalid scans.  Currently tests for:
 
-        - Error in super saturation
+        - Error in supersaturation
         - Standard devations in the three tempuratures greater than 1
         - Checks for uniform values in temperatures by comparing the first value to all the values
 
         """
         # DOCQUESTION K: more work over here. Can always improve this one
-        # Check for error in super saturation
+        # Check for error in supersaturation
         for i in range(len(self.processed_super_sats)):
             if not hf.are_floats_equal(self.true_super_sat, self.processed_super_sats[i]):  # DOCQUESTION err value?
                 self.true_super_sat = None
@@ -424,12 +432,14 @@ class Scan(object):
         # Process the dndlogdp list  # DOCQUESTION naming again
         self.processed_normalized_concs = hf.normalize_dndlogdp_list(self.raw_normalized_concs)
         # Copy raw CCNC values to local variables
-        ccnc_counts = self.raw_ccnc_counts
-        t1s = self.raw_T1s
-        t2s = self.raw_T2s
-        t3s = self.raw_T3s
-        super_sats = self.raw_super_sats
-        ave_ccnc_sizes = self.raw_ave_ccnc_sizes
+        ccnc_counts = self.raw_ccnc_counts[:]
+        ccnc_count_sums = self.raw_ccnc_count_sums[:]
+        ccnc_sample_flow = self.raw_ccnc_sample_flow[:]
+        t1s = self.raw_T1s[:]
+        t2s = self.raw_T2s[:]
+        t3s = self.raw_T3s[:]
+        super_sats = self.raw_super_sats[:]
+        ave_ccnc_sizes = self.raw_ave_ccnc_sizes[:]
         # Update for shift factors
         # -- if shift factor is non-negative  # DOCQUESTION But, we assumed it always would be?
         if self.shift_factor >= 0:
@@ -439,6 +449,8 @@ class Scan(object):
                 self.set_status_code(6)  # RESEARCH 6 Status Code
             # Shift the data based on the shift factor
             ccnc_counts = ccnc_counts[self.shift_factor:]
+            ccnc_count_sums = ccnc_count_sums[self.shift_factor:]
+            ccnc_sample_flow = ccnc_sample_flow[self.shift_factor:]
             t1s = t1s[self.shift_factor:]
             t2s = t2s[self.shift_factor:]
             t3s = t3s[self.shift_factor:]
@@ -447,6 +459,8 @@ class Scan(object):
         else:  # -- if shift factor is negative
             # populate ccnc counts with 0s in the fronts
             ccnc_counts = hf.fill_zeros_to_begin(ccnc_counts, abs(self.shift_factor))
+            ccnc_count_sums = hf.fill_zeros_to_begin(ccnc_count_sums, abs(self.shift_factor))
+            ccnc_sample_flow = hf.fill_zeros_to_begin(ccnc_sample_flow, abs(self.shift_factor))
             t1s = hf.fill_zeros_to_begin(t1s, abs(self.shift_factor))
             t2s = hf.fill_zeros_to_begin(t2s, abs(self.shift_factor))
             t3s = hf.fill_zeros_to_begin(t3s, abs(self.shift_factor))
@@ -454,6 +468,8 @@ class Scan(object):
             ave_ccnc_sizes = hf.fill_zeros_to_begin(ave_ccnc_sizes, abs(self.shift_factor))
         # If the shifted data is not long enough to match duration, fill with zeros.
         ccnc_counts = hf.fill_zeros_to_end(ccnc_counts, self.duration)
+        ccnc_count_sums = hf.fill_zeros_to_end(ccnc_count_sums, self.duration)
+        ccnc_sample_flow = hf.fill_zeros_to_end(ccnc_sample_flow, self.duration)
         t1s = hf.fill_zeros_to_end(t1s, self.duration)
         t2s = hf.fill_zeros_to_end(t2s, self.duration)
         t3s = hf.fill_zeros_to_end(t3s, self.duration)
@@ -461,6 +477,8 @@ class Scan(object):
         ave_ccnc_sizes = hf.fill_zeros_to_end(ave_ccnc_sizes, self.duration)
         # Update the objects values with the local calculations truncating to the length of duration
         self.processed_ccnc_counts = ccnc_counts[:self.duration]
+        self.processed_ccnc_count_sums = ccnc_count_sums[:self.duration]
+        self.processed_ccnc_sample_flow = ccnc_sample_flow[:self.duration]
         self.processed_T1s = t1s[:self.duration]
         self.processed_T2s = t2s[:self.duration]
         self.processed_T3s = t3s[:self.duration]
@@ -469,6 +487,7 @@ class Scan(object):
         self.true_super_sat = self.processed_super_sats[0]
         # Perform self test
         self.post_align_self_test()
+        self.get_activation()
 
     def correct_charges(self):
         """
@@ -479,9 +498,9 @@ class Scan(object):
         if not self.is_valid():
             return -1
         # Initiate some necessary variables
-        ccnc = self.processed_ccnc_counts
-        smps = self.processed_smps_counts
-        ave_smps_dp = self.ave_smps_diameters
+        ccnc = self.processed_ccnc_counts[:]
+        smps = self.processed_smps_counts[:]
+        ave_smps_dp = self.ave_smps_diameters[:]
         # Basic Processing
         ccnc = hf.resolve_zeros(ccnc)
         smps = hf.resolve_zeros(smps)
@@ -508,3 +527,20 @@ class Scan(object):
         if not self.is_valid():
             return
         sigmoid_fit.get_all_fit_curves(self)
+
+    def get_activation(self):
+        """
+        # REVIEW Documentation
+        """
+        # Sum of CCNC Uptime across all 20 bins  # TODO Fix
+        ccnc_uptime = sum(self.processed_ccnc_count_sums[0:self.scan_up_time])
+        # Sum of SMPS counts (Section 4) during Uptime
+        smps_uptime = round(sum(self.processed_smps_counts[0:self.scan_up_time]) / self.counts_to_conc, 0)
+        # CPC Sample Flow Rate (0.05)
+        # TODO Need to come from part of the file not scraped yet
+        cpc_sample_flow_rate = 0.05
+        # Average Sample Flow (CCNC)
+        mean_sample_flow = sum(self.processed_ccnc_sample_flow[0:self.scan_up_time])
+        mean_sample_flow /= len((self.processed_ccnc_sample_flow[0:self.scan_up_time]))
+
+        return round(((ccnc_uptime / smps_uptime) * (cpc_sample_flow_rate/(mean_sample_flow/1000))*100), 2)

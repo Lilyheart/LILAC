@@ -29,7 +29,7 @@ if getattr(sys, 'frozen', False):  # we are running in a |PyInstaller| bundle
     logging_env.configure_logger_frz("Chemicslog-" + datetime.datetime.now().strftime("%Y-%m-%d") + ".log")
 else:  # we are running in a normal Python environment
     # setup debugger
-    logging_env.configure_logger_env("Chemicslog-" + datetime.datetime.now().strftime("%Y-%m-%d") + ".log")
+    logging_env.configure_logger_env()
 
 logger = logging.getLogger("main")
 
@@ -75,6 +75,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         # showMaximized must be at end of init
         self.showMaximized()
         self.reset_view()
+        self.open_files()  # TEMP
 
     ########
     # Menu #
@@ -191,7 +192,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         """
         Opens data files and begins the scan alignment process
         """
-        temp_dir = "../../TestData/O3 (150), VOC (150), TRIAL 11 at 500 cc amd 4 SS/Analysis"  # TEMP
+        temp_dir = "../../TestData/200 O3, VOC 100, dry 7-16/Analysis"  # TEMP
         # noinspection PyCallByClass
         files = Qg.QFileDialog.getOpenFileNames(self, "Open files", temp_dir, "Data files (*.csv *.txt)")[0]  # TEMP
         # files = Qg.QFileDialog.getOpenFileNames(self, "Open files", "", "Data files (*.csv *.txt)")[0]
@@ -549,19 +550,21 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         """
         Shows an error message dialog box
 
-        Currently unused
-
         :param str err_type: The type of error
         """
-        # RESEARCH Unused?
-        # Once used: update docstring and ../configs/vulture_whitelist.py
         (title, text, subtext) = (None, None, None)
         # Get text information for message box
         if err_type == "no_data":
             title = "Error!"
             text = "There is no scan data to perform this action!"
             subtext = "Please import scan data through File/New or import a project through File/Open first!"
+        if err_type == "old project file":
+            title = "Old File"
+            text = "This file was created with an older version and " \
+                   "can only be opened with an older version of this application"
         else:
+            title = "Error!"
+            text = "There is was an error"
             pass
         warning_msbx = Qg.QMessageBox()
         warning_msbx.setIcon(Qg.QMessageBox.Warning)

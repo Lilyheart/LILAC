@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ([#](https://gitlab.bucknell.edu/nrr004/Chemics/issues/))
 -->
 
+## [Unreleased]
+### Removed
+- Backwards compability of project run files
+
 
 ## [2.2.0] - 2019-07-17
 ### Added

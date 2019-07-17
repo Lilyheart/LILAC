@@ -309,8 +309,8 @@ class Controller(object):
         # REVIEW Documentation
         """
         # COMBAKL Kappa
-        # Calculate the kappa values for each super saturation percentage. The values are average of all scans with the
-        # same super saturation
+        # Calculate the kappa values for each supersaturation percentage. The values are average of all scans with the
+        # same supersaturation
         self.alpha_pinene_dict = {}
         for a_key in self.kappa_calculate_dict.keys():
             a_scan = self.kappa_calculate_dict[a_key]
@@ -487,7 +487,7 @@ class Controller(object):
 
          * :class:`~scan.Scan.set_status` Based on status of scan  # REVIEW - Add reasons to documentation
          * :class:`~scan.Scan.set_status_code` Based on status of scan  # REVIEW - Add reasons to documentation
-         * :class:`~scan.Scan.add_to_raw_super_sats`  The super saturation values
+         * :class:`~scan.Scan.add_to_raw_super_sats`  The supersaturation values
          * :class:`~scan.Scan.add_to_raw_ccnc_counts`  The CCNC counts
          * :class:`~scan.Scan.add_to_raw_ave_ccnc_sizes`  The average CCNC size
          * :class:`~scan.Scan.add_to_raw_t1s_t2s_t3s`  The temperature values
@@ -528,10 +528,12 @@ class Controller(object):
                         a_scan.set_status_code(1)  # RESEARCH 1 Status Code
                     break
                 # collect a bunch of data from ccnc file
-                super_saturation = self.ccnc_data[curr_ccnc_index][1]
-                a_scan.add_to_raw_super_sats(super_saturation)
+                supersaturation = self.ccnc_data[curr_ccnc_index][1]
+                a_scan.add_to_raw_super_sats(supersaturation)
                 ccnc_count = self.ccnc_data[curr_ccnc_index][-3]
-                a_scan.add_to_raw_ccnc_counts(ccnc_count)
+                ccnc_count_sum = int(sum([float(x) for x in self.ccnc_data[curr_ccnc_index][25:44]]))
+                ccnc_sample_flow = self.ccnc_data[curr_ccnc_index][17]
+                a_scan.add_to_raw_ccnc_counts(ccnc_count, ccnc_count_sum, ccnc_sample_flow)
                 total_count = 0
                 total_size = 0
                 for j in range(len(bin_sizes)):
@@ -815,23 +817,27 @@ class Controller(object):
                  self.asym_limits, self.kappa_calculate_dict, self.alpha_pinene_dict, self.stage,
                  self.valid_kappa_points,
                  self.save_name) = pickle.load(handle)
-        except TypeError as e:
-            if str(e) == "__init__() takes exactly 2 arguments (1 given)":
-                with open(project_file, 'rb') as handle:
-                    (self.scans, self.counts_to_conc_conv, self.data_files, self.ccnc_data, self.smps_data,
-                     self.experiment_date, self.smooth_method, self.base_shift_factor, self.b_limits,
-                     self.asym_limits, self.kappa_calculate_dict, self.alpha_pinene_dict, self.stage,
-                     self.valid_kappa_points,
-                     self.save_name) = hf.CustomUnpickler(handle).load()
-        except ImportError as e:
-            if str(e) == "No module named Scan":
-                logger.warn("run import but no module named Scan - CustomUnpickler")
-                with open(project_file, 'rb') as handle:
-                    (self.scans, self.counts_to_conc_conv, self.data_files, self.ccnc_data, self.smps_data,
-                     self.experiment_date, self.smooth_method, self.base_shift_factor, self.b_limits,
-                     self.asym_limits, self.kappa_calculate_dict, self.alpha_pinene_dict, self.stage,
-                     self.valid_kappa_points,
-                     self.save_name) = hf.CustomUnpickler(handle).load()
+        except Exception as e:
+            logger.warn("Old project/run file attempted to load (%s)" % e)
+            self.view.show_error_message("old project file")
+            return
+        # except TypeError as e:
+        #     if str(e) == "__init__() takes exactly 2 arguments (1 given)":
+        #         with open(project_file, 'rb') as handle:
+        #             (self.scans, self.counts_to_conc_conv, self.data_files, self.ccnc_data, self.smps_data,
+        #              self.experiment_date, self.smooth_method, self.base_shift_factor, self.b_limits,
+        #              self.asym_limits, self.kappa_calculate_dict, self.alpha_pinene_dict, self.stage,
+        #              self.valid_kappa_points,
+        #              self.save_name) = hf.CustomUnpickler(handle).load()
+        # except ImportError as e:
+        #     if str(e) == "No module named Scan":
+        #         logger.warn("run import but no module named Scan - CustomUnpickler")
+        #         with open(project_file, 'rb') as handle:
+        #             (self.scans, self.counts_to_conc_conv, self.data_files, self.ccnc_data, self.smps_data,
+        #              self.experiment_date, self.smooth_method, self.base_shift_factor, self.b_limits,
+        #              self.asym_limits, self.kappa_calculate_dict, self.alpha_pinene_dict, self.stage,
+        #              self.valid_kappa_points,
+        #              self.save_name) = hf.CustomUnpickler(handle).load()
 
         # Set up the View
         self.view.reset_view()
@@ -864,6 +870,6 @@ class Controller(object):
                     a_row = [a_key] + aSS + ["Excluded point"]
                 data_to_export.append(a_row)
         df = pd.DataFrame(np.asarray(data_to_export),
-                          columns=["Super Saturation(%)", "dp(nm)", "K/app", "K/ana", "deviation(%", "Status"])
+                          columns=["Supersaturation(%)", "dp(nm)", "K/app", "K/ana", "deviation(%", "Status"])
         df.to_csv(export_filename, index=False)
         self.view.show_information_message(title="Export Data", text="Export to " + export_filename + " successful!")

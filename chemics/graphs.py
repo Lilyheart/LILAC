@@ -256,7 +256,7 @@ class KappaGraph(FigureCanvas):
         # set up the figure and axes
         # self.ax.set_title("")  # TODO
         self.ax.set_xlabel("Dry diameter(nm)")
-        self.ax.set_ylabel("Super Saturation(%)")
+        self.ax.set_ylabel("Supersaturation(%)")
         # set up klines  # TODO See if csv file is an issue for standalone exe
         self.klines_data = pd.read_csv(StringIO(data.klines.csv_codes), header=1)
         self.header = self.klines_data.columns

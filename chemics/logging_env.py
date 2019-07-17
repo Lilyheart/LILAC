@@ -2,7 +2,7 @@ import logging
 import logging.config
 
 
-def configure_logger_env(log_path):
+def configure_logger_env():
     logging.config.dictConfig({
         'version': 1,
         'formatters': {
@@ -15,14 +15,6 @@ def configure_logger_env(log_path):
                 'class': 'logging.StreamHandler',
                 'formatter': 'formatter',
                 'stream': 'ext://sys.stdout'
-            },
-            'file_handler': {
-                'level': 'DEBUG',
-                'class': 'logging.handlers.RotatingFileHandler',
-                'formatter': 'formatter',
-                'filename': log_path,
-                'maxBytes': 1024,
-                'backupCount': 3
             }
         },
         'loggers': {
