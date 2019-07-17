@@ -182,7 +182,6 @@ class RatioOverDiameterGraph(FigureCanvas):
         self.ccn_cn_ratio_corrected_points, = self.ax.plot([0], [0], 'o', label="CCNC/SMPS corrected")
         self.normalized_conc, = self.ax.plot([0], [0], label="normalized conc (dN/dlogDp)", linestyle='dashed')
         self.sigmoid_lines = []
-        self.sigmoid_cross_lines = []
         self.ax.axhline(1, linestyle='dashed')
         self.ax.axhline(0.5, color="gray")
         # plot graph
@@ -235,14 +234,10 @@ class RatioOverDiameterGraph(FigureCanvas):
         # -- Remove old lines
         for i in range(len(self.sigmoid_lines)):
             self.ax.lines.remove(self.sigmoid_lines[i])
-            self.ax.lines.remove(self.sigmoid_cross_lines[i])
         # -- Determine new lines
         sigmoid_y_vals = a_scan.sigmoid_curve_y
         self.sigmoid_lines = []
-        self.sigmoid_cross_lines = []
         for i in range(len(sigmoid_y_vals)):
-            cross = np.interp(.5, a_scan.sigmoid_curve_y[i], a_scan.sigmoid_curve_x[i])
-            self.sigmoid_cross_lines.append(self.ax.axvline(cross, color='grey'))
             self.sigmoid_lines.append(self.ax.plot(a_scan.sigmoid_curve_x[i], a_scan.sigmoid_curve_y[i],
                                                    label="Sigmoid Line #" + (str(i + 1)), color="C"+str(i+3))[0])
         # Other graph details

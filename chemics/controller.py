@@ -237,13 +237,13 @@ class Controller(object):
                 try:
                     sigmoid_fit.get_sigmoid_info(a_scan)
                 except NotImplementedError as e:
-                    logger.warn("Scan: %d - NotImplementedError: %s" % (i, str(e)))  # TEMP
+                    logger.warn("Scan: %d - NotImplementedError: %s" % (i, str(e)))
                 except OverflowError as e:
-                    logger.warn("Scan: %d - OverflowError: %s" % (i, str(e)))  # TEMP
+                    logger.warn("Scan: %d - OverflowError: %s" % (i, str(e)))
                 except RuntimeWarning as e:
-                    logger.warn("Scan: %d - RuntimeWarning Error: %s" % (i, str(e)))  # TEMP
+                    logger.warn("Scan: %d - RuntimeWarning Error: %s" % (i, str(e)))
                 except RuntimeError as e:
-                    logger.warn("Scan: %d - RuntimeError Error: %s" % (i, str(e)))  # TEMP
+                    logger.warn("Scan: %d - RuntimeError Error: %s" % (i, str(e)))
 
         self.view.close_progress_bar()
         self.switch_to_scan(0)

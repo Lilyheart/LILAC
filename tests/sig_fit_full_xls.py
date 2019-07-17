@@ -33,7 +33,6 @@ def get_sigmoid_info(corrected_smps_counts, corrected_ccnc_counts, ave_smps_diam
     :return:
     :rtype:
     """
-    # TEMP - Remove scan_index variable
     # TODO Change names
     df = pd.DataFrame({"diameter": ave_smps_diameters,
                        "log_diameter": np.log(ave_smps_diameters),
