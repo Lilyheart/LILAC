@@ -25,7 +25,7 @@ class ConcOverTimeRawDataGraph(FigureCanvas):
         # set up the figure and axes
         self.ax.set_title("Raw SMPS and CCNC concentration over time")
         self.ax.set_xlabel("Scan time(s)")
-        self.ax.set_ylabel("Concentration ($\\mathregular{1/cm^3}$)")
+        self.ax.set_ylabel("Concentration (#$\\mathregular{/cm^3}$)")
         # set up empty data lines
         self.smps_points, = self.ax.plot([], [], label="Raw SMPS")
         self.ccnc_points, = self.ax.plot([], [], label="Raw CCNC")
@@ -72,7 +72,7 @@ class ConcOverTimeSmoothGraph(FigureCanvas):
         # set up the figure and axes
         self.ax.set_title("Smoothed SMPS and CCNC concentration over scan time")
         self.ax.set_xlabel("Scan time(s)")
-        self.ax.set_ylabel("Concentration ($\\mathregular{1/cm^3}$)")
+        self.ax.set_ylabel("Concentration (#$\\mathregular{/cm^3}$)")
         # set up empty data lines
         self.smps_points, = self.ax.plot([], [], label="SMPS")
         self.ccnc_points, = self.ax.plot([], [], label="CCNC")
@@ -195,6 +195,7 @@ class RatioOverDiameterGraph(FigureCanvas):
         :param Scan a_scan: The scan object to update the graph with
         """
         # Get data from the scan
+        status = a_scan.is_valid()
         ccnc = a_scan.processed_ccnc_counts
         smps = a_scan.processed_smps_counts
         ave_smps_dp = a_scan.ave_smps_diameters
@@ -205,6 +206,10 @@ class RatioOverDiameterGraph(FigureCanvas):
         # QUESTION K comment: if there are less normalized concs data, then trim the other data list
         # Calculate the ratios
         ratio = []
+        if status:
+            self.ax.set_facecolor('xkcd:white')
+        else:
+            self.ax.set_facecolor('xkcd:salmon')
         for i in range(len(smps)):
             ratio.append(hf.safe_div(ccnc[i], smps[i]))
         # QUESTION K comment: We only need data within 0 to 1.5.

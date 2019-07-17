@@ -15,6 +15,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -->
 
 ## [Unreleased]
+### Added 
+- Background color on sigmoid graph when scan is invalid
+- Activation percentage
+
+### Fixed 
+- Graph titles
+- Sigmoid parameter rounding and step values
+- Super saturation updated to supersaturation
+
 ### Removed
 - Backwards compability of project run files
 
