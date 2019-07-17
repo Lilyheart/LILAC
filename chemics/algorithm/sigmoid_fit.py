@@ -232,8 +232,7 @@ def get_all_fit_parameters(a_scan):
                                                   ydata=y_corr_cs_ratio,
                                                   p0=init_params,
                                                   bounds=bounds)
-
-            popt_arr.append(popt)
+            popt_arr.append(np.round(popt, 4))
         except OverflowError as e:
             raise OverflowError("optimize.curve_fit: " + str(e))
         except RuntimeWarning as e:
@@ -252,7 +251,9 @@ def get_all_fit_curves(a_scan):
     :param Scan a_scan:
     """
     df = a_scan.sig_df.copy()
-    popt = a_scan.sigmoid_params
+    # Round popt as sigmoid parameters screen will truncate at 4 decimal places
+    # This will ensure identical Dp50 calculations
+    popt = np.round(a_scan.sigmoid_params, 4)
 
     dp50s = []
     sigmoid_curve_x = []
@@ -287,7 +288,10 @@ def get_all_fit_curves(a_scan):
         except RuntimeWarning as e:
             raise RuntimeWarning(e)
 
-        dp50s.append(np.exp(sigmoid_at_val(0.5, *popt[peak_num])))
+        dp50 = np.exp(sigmoid_at_val(0.5, *popt[peak_num]))
+        # Round dp50 as sigmoid parameters screen will truncate at 1 decimal places
+        # This will ensure identical Dp50 calculations
+        dp50s.append(round(dp50, 1))
         sigmoid_curve_x.append(dm_x)
         sigmoid_curve_y.append(dm_y)
 

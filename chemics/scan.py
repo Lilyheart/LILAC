@@ -543,4 +543,4 @@ class Scan(object):
         mean_sample_flow = sum(self.processed_ccnc_sample_flow[0:self.scan_up_time])
         mean_sample_flow /= len((self.processed_ccnc_sample_flow[0:self.scan_up_time]))
 
-        return round(((ccnc_uptime / smps_uptime) * (cpc_sample_flow_rate/(mean_sample_flow/1000))*100), 2)
+        return round(((ccnc_uptime / smps_uptime) * (cpc_sample_flow_rate/(mean_sample_flow/1000))*100), 0)

@@ -92,7 +92,7 @@ class DockerScanInformation(Qg.QFrame):
         # -- add the activation indicator
         self.activationpercent = Qg.QLabel("-%")
         self.activationpercent.setAlignment(Qc.Qt.AlignRight)
-        form_layout.addRow("Activation (%)", self.activationpercent)
+        form_layout.addRow("Percent Activation", self.activationpercent)
         # -- add the status of the scan
         self.scan_status = Qg.QLabel("-")
         self.scan_status.setAlignment(Qc.Qt.AlignRight)
