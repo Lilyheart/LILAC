@@ -416,6 +416,7 @@ class DockerSigmoidWidget(Qg.QFrame):
         sig_mid.set_value(np.exp(sigmoid_params[0]))
         curve_max = c_widget.LabeledDoubleSpinbox("Curve Max")  # QUESTION Better label wording
         curve_max.set_maximum(maximum)
+        curve_max.set_setsinglestep(0.01)
         curve_max.set_value(sigmoid_params[1])
         log_grow_rate = c_widget.LabeledDoubleSpinbox("Curve Steepness")  # QUESTION Better label wording
         log_grow_rate.set_maximum(maximum)
