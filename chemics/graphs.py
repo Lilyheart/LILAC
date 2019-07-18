@@ -424,12 +424,14 @@ class KappaGraph(FigureCanvas):
         y_invalid_ks = []
         # print valid_kappa_points
         for a_key in alpha_pinene_dict.keys():
-            for i in alpha_pinene_dict[a_key][-1]:
-                if valid_kappa_points[i, a_key]:
-                    x_valid_ks.append(i)
+            for v in alpha_pinene_dict[a_key][-1]:
+                dp50 = v[0]
+                activation = v[1]
+                if valid_kappa_points[dp50, a_key, activation]:
+                    x_valid_ks.append(dp50)
                     y_valid_ks.append(a_key)
                 else:
-                    x_invalid_ks.append(i)
+                    x_invalid_ks.append(dp50)
                     y_invalid_ks.append(a_key)
         # update the valid points
         self.valid_kappa_points.set_xdata(x_valid_ks)
