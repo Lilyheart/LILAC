@@ -75,7 +75,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         # showMaximized must be at end of init
         self.showMaximized()
         self.reset_view()
-        self.open_files()  # TEMP
+        # self.open_files()  # TEMP
 
     ########
     # Menu #
@@ -104,8 +104,8 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         file_menu.addActions([open_action, save_action, save_as_action, export_data_action])
         file_menu.addSeparator()
         file_menu.addAction(exit_action)
-        export_scans = Qg.QAction('Export Scans', self, triggered=self.export_scans)  # TEMP
-        file_menu.addAction(export_scans)  # TEMP
+        # export_scans = Qg.QAction('Export Scans', self, triggered=self.export_scans)  # TEMP
+        # file_menu.addAction(export_scans)  # TEMP
         self.menuBar().addMenu(file_menu)
         # Add action menu
         action_menu = Qg.QMenu("&Actions")
@@ -192,10 +192,10 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         """
         Opens data files and begins the scan alignment process
         """
-        temp_dir = "../../TestData/200 O3, VOC 100, dry 7-16/Analysis"  # TEMP
+        # temp_dir = "../../TestData/200 O3, VOC 100, dry 7-16/Analysis"  # TEMP
         # noinspection PyCallByClass
-        files = Qg.QFileDialog.getOpenFileNames(self, "Open files", temp_dir, "Data files (*.csv *.txt)")[0]  # TEMP
-        # files = Qg.QFileDialog.getOpenFileNames(self, "Open files", "", "Data files (*.csv *.txt)")[0]
+        # files = Qg.QFileDialog.getOpenFileNames(self, "Open files", temp_dir, "Data files (*.csv *.txt)")[0]  # TEMP
+        files = Qg.QFileDialog.getOpenFileNames(self, "Open files", "", "Data files (*.csv *.txt)")[0]
         if files:
             # read in new files
             self.controller.start(files)
@@ -206,10 +206,10 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
 
         See :class:`~controller.Controller.save_project` in the Controller class.
         """
-        temp_dir = "../../TestData/Saved Chemics Files"  # TEMP
+        # temp_dir = "../../TestData/Saved Chemics Files"  # TEMP
         # noinspection PyCallByClass
-        run_file = Qg.QFileDialog.getOpenFileName(self, "Open file", temp_dir, "Project files (*.chemics)")[0]  # TEMP
-        # run_file = Qg.QFileDialog.getOpenFileName(self, "Open file", "", "Project files (*.chemics)")[0]
+        # run_file = Qg.QFileDialog.getOpenFileName(self, "Open file", temp_dir, "Project files (*.chemics)")[0]  # TEMP
+        run_file = Qg.QFileDialog.getOpenFileName(self, "Open file", "", "Project files (*.chemics)")[0]
         if run_file:
             # read in new files
             self.controller.load_project(run_file)
@@ -279,12 +279,12 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
             self.save_project()
             app.quit()
 
-    def export_scans(self):  # TEMP
-        """
-        # REVIEW Documentation
-        """
-        filename = os.path.basename(os.path.normpath(self.controller.project_folder)) + "-exported"
-        self.controller.export_scans(filename)
+    # def export_scans(self):  # TEMP
+    #     """
+    #     # REVIEW Documentation
+    #     """
+    #     filename = os.path.basename(os.path.normpath(self.controller.project_folder)) + "-exported"
+    #     self.controller.export_scans(filename)
 
     # Action menu items
 
@@ -396,7 +396,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         """
         # TODO issues/23 https://gitlab.bucknell.edu/nrr004/Chemics/issues/23
         # noinspection PyCallByClass
-        Qg.QMessageBox.about(self, "About", "Chemics\n\nVersion 2.2.0")
+        Qg.QMessageBox.about(self, "About", "Chemics\n\nVersion 2.2.1")
 
     @staticmethod
     def open_user_manual():
@@ -555,7 +555,9 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         (title, text, subtext) = (None, None, None)
         # Get text information for message box
         if err_type == "no_data":
+            # noinspection PyUnusedLocal
             title = "Error!"
+            # noinspection PyUnusedLocal
             text = "There is no scan data to perform this action!"
             subtext = "Please import scan data through File/New or import a project through File/Open first!"
         if err_type == "old project file":

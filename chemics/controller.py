@@ -304,7 +304,8 @@ class Controller(object):
                 self.kappa_calculate_dict[ss].append([dp_50, activation, apparent_kappa, analytic_kappa,
                                                       deviation_percentage])
             else:
-                self.kappa_calculate_dict[ss] = ([[dp_50, activation, apparent_kappa, analytic_kappa, deviation_percentage]])
+                self.kappa_calculate_dict[ss] = ([[dp_50, activation, apparent_kappa,
+                                                   analytic_kappa, deviation_percentage]])
             self.valid_kappa_points[(dp_50, ss, activation)] = True
 
     def calculate_average_kappa_values(self):
@@ -314,7 +315,7 @@ class Controller(object):
         # COMBAKL Kappa
         # Calculate the kappa values for each supersaturation percentage. The values are average of all scans with the
         # same supersaturation        self.alpha_pinene_dict = {}
-        for a_key in self.kappa_calculate_dict.keys():  # TEMP [0.8, 0.4]
+        for a_key in self.kappa_calculate_dict.keys():
             scan_list_at_ss = self.kappa_calculate_dict[a_key]
             temp_dp50_list = []
             dp_50s = []
@@ -872,6 +873,7 @@ class Controller(object):
                     a_row = [a_key] + aSS + ["Excluded point"]
                 data_to_export.append(a_row)
         df = pd.DataFrame(np.asarray(data_to_export),
-                          columns=["Supersaturation(%)", "dp(nm)", "% activation", "K/app", "K/ana", "deviation(%", "Status"])
+                          columns=["Supersaturation(%)", "dp(nm)", "% activation",
+                                   "K/app", "K/ana", "deviation(%", "Status"])
         df.to_csv(export_filename, index=False)
         self.view.show_information_message(title="Export Data", text="Export to " + export_filename + " successful!")

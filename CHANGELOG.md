@@ -14,15 +14,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ([#](https://gitlab.bucknell.edu/nrr004/Chemics/issues/))
 -->
 
-## [Unreleased]
+## [2.2.1] - 2019-07-18
 ### Added 
 - Background color on sigmoid graph when scan is invalid
-- Activation percentage
+- Percent Activation ([#32](https://gitlab.bucknell.edu/nrr004/Chemics/issues/32))
 
 ### Fixed 
-- Graph titles
+- Graph titles and tweaks
 - Sigmoid parameter rounding and step values
-- Super saturation updated to supersaturation
+- Super saturation updated to supersaturation ([#55](https://gitlab.bucknell.edu/nrr004/Chemics/issues/55))
 
 ### Removed
 - Backwards compability of project run files

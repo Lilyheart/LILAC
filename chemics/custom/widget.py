@@ -129,17 +129,17 @@ class LabeledDoubleSpinbox(Qg.QWidget):
         h_layout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(h_layout)
 
-    def set_setsinglestep(self, newSingleStep):
+    def set_setsinglestep(self, new_single_step):
         """
         Overloads the QDoubleSpinBox setSingleStep function:
         "When the user uses the arrows to change the spin box's value the value will be incremented/decremented by the
         amount of the PySide.QtGui.QDoubleSpinBox.singleStep() . The default value is 1.0. Setting a
         PySide.QtGui.QDoubleSpinBox.singleStep() value of less than 0 does nothing."
 
-        :param float newSingleStep: The maximum value allowed in the spinner box
+        :param float new_single_step: The maximum value allowed in the spinner box
         """
         # print("%s max_value at: %f" % (self.title, max_value))  # TODO issues/29 end_asymp_dp shows max of 99
-        self.content_box.setSingleStep(newSingleStep)
+        self.content_box.setSingleStep(new_single_step)
 
     def set_maximum(self, max_value):
         """

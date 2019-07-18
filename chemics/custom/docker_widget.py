@@ -202,6 +202,7 @@ class DockerScanInformation(Qg.QFrame):
                 self.scan_status.setStyleSheet("QWidget { color: white; background-color:red}")
                 self.additional_information.setText(curr_scan.get_status_code_descript())
                 self.enable_disable_button.setText("Enable this scan")
+            self.controller.view.ratio_dp_graph.update_graph(curr_scan)
 
     def show_data(self):
         """
@@ -586,4 +587,5 @@ class DockerKappaWidget(Qg.QFrame):
                 dp_50 = aSS[0]
                 activation = aSS[1]
                 app_k = aSS[2]
-                self.kappa_data_table.add_row(ss, dp_50, app_k, self.controller.valid_kappa_points[(dp_50, ss, activation)])
+                self.kappa_data_table.add_row(ss, dp_50, app_k,
+                                              self.controller.valid_kappa_points[(dp_50, ss, activation)])
