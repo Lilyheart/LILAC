@@ -199,6 +199,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         if files:
             # read in new files
             self.controller.start(files)
+            self.setWindowTitle("Chemics: " + self.controller.get_project_name())
 
     def open_project(self):
         """
@@ -213,6 +214,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         if run_file:
             # read in new files
             self.controller.load_project(run_file)
+            self.setWindowTitle("Chemics: " + self.controller.get_project_name())
 
     def save_project(self):
         """
