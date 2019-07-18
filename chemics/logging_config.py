@@ -31,7 +31,13 @@ def configure_logger_env():
             'controller': {
                 'level': 'DEBUG',
                 'handlers': ['stream_handler'],
-                'qualname': 'main',
+                'qualname': 'controller',
+                'propagate': 0
+            },
+            'scan': {
+                'level': 'DEBUG',
+                'handlers': ['stream_handler'],
+                'qualname': 'scan',
                 'propagate': 0
             }
         },
@@ -76,7 +82,13 @@ def configure_logger_frz(log_path):
             'controller': {
                 'level': 'DEBUG',
                 'handlers': ['stream_handler', 'file_handler'],
-                'qualname': 'main',
+                'qualname': 'controller',
+                'propagate': 0
+            },
+            'scan': {
+                'level': 'DEBUG',
+                'handlers': ['stream_handler', 'file_handler'],
+                'qualname': 'scan',
                 'propagate': 0
             }
         },

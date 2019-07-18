@@ -16,7 +16,7 @@ import custom.central_widget as c_central_widget
 import custom.docker_widget as c_dock_widget
 import custom.modal_dialogs as c_modal_dialogs
 import graphs
-import logging_env
+import logging_config
 
 
 ##############
@@ -26,10 +26,10 @@ import logging_env
 # Determine if running in pyinstaller bundle or python environment
 if getattr(sys, 'frozen', False):  # we are running in a |PyInstaller| bundle
     # setup debugger
-    logging_env.configure_logger_frz("Chemicslog-" + datetime.datetime.now().strftime("%Y-%m-%d") + ".log")
+    logging_config.configure_logger_frz("Chemicslog-" + datetime.datetime.now().strftime("%Y-%m-%d") + ".log")
 else:  # we are running in a normal Python environment
     # setup debugger
-    logging_env.configure_logger_env()
+    logging_config.configure_logger_env()
 
 logger = logging.getLogger("main")
 

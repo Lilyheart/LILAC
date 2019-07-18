@@ -2,6 +2,7 @@
 This class creates a scan object stores the data from a single scan.
 """
 # External Packages
+import logging
 import numpy as np
 import scipy.stats
 
@@ -10,6 +11,9 @@ from algorithm import sigmoid_fit
 import constants as const
 import fast_dp_calculator as fast_dp_calculator
 import helper_functions as hf
+
+# Set logger for this module
+logger = logging.getLogger("scan")
 
 
 class Scan(object):
@@ -530,7 +534,11 @@ class Scan(object):
 
     def get_activation(self):
         """
-        # REVIEW Documentation
+        Calculates the activation percentage for each scan on the fly.
+        Updates each time a new shift value is selected
+
+        :return: The activation percentage.  If an exception occurs, returns `"Unknown"`
+        :rtype: str|int
         """
         # Sum of CCNC Uptime across all 20 bins  # TODO Fix
         ccnc_uptime = sum(self.processed_ccnc_count_sums[0:self.scan_up_time])
@@ -543,4 +551,11 @@ class Scan(object):
         mean_sample_flow = sum(self.processed_ccnc_sample_flow[0:self.scan_up_time])
         mean_sample_flow /= len((self.processed_ccnc_sample_flow[0:self.scan_up_time]))
 
-        return round(((ccnc_uptime / smps_uptime) * (cpc_sample_flow_rate/(mean_sample_flow/1000))*100), 0)
+        if smps_uptime == 0 or sum(self.processed_ccnc_sample_flow[0:self.scan_up_time]) == 0:
+            return "Unknown"
+        else:
+            try:
+                return round(((ccnc_uptime / smps_uptime) * (cpc_sample_flow_rate/(mean_sample_flow/1000))*100), 0)
+            except Exception as e:
+                logger.warn("Scan (" + str(self.index) + "):" + str(e))
+                return "Unknown"
