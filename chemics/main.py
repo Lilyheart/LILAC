@@ -243,7 +243,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         """
         # TODO issues/11
         file_name = self.controller.project_folder + "/kappa_"
-        file_name += self.controller.experiment_date.replace("/", ".") + ".csv"
+        file_name += self.controller.get_project_name() + ".csv"
         # noinspection PyCallByClass
         export_file = Qg.QFileDialog.getSaveFileName(self, "Save file", file_name, "*.csv")[0]
         if export_file:

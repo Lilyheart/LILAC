@@ -14,6 +14,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ([#](https://gitlab.bucknell.edu/nrr004/Chemics/issues/))
 -->
 
+## [Unreleased]
+### Fixed
+- Exported Kappa CSV files to now be named after the parent folder like the project run file is.
+
+### Changed
+- Percent Activation to show "Unknown" when unable to calculate
+
 ## [2.2.1] - 2019-07-18
 ### Added 
 - Background color on sigmoid graph when scan is invalid
