@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ([#](https://gitlab.bucknell.edu/nrr004/Chemics/issues/))
 -->
 
-## [Unreleased]
+## [2.2.2] - 2019-07-19
 ### Added
 - Sigmoid fit on single scan
 - Sigmoid status on sigmoid parameters screen
