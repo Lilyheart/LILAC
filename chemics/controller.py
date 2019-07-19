@@ -191,7 +191,11 @@ class Controller(object):
         for i in range(len(self.scans)):
             a_scan = self.scans[i]
             self.view.update_progress_bar(100 * (i + 1) // len(self.scans))
-            shift_factor = auto_shift.get_auto_shift(a_scan.raw_smps_counts, a_scan.raw_ccnc_counts)
+            shift_factor, err_msg = auto_shift.get_auto_shift(a_scan.raw_smps_counts, a_scan.raw_ccnc_counts)
+            for index, value in enumerate(err_msg):
+                if index == 0:
+                    logger.warn("get_auto_shift error on scan: " + str(i))
+                logger.warn("    (%d) %s" % (index, value))
             self.scans[i].set_shift_factor(shift_factor)
             self.scans[i].generate_processed_data()
         self.view.close_progress_bar()

@@ -5,7 +5,6 @@ Version 2.0
 import logging
 import numpy as np
 import scipy.signal
-import warnings
 
 import constants as const
 import helper_functions as hf
@@ -18,7 +17,7 @@ def get_auto_shift(smps_count, ccnc_count):
     """
     Determines shift values of CCNC and SMPS files and prints the results to the console
 
-    # REVIEW Documentation
+    # REVIEW Documentation - Add return information
 
     :param ndarray smps_count:
     :param ndarray ccnc_count:
@@ -26,6 +25,7 @@ def get_auto_shift(smps_count, ccnc_count):
     # Initalize weight values
     high_smps_weight = const.HIGH_SMPS_WEIGHT
     high_ccnc_weight = const.HIGH_CCNC_WEIGHT
+    error_messages = []
 
     # RESEARCH best way?
     smooth_smps_count = hf.smooth(smps_count, window_length=7, polyorder=2)
@@ -43,7 +43,7 @@ def get_auto_shift(smps_count, ccnc_count):
 
     # Check there are at least two peaks in both datasets.
     if len(smps_peak_index) < 2 or len(ccnc_peak_index) < 2:
-        return 0
+        return 0, error_messages
 
     # determine peak indcies.
     if (len(smps_peak_index) - 1) > np.argmax(smps_peak_heights):
@@ -91,43 +91,46 @@ def get_auto_shift(smps_count, ccnc_count):
         ccnc_middle_data = smooth_ccnc_count[c_s:c_e]
 
         # Get area between the curves
-        np.seterr(all='warn')
-        warnings.filterwarnings('error')
-        try:
-            # -- Set weights
-            smps_weight = np.where(smps_middle_data[:-1] > ccnc_middle_data[:-1], high_smps_weight, 1)
-            ccnc_weight = np.where(ccnc_middle_data[:-1] > smps_middle_data[:-1], high_ccnc_weight, 1)
-            # -- create array to represent x axis
-            x = np.arange(len(smps_middle_data))
-            # -- create array of differences
-            s_subt_c = smps_middle_data - ccnc_middle_data
-            # -- Find if the lines cross
-            data_crosses = np.sign(s_subt_c[:-1] * s_subt_c[1:])
-            # -- Slopes and individual intersects
-            smps_slope = smps_middle_data[1:] - smps_middle_data[:-1]
-            ccnc_slope = ccnc_middle_data[1:] - ccnc_middle_data[:-1]
-            smps_y_isects = smps_middle_data[:-1] - (smps_slope * x[:-1])
-            ccnc_y_isects = ccnc_middle_data[:-1] - (ccnc_slope * x[:-1])
-            # -- Find the x coordinate where the lines cross (the decimal places only)
-            x_line_isects = (ccnc_y_isects - smps_y_isects) / (smps_slope - ccnc_slope)
-            x_line_isects = np.where(data_crosses > 0, 0., x_line_isects)
-            x_line_isects = np.where(data_crosses > 0, 0., x_line_isects - x[:-1])
-            # -- Areas via trapezoidal rule
-            areas_no_isects = 0.5 * abs(s_subt_c[:-1] + s_subt_c[1:]) * ccnc_weight * smps_weight
-            areas_of_isects_l = 0.5 * abs(s_subt_c[:-1]) * x_line_isects * ccnc_weight * smps_weight
-            areas_of_isects_r = 0.5 * abs(s_subt_c[1:]) * (1 - x_line_isects) * ccnc_weight * smps_weight
-            areas_of_isects = areas_of_isects_l + areas_of_isects_r
-            total_area.append(np.sum(np.where(data_crosses > 0, areas_no_isects, areas_of_isects)))
-        except RuntimeWarning as e:
-            # Catch divide by zero errors
-            if len(total_area) == 0:
-                total_area.append(999999999999)
-            else:
-                logger.error(e, exc_info=True)
-                total_area.append(total_area[-1])
+        with np.errstate(all='raise'):
+            try:
+                # -- Set weights
+                smps_weight = np.where(smps_middle_data[:-1] > ccnc_middle_data[:-1], high_smps_weight, 1)
+                ccnc_weight = np.where(ccnc_middle_data[:-1] > smps_middle_data[:-1], high_ccnc_weight, 1)
+                # -- create array to represent x axis
+                x = np.arange(len(smps_middle_data))
+                # -- create array of differences
+                s_subt_c = smps_middle_data - ccnc_middle_data
+                # -- Find if the lines cross
+                data_crosses = np.sign(s_subt_c[:-1] * s_subt_c[1:])
+                # -- Slopes and individual intersects
+                smps_slope = smps_middle_data[1:] - smps_middle_data[:-1]
+                ccnc_slope = ccnc_middle_data[1:] - ccnc_middle_data[:-1]
+                smps_y_isects = smps_middle_data[:-1] - (smps_slope * x[:-1])
+                ccnc_y_isects = ccnc_middle_data[:-1] - (ccnc_slope * x[:-1])
+                # -- Find the x coordinate where the lines cross (the decimal places only)
+                x_line_isects = (ccnc_y_isects - smps_y_isects) / (smps_slope - ccnc_slope)
+                x_line_isects = np.where(data_crosses > 0, 0., x_line_isects)
+                x_line_isects = np.where(data_crosses > 0, 0., x_line_isects - x[:-1])
+                # -- Areas via trapezoidal rule
+                areas_no_isects = 0.5 * abs(s_subt_c[:-1] + s_subt_c[1:]) * ccnc_weight * smps_weight
+                areas_of_isects_l = 0.5 * abs(s_subt_c[:-1]) * x_line_isects * ccnc_weight * smps_weight
+                areas_of_isects_r = 0.5 * abs(s_subt_c[1:]) * (1 - x_line_isects) * ccnc_weight * smps_weight
+                areas_of_isects = areas_of_isects_l + areas_of_isects_r
+                total_area.append(np.sum(np.where(data_crosses > 0, areas_no_isects, areas_of_isects)))
+            except Exception as e:
+                # Catch divide by zero errors
+                error_message = "Shift issue on iteration " + str(iteration)
+                error_message += " (" + str(e) + ")"
+                if len(total_area) == 0:
+                    total_area.append(999999999999)
+                    error_message += " [set to 9's]"
+                else:
+                    total_area.append(total_area[-1])
+                    error_message += " [set to prior value]"
+                error_messages.append(error_message)
 
     if len(total_area) == 0:
-        return 0
+        return 0, error_messages
     else:
         proposed_shift = ccnc_first_peak - smps_first_peak - np.argmin(total_area)
-        return proposed_shift
+        return proposed_shift, error_messages
