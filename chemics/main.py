@@ -271,6 +271,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         if self.controller.data_files is None:
             app.quit()
         dialog = Qg.QMessageBox()
+        dialog.setWindowTitle("Exit")
         dialog.setText("Do you really wish to exit the program")
         dialog.setIcon(Qg.QMessageBox.Question)
         yes_button = dialog.addButton("Exit", Qg.QMessageBox.AcceptRole)
@@ -372,6 +373,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         Shows the dialog box that asked the usef if they want to let the program fit the sigmoid line automatically.
         """
         message = Qg.QMessageBox()
+        message.setWindowTitle("Sigmoid Fit")
         message.setText("Are you sure you want to let the program fit the sigmoid lines for you?")
         message.setIcon(Qg.QMessageBox.Question)
         message.setStandardButtons(Qg.QMessageBox.Yes | Qg.QMessageBox.No)
@@ -542,6 +544,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         :rtype: Qg.QProgressDialog
         """
         progress_dialog = Qg.QProgressDialog("Starting..", "Cancel", 0, 100, self)
+        progress_dialog.setWindowTitle("Progress...")
         progress_dialog.setWindowModality(Qc.Qt.WindowModal)
         progress_dialog.setAutoReset(True)
         progress_dialog.setAutoClose(True)
@@ -581,6 +584,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
 
         :param str err_type: The type of error
         """
+        # TODO - update to match show info message
         (title, text, subtext) = (None, None, None)
         # Get text information for message box
         if err_type == "no_data":
@@ -589,7 +593,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
             # noinspection PyUnusedLocal
             text = "There is no scan data to perform this action!"
             subtext = "Please import scan data through File/New or import a project through File/Open first!"
-        if err_type == "old project file":
+        elif err_type == "old project file":
             title = "Old File"
             text = "This file was created with an older version and " \
                    "can only be opened with an older version of this application"
@@ -627,7 +631,8 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         # DOCQUESTION English?
         # TODO issues/30  New Counts2ConcConv formula
         # noinspection PyCallByClass
-        cc = Qg.QInputDialog.getDouble(self, "Counts2ConcConv", "Counts2ConcConv", value=1.2, decimals=2)
+        cc = Qg.QInputDialog.getDouble(self, "Counts to concentration conversion", "Counts to concentration conversion",
+                                       value=1.2, decimals=2)
         if cc[1]:
             return float(cc[0])
         else:
@@ -640,6 +645,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         processed.
         """
         dialog = Qg.QMessageBox()
+        dialog.setWindowTitle("Sigmoid Fit")
         dialog.setText("Select your preferred way to fit the sigmoid line to the data")
         dialog.setInformativeText("Do you want to manually fit the sigmoid lines, or let the program do it for you?")
         dialog.setIcon(Qg.QMessageBox.Question)
