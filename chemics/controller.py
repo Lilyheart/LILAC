@@ -289,11 +289,14 @@ class Controller(object):
             activation = a_scan.get_activation()
             for j in range(len(a_scan.dp50)):
                 dp_50 = a_scan.dp50[j]
-                ss_and_dps.append([ss, dp_50, activation])
+                # REVIEW kset Create ss_and_dps
+                ss_and_dps.append([i, ss, dp_50, activation])
         for i in range(len(ss_and_dps)):
-            ss = float(ss_and_dps[i][0])
-            dp_50 = float(ss_and_dps[i][1])
-            activation = float(ss_and_dps[i][2])
+            # REVIEW kset Create use ss_and_dps
+            scan_index = float(ss_and_dps[i][0])
+            ss = float(ss_and_dps[i][1])
+            dp_50 = float(ss_and_dps[i][2])
+            activation = float(ss_and_dps[i][3])
             row_index = int(math.floor(dp_50 - 9))
             match_row = list(lookup.iloc[row_index][1:])
             value_row = list(lookup.iloc[0][1:])
@@ -312,12 +315,15 @@ class Controller(object):
             analytic_kappa = (4 * a_param ** 3) / (27 * (dp_50 * 0.000000001) ** 3 * math.log(ss / 100 + 1) ** 2)
             deviation_percentage = (apparent_kappa - analytic_kappa) / apparent_kappa * 100
             if ss in self.kappa_calculate_dict.keys():
-                self.kappa_calculate_dict[ss].append([dp_50, activation, apparent_kappa, analytic_kappa,
-                                                      deviation_percentage])
+                # REVIEW kset set kappa dict values, key = ss
+                self.kappa_calculate_dict[ss].append([scan_index, dp_50, apparent_kappa, activation,
+                                                      analytic_kappa, deviation_percentage])
             else:
-                self.kappa_calculate_dict[ss] = ([[dp_50, activation, apparent_kappa,
+                # REVIEW kset set kappa dict values, key = ss
+                self.kappa_calculate_dict[ss] = ([[scan_index, dp_50, apparent_kappa, activation,
                                                    analytic_kappa, deviation_percentage]])
-            self.valid_kappa_points[(dp_50, ss, activation)] = True
+            # REVIEW kset set value kappa points key, value = true
+            self.valid_kappa_points[(scan_index, dp_50, ss, activation)] = True
 
     def calculate_average_kappa_values(self):
         """
@@ -326,6 +332,7 @@ class Controller(object):
         # COMBAKL Kappa
         # Calculate the kappa values for each supersaturation percentage. The values are average of all scans with the
         # same supersaturation        self.alpha_pinene_dict = {}
+        # REVIEW kset use kappa dict
         for a_key in self.kappa_calculate_dict.keys():
             scan_list_at_ss = self.kappa_calculate_dict[a_key]
             temp_dp50_list = []
@@ -334,12 +341,14 @@ class Controller(object):
             analytical_kappas = []
             mean_of_stds = []
             for aSS in scan_list_at_ss:
-                dp_50s.append((aSS[0], aSS[1]))
-                if self.valid_kappa_points[(aSS[0], a_key, aSS[1])]:
-                    temp_dp50_list.append(aSS[0])
+                # scan_index, dp_50, apparent_kappa, activation, analytic_kappa, deviation_percentage
+                dp_50s.append((aSS[0], aSS[1], aSS[3]))
+                # REVIEW kset use valid kappa points
+                if self.valid_kappa_points[(aSS[0], aSS[1], a_key, aSS[3])]:
+                    temp_dp50_list.append(aSS[1])
                     apparent_kappas.append(aSS[2])
-                    analytical_kappas.append(aSS[3])
-                    mean_of_stds.append(aSS[4])
+                    analytical_kappas.append(aSS[4])
+                    mean_of_stds.append(aSS[5])
             mean_dp = np.average(temp_dp50_list)
             std_dp = np.std(temp_dp50_list)
             mean_app = np.average(apparent_kappas)
@@ -875,16 +884,18 @@ class Controller(object):
         """
         # TODO issues/20 issues/21 issues/22 issues/11
         data_to_export = []
+        # REVIEW kset use kappa dist
         for a_key in self.kappa_calculate_dict.keys():
             a_scan = self.kappa_calculate_dict[a_key]
             for aSS in a_scan:
-                if self.valid_kappa_points[(aSS[0], a_key, aSS[1])]:
-                    a_row = [a_key] + aSS + ["Included point"]
+                # REVIEW kset use valid_kappa_points
+                if self.valid_kappa_points[(aSS[0], aSS[1], a_key, aSS[3])]:
+                    a_row = [a_key] + aSS[:-2] + ["Included point"]
                 else:
-                    a_row = [a_key] + aSS + ["Excluded point"]
+                    a_row = [a_key] + aSS[:-2] + ["Excluded point"]
                 data_to_export.append(a_row)
         df = pd.DataFrame(np.asarray(data_to_export),
-                          columns=["Supersaturation(%)", "dp(nm)", "% activation",
-                                   "K/app", "K/ana", "deviation(%", "Status"])
+                          columns=["Supersaturation(%)", "Scan Index", "dp(nm)",
+                                   "K/app", "% activation", "Status"])
         df.to_csv(export_filename, index=False)
         self.view.show_information_message(title="Export Data", text="Export to " + export_filename + " successful!")

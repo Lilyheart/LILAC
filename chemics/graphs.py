@@ -423,11 +423,14 @@ class KappaGraph(FigureCanvas):
         x_invalid_ks = []
         y_invalid_ks = []
         # print valid_kappa_points
+        # REVIEW kset use alpha pinene
         for a_key in alpha_pinene_dict.keys():
             for v in alpha_pinene_dict[a_key][-1]:
-                dp50 = v[0]
-                activation = v[1]
-                if valid_kappa_points[dp50, a_key, activation]:
+                scan_index = v[0]
+                dp50 = v[1]
+                activation = v[2]
+                # REVIEW kset use valid kappa points
+                if valid_kappa_points[scan_index, dp50, a_key, activation]:
                     x_valid_ks.append(dp50)
                     y_valid_ks.append(a_key)
                 else:

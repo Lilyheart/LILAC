@@ -18,9 +18,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Sigmoid fit on single scan
 - Sigmoid status on sigmoid parameters screen
+- Scan index to Kappa Table
+- Scan index to Kappa CSV
+- Window shows parent folder of raw data location
 
 ### Fixed
 - Exported Kappa CSV files to now be named after the parent folder like the project run file is.
+- Various window titles
 
 ### Changed
 - Percent Activation to show "Unknown" when unable to calculate

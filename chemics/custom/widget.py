@@ -171,8 +171,8 @@ class KappaTableWidget(Qg.QTableWidget):
         # COMBAKL Kappa
         super(self.__class__, self).__init__()
         self.kappa_docker = kappa_docker
-        self.setColumnCount(4)
-        self.setHorizontalHeaderLabels(["Status", "ss", "dp50", "app-K"])
+        self.setColumnCount(5)
+        self.setHorizontalHeaderLabels(["Scan", "Status", "ss", "Dp50", "Kappa Apparent"])
         self.setSelectionBehavior(Qg.QTableWidget.SelectRows)
         # noinspection PyUnresolvedReferences
         self.itemClicked.connect(self.row_click)  # RESEARCH connect unresolved ref
@@ -180,14 +180,19 @@ class KappaTableWidget(Qg.QTableWidget):
         self.itemChanged.connect(self.toggle_row)  # RESEARCH connect unresolved ref
         # noinspection PyUnresolvedReferences
         self.itemDoubleClicked.connect(self.row_click)  # RESEARCH connect unresolved ref
+        self.verticalHeader().setVisible(False)
+        self.setColumnWidth(0, 40)
         self.setColumnWidth(1, 60)
-        self.setColumnWidth(2, 80)
-        self.setColumnWidth(3, 80)
+        self.setColumnWidth(2, 40)
+        self.setColumnWidth(3, 70)
+        self.horizontalHeader().setStretchLastSection(True)
 
-    def add_row(self, ss, dp_50, app_k, status):
+    def add_row(self, scan_index, ss, dp_50, app_k, status):
         """
         # REVIEW Documentation
 
+        :param scan_index:
+        :type scan_index:
         :param ss:
         :type ss:
         :param dp_50:
@@ -200,13 +205,16 @@ class KappaTableWidget(Qg.QTableWidget):
         # COMBAKL Kappa
         self.insertRow(self.rowCount())
         current_row = self.rowCount() - 1
+        scan_index = Qg.QTableWidgetItem(str(int(scan_index)))
+        scan_index.setFlags(Qc.Qt.ItemIsEnabled | Qc.Qt.ItemIsSelectable)
+        scan_index.setTextAlignment(Qc.Qt.AlignCenter)
         status_box = Qg.QTableWidgetItem()
         if status:
             status_box.setCheckState(Qc.Qt.Checked)
-            status_box.setText("Included")
+            status_box.setText("Inc")
         else:
             status_box.setCheckState(Qc.Qt.Unchecked)
-            status_box.setText("Excluded")
+            status_box.setText("Exc")
         status_box.setTextAlignment(Qc.Qt.AlignCenter)
         ss = Qg.QTableWidgetItem(str(ss))
         ss.setFlags(Qc.Qt.ItemIsEnabled | Qc.Qt.ItemIsSelectable)
@@ -214,15 +222,16 @@ class KappaTableWidget(Qg.QTableWidget):
         dp_50 = Qg.QTableWidgetItem(str(dp_50))
         dp_50.setFlags(Qc.Qt.ItemIsEnabled | Qc.Qt.ItemIsSelectable)
         dp_50.setTextAlignment(Qc.Qt.AlignCenter)
-        app_k = Qg.QTableWidgetItem(str(app_k))
+        app_k = Qg.QTableWidgetItem(str(round(app_k, 2)))
         app_k.setFlags(Qc.Qt.ItemIsEnabled | Qc.Qt.ItemIsSelectable)
         app_k.setTextAlignment(Qc.Qt.AlignCenter)
-        self.setItem(current_row, 0, status_box)
-        self.setItem(current_row, 1, ss)
-        self.setItem(current_row, 2, dp_50)
-        self.setItem(current_row, 3, app_k)
-        self.sortByColumn(1, Qc.Qt.AscendingOrder)
+        self.setItem(current_row, 0, scan_index)
+        self.setItem(current_row, 1, status_box)
+        self.setItem(current_row, 2, ss)
+        self.setItem(current_row, 3, dp_50)
+        self.setItem(current_row, 4, app_k)
         self.sortByColumn(2, Qc.Qt.AscendingOrder)
+        self.sortByColumn(3, Qc.Qt.AscendingOrder)
 
     def row_click(self, item):
         """

@@ -597,8 +597,9 @@ class DockerKappaWidget(Qg.QFrame):
             a_scan = self.controller.kappa_calculate_dict[a_key]
             for aSS in a_scan:
                 ss = a_key
-                dp_50 = aSS[0]
-                activation = aSS[1]
+                scan_index = aSS[0]
+                dp_50 = aSS[1]
                 app_k = aSS[2]
-                self.kappa_data_table.add_row(ss, dp_50, app_k,
-                                              self.controller.valid_kappa_points[(dp_50, ss, activation)])
+                activation = aSS[3]
+                self.kappa_data_table.add_row(scan_index, ss, dp_50, app_k,
+                                              self.controller.valid_kappa_points[(scan_index, dp_50, ss, activation)])

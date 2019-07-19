@@ -21,11 +21,23 @@ HIGH_SMPS_WEIGHT = 1
 # is greater, is multipled by this weight.  This value was determined empirically.
 HIGH_CCNC_WEIGHT = 2.2
 
-#:
+#: # REVIEW Documentation
 SIGMOID_MIN_DIAMETER = 9.0
+
+#: # REVIEW Documentation
 SIGMOID_MAX_DIAMETER = 200.0
+
+#: # REVIEW Documentation
 SIGMOID_ZERO_COUNT_THRESH = 0.01
+
+#: # REVIEW Documentation
 SIGMOID_MIN_VALID_RATIO = 0.0
+
+#: # REVIEW Documentation
 SIGMOID_MAX_VALID_RATIO = 1.2
+
+#: # REVIEW Documentation
 SIGMOID_MIN_PEAK_PROMINENCE = 0.75
+
+#: # REVIEW Documentation
 SIGMOID_MIN_PEAK_WIDTH = 4
