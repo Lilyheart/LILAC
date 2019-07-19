@@ -49,6 +49,7 @@ class Scan(object):
         self.version = "2.2.1"
         self.status = 1
         self.status_code = 0
+        self.sigmoid_status = None
         self.counts_to_conc = 0.0
         self.index = index
         self.start_time = None

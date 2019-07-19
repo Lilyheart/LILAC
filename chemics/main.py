@@ -113,11 +113,13 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         auto_align_action = Qg.QAction('Auto &Shift', self, triggered=self.show_auto_align_dialog)
         correct_charges = Qg.QAction('Correct Charges &All Scans', self, triggered=self.correct_charges)
         correct_charges_one = Qg.QAction('Correct Charges &One Scan', self, triggered=self.correct_charges_one)
-        auto_fit_action = Qg.QAction('Auto &Fit Sigmoid', self, triggered=self.show_auto_fit_sigmoid_dialog)
+        auto_fit_action = Qg.QAction('Auto &Fit Sigmoid All Scans', self, triggered=self.show_auto_fit_sigmoid_dialog)
+        auto_fit_one_action = Qg.QAction('Auto F&it Sigmoid One Scan', self, triggered=self.auto_fit_sigmoid_one)
         cal_kappa_action = Qg.QAction('&Calculate Kappa', self, triggered=self.show_kappa_params_dialog)
         action_menu.addAction(preview_all_action)
         action_menu.addSeparator()
-        action_menu.addActions([auto_align_action, correct_charges, correct_charges_one, auto_fit_action])
+        action_menu.addActions([auto_align_action, correct_charges, correct_charges_one,
+                                auto_fit_action, auto_fit_one_action])
         action_menu.addSeparator()
         action_menu.addAction(cal_kappa_action)
         self.menuBar().addMenu(action_menu)
@@ -168,7 +170,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
             action_list = self.action_menu.actions()  # TODO - Find better way to reference
             action_list[4].setDisabled(True)  # Disable Correct charges one scan
             action_list[5].setDisabled(True)  # Disable Autofit sigmoid
-            action_list[7].setDisabled(True)  # Disable calculate Kappa
+            action_list[8].setDisabled(True)  # Disable calculate Kappa
             # window menu - none disable
         elif self.controller.stage == "sigmoid":
             # file menu - none disabled
@@ -358,7 +360,8 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         message.setText("Please confirm that you wish to correct charges for this scan!")
         message.setStandardButtons(Qg.QMessageBox.Yes | Qg.QMessageBox.No)
         message.setDefaultButton(Qg.QMessageBox.No)
-        if message.exec_():
+        ret = message.exec_()
+        if ret == Qg.QMessageBox.Yes:
             curr_scan = self.controller.scans[self.controller.curr_scan_index]
             curr_scan.generate_processed_data()
             curr_scan.correct_charges()
@@ -368,13 +371,37 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         """
         Shows the dialog box that asked the usef if they want to let the program fit the sigmoid line automatically.
         """
-        dialog = Qg.QMessageBox()
-        dialog.setText("Are you sure you want to let the program fit the sigmoid lines for you?")
-        dialog.setIcon(Qg.QMessageBox.Question)
-        dialog.setStandardButtons(Qg.QMessageBox.Yes | Qg.QMessageBox.No)
-        dialog.setDefaultButton(Qg.QMessageBox.No)
-        if dialog.exec_():
-            self.controller.auto_fit_sigmoid()
+        message = Qg.QMessageBox()
+        message.setText("Are you sure you want to let the program fit the sigmoid lines for you?")
+        message.setIcon(Qg.QMessageBox.Question)
+        message.setStandardButtons(Qg.QMessageBox.Yes | Qg.QMessageBox.No)
+        message.setDefaultButton(Qg.QMessageBox.No)
+        ret = message.exec_()
+        if ret == Qg.QMessageBox.Yes:
+            self.controller.auto_fit_sigmoids()
+
+    def auto_fit_sigmoid_one(self):
+        """
+        Shows the dialog box that asked the usef if they want to let the program fit the sigmoid line automatically.
+        """
+        if len(self.controller.scans) == 0:
+            self.show_error_by_type("no_data")
+            return
+        message = Qg.QMessageBox()
+        message.setWindowTitle("Fit Sigmoid One Scan")
+        message.setIcon(Qg.QMessageBox.Question)
+        message.setText("Please confirm that you wish to reset the sigmoid settings and refit for this scan!")
+        message.setStandardButtons(Qg.QMessageBox.Yes | Qg.QMessageBox.No)
+        message.setDefaultButton(Qg.QMessageBox.No)
+        ret = message.exec_()
+        if ret == Qg.QMessageBox.Yes:
+            curr_scan = self.controller.scans[self.controller.curr_scan_index]
+            curr_scan.generate_processed_data()
+            curr_scan.correct_charges()
+            self.controller.auto_fit_one_sigmoid(self.controller.curr_scan_index)
+            self.controller.switch_to_scan(self.controller.curr_scan_index)
+            self.controller.stage = "kappa"
+            self.action_menu.actions()[8].setDisabled(False)
 
     def show_kappa_params_dialog(self):
         """
@@ -620,7 +647,7 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         auto_button = dialog.addButton("Auto", Qg.QMessageBox.AcceptRole)
         dialog.exec_()
         if dialog.clickedButton() == auto_button:
-            self.controller.auto_fit_sigmoid()
+            self.controller.auto_fit_sigmoids()
 
     def show_sigmoid_docker(self):
         """

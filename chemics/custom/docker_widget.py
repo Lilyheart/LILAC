@@ -289,6 +289,10 @@ class DockerSigmoidWidget(Qg.QFrame):
         self.scan_status = Qg.QLabel("-")
         self.scan_status.setAlignment(Qc.Qt.AlignRight)
         form_layout.addRow("Scan Status", self.scan_status)
+        # -- add the status of the sigmoid
+        self.sigmoid_status = Qg.QLabel("-")
+        self.sigmoid_status.setAlignment(Qc.Qt.AlignRight)
+        form_layout.addRow("Sigmoid Fit Status", self.sigmoid_status)
         # -- add the params area
         self.sigmoid_line_spinbox = c_widget.ArrowSpinBox(forward=True)
         form_layout.addRow("Number of sigmoid lines", self.sigmoid_line_spinbox)
@@ -348,6 +352,15 @@ class DockerSigmoidWidget(Qg.QFrame):
         else:
             self.scan_status.setText("INVALID")
             self.scan_status.setStyleSheet("QWidget { color: white; background-color:red}")
+        if curr_scan.sigmoid_status is None:
+            self.sigmoid_status.setText("Not attempted")
+            self.sigmoid_status.setStyleSheet("QWidget { background-color:None}")
+        elif curr_scan.sigmoid_status:
+            self.sigmoid_status.setText("VALID")
+            self.sigmoid_status.setStyleSheet("QWidget { background-color:None}")
+        else:
+            self.sigmoid_status.setText("INVALID")
+            self.sigmoid_status.setStyleSheet("QWidget { color: white; background-color:red}")
         # For all dp widgets on the screen, remove them
         for i in range(len(self.dp_widgets)):
             self.rem_params_group_box()
@@ -382,7 +395,7 @@ class DockerSigmoidWidget(Qg.QFrame):
         # If there are still dp_widgets
         if len(self.dp_widgets) > 0:
             # RESEARCH This is too hardcoded to be flexible
-            to_del = self.layout().takeAt(len(self.dp_widgets)+14)
+            to_del = self.layout().takeAt(len(self.dp_widgets)+16)
             del self.dp_widgets[-1]
             to_del.widget().deleteLater()
 
@@ -442,7 +455,7 @@ class DockerSigmoidWidget(Qg.QFrame):
         params_group_box.setLayout(v_layout)
         self.dp_widgets.append([sig_mid, curve_max, log_grow_rate, y_0])
         # RESEARCH Hard code-y values again for first parameter
-        self.layout().insertRow(len(self.dp_widgets)+7, params_group_box)
+        self.layout().insertRow(len(self.dp_widgets)+8, params_group_box)
 
     def apply_sigmoid_params(self):
         """

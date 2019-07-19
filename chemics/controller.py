@@ -223,7 +223,7 @@ class Controller(object):
         self.stage = "sigmoid"
         self.switch_to_scan(0)
 
-    def auto_fit_sigmoid(self):
+    def auto_fit_sigmoids(self):
         """
         Automatically fits the sigmoid lines and updates the display.
         """
@@ -231,22 +231,29 @@ class Controller(object):
         self.view.init_progress_bar("Auto fitting sigmoid...")
         for i in range(len(self.scans)):
             self.view.update_progress_bar(100 * (i + 1) // len(self.scans))
-
-            a_scan = self.scans[i]
-            if a_scan.status_code == 0:
-                try:
-                    sigmoid_fit.get_sigmoid_info(a_scan)
-                except NotImplementedError as e:
-                    logger.warn("Scan: %d - NotImplementedError: %s" % (i, str(e)))
-                except OverflowError as e:
-                    logger.warn("Scan: %d - OverflowError: %s" % (i, str(e)))
-                except RuntimeWarning as e:
-                    logger.warn("Scan: %d - RuntimeWarning Error: %s" % (i, str(e)))
-                except RuntimeError as e:
-                    logger.warn("Scan: %d - RuntimeError Error: %s" % (i, str(e)))
+            self.auto_fit_one_sigmoid(i)
 
         self.view.close_progress_bar()
         self.switch_to_scan(0)
+
+    def auto_fit_one_sigmoid(self, scan_index):
+        a_scan = self.scans[scan_index]
+        if a_scan.status_code == 0:
+            try:
+                sigmoid_fit.get_sigmoid_info(a_scan)
+                a_scan.sigmoid_status = True
+            except NotImplementedError as e:
+                a_scan.sigmoid_status = False
+                logger.warn("Scan: %d - NotImplementedError: %s" % (scan_index, str(e)))
+            except OverflowError as e:
+                a_scan.sigmoid_status = False
+                logger.warn("Scan: %d - OverflowError: %s" % (scan_index, str(e)))
+            except RuntimeWarning as e:
+                a_scan.sigmoid_status = False
+                logger.warn("Scan: %d - RuntimeWarning Error: %s" % (scan_index, str(e)))
+            except RuntimeError as e:
+                a_scan.sigmoid_status = False
+                logger.warn("Scan: %d - RuntimeError Error: %s" % (scan_index, str(e)))
 
     def cal_kappa(self):
         """

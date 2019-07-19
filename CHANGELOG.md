@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -->
 
 ## [Unreleased]
+### Added
+- Sigmoid fit on single scan
+- Sigmoid status on sigmoid parameters screen
+
 ### Fixed
 - Exported Kappa CSV files to now be named after the parent folder like the project run file is.
 
