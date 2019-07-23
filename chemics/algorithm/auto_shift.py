@@ -22,6 +22,8 @@ def get_auto_shift(smps_count, ccnc_count):
     :param ndarray smps_count:
     :param ndarray ccnc_count:
     """
+    if sum(smps_count) == 0 or sum(ccnc_count) == 0:
+        return 0, ["No SMPS and/or CCNC data"]
     # Initalize weight values
     high_smps_weight = const.HIGH_SMPS_WEIGHT
     high_ccnc_weight = const.HIGH_CCNC_WEIGHT

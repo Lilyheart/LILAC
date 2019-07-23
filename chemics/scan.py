@@ -143,6 +143,9 @@ class Scan(object):
                  statistic is greater than 0.05
         :rtype: bool
         """
+        # Ensure there is SMPS data.
+        if sum(self.raw_smps_counts) == 0 or sum(another_scan.raw_smps_counts) == 0:
+            return False
         # Compare two scans using correlation coefficient
         corr_coef_p = scipy.stats.pearsonr(self.raw_smps_counts, another_scan.raw_smps_counts)[1]
         # Compare two scans using Kolmogorov-Smirnov statistic
