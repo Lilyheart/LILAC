@@ -24,12 +24,18 @@ import logging_config
 ##############
 
 # Determine if running in pyinstaller bundle or python environment
+#   Debugger
+#      If frozen, log to both black box and a log file
+#      If running in nomal environment, only display in console
+#   Test Environment
+#      If frozen, do not show any testing features
+#      If running in nomal environment, preset folders and allow exporting of data
 if getattr(sys, 'frozen', False):  # we are running in a |PyInstaller| bundle
-    # setup debugger
     logging_config.configure_logger_frz("Chemicslog-" + datetime.datetime.now().strftime("%Y-%m-%d") + ".log")
+    isTest = False
 else:  # we are running in a normal Python environment
-    # setup debugger
     logging_config.configure_logger_env()
+    isTest = True
 
 logger = logging.getLogger("main")
 
@@ -75,7 +81,8 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         # showMaximized must be at end of init
         self.showMaximized()
         self.reset_view()
-        # self.open_files()  # TEMP
+        if isTest:  # TEST
+            self.open_files()
 
     ########
     # Menu #
@@ -104,8 +111,6 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         file_menu.addActions([open_action, save_action, save_as_action, export_data_action])
         file_menu.addSeparator()
         file_menu.addAction(exit_action)
-        # export_scans = Qg.QAction('Export Scans', self, triggered=self.export_scans)  # TEMP
-        # file_menu.addAction(export_scans)  # TEMP
         self.menuBar().addMenu(file_menu)
         # Add action menu
         action_menu = Qg.QMenu("&Actions")
@@ -137,6 +142,12 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         help_menu.addSeparator()
         help_menu.addAction(about_action)
         self.menuBar().addMenu(help_menu)
+        # Add Test menu
+        test_menu = Qg.QMenu("&Test")
+        if isTest:  # TEST
+            export_scans = Qg.QAction('Export Scans', self, triggered=self.export_scans)
+            test_menu.addAction(export_scans)
+            self.menuBar().addMenu(test_menu)
         return file_menu, action_menu, window_menu
 
     def set_menu_bar_by_stage(self):
@@ -194,10 +205,12 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
         """
         Opens data files and begins the scan alignment process
         """
-        # temp_dir = "../../TestData/200 O3, VOC 100, dry 7-16/Analysis"  # TEMP
+        if isTest:  # TEST
+            open_dir = "../../TestData/Penn State 2019/caryophellen (150), ozone (200), dry seeding/Analysis"
+        else:
+            open_dir = ""
         # noinspection PyCallByClass
-        # files = Qg.QFileDialog.getOpenFileNames(self, "Open files", temp_dir, "Data files (*.csv *.txt)")[0]  # TEMP
-        files = Qg.QFileDialog.getOpenFileNames(self, "Open files", "", "Data files (*.csv *.txt)")[0]
+        files = Qg.QFileDialog.getOpenFileNames(self, "Open files", open_dir, "Data files (*.csv *.txt)")[0]
         if files:
             # read in new files
             self.controller.start(files)
@@ -209,10 +222,12 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
 
         See :class:`~controller.Controller.save_project` in the Controller class.
         """
-        # temp_dir = "../../TestData/Saved Chemics Files"  # TEMP
+        if isTest:  # TEST
+            open_dir = "../../TestData/Saved Chemics Files"
+        else:
+            open_dir = ""
         # noinspection PyCallByClass
-        # run_file = Qg.QFileDialog.getOpenFileName(self, "Open file", temp_dir, "Project files (*.chemics)")[0]  # TEMP
-        run_file = Qg.QFileDialog.getOpenFileName(self, "Open file", "", "Project files (*.chemics)")[0]
+        run_file = Qg.QFileDialog.getOpenFileName(self, "Open file", open_dir, "Project files (*.chemics)")[0]
         if run_file:
             # read in new files
             self.controller.load_project(run_file)
@@ -284,12 +299,13 @@ class MainView(Qg.QMainWindow):  # REVIEW Code Class
             self.save_project()
             app.quit()
 
-    # def export_scans(self):  # TEMP
-    #     """
-    #     # REVIEW Documentation
-    #     """
-    #     filename = os.path.basename(os.path.normpath(self.controller.project_folder)) + "-exported"
-    #     self.controller.export_scans(filename)
+    def export_scans(self):  # TEST
+        """
+        # REVIEW Documentation
+        """
+        if isTest:
+            filename = os.path.basename(os.path.normpath(self.controller.project_folder)) + "-exported"
+            self.controller.export_scans(filename)
 
     # Action menu items
 
