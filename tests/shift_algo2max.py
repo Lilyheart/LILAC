@@ -8,7 +8,7 @@ import scipy.signal
 import warnings
 
 
-def process_autoshift(smps_counts, ccnc_counts, index=None, debug=None, weights=None):
+def process_autoshift(smps_counts, ccnc_counts, scan_up_time, index=None, debug=None, weights=None):
     """
     Determines shift values of CCNC and SMPS files and prints the results to the console
 
@@ -79,36 +79,26 @@ def process_autoshift(smps_counts, ccnc_counts, index=None, debug=None, weights=
         """
 
         # Get peak information
-        smps_peak_index, smps_peak_heights = scipy.signal.find_peaks(all_pro3_smps_counts[curr_scan],
-                                                                     height=0, distance=20)
-        smps_peak_heights = smps_peak_heights.get("peak_heights", "")
-        ccnc_peak_index, ccnc_peak_heights = scipy.signal.find_peaks(all_pro3_ccnc_counts[curr_scan],
-                                                                     height=0, distance=20)
-        ccnc_peak_heights = ccnc_peak_heights.get("peak_heights", "")
+        # smps_peak_index, smps_peak_heights = scipy.signal.find_peaks(all_pro3_smps_counts[curr_scan],
+        #                                                              height=0, distance=20)
+        # smps_peak_heights = smps_peak_heights.get("peak_heights", "")
+        # ccnc_peak_index, ccnc_peak_heights = scipy.signal.find_peaks(all_pro3_ccnc_counts[curr_scan],
+        #                                                              height=0, distance=20)
+        # ccnc_peak_heights = ccnc_peak_heights.get("peak_heights", "")
+
+        smps_first_peak = np.argmax(all_pro3_smps_counts[scan_index][0:scan_up_time])
+        smps_next_peak = np.argmax(all_pro3_smps_counts[scan_index][scan_up_time:]) + scan_up_time
+        ccnc_first_peak = np.argmax(all_pro3_ccnc_counts[scan_index][0:scan_up_time])
+        ccnc_next_peak = np.argmax(all_pro3_ccnc_counts[scan_index][scan_up_time:]) + scan_up_time
 
         if debug["peaks"]:
             print("===Peak Details===")
-            print(smps_peak_index, smps_peak_heights)
-            print(ccnc_peak_index, ccnc_peak_heights)
-
-        # Check there are at least two peaks in both datasets.
-        if len(smps_peak_index) < 2 or len(ccnc_peak_index) < 2:
-            return curr_scan, 0, "Not enough peak data in scan"
-
-        # determine peak indcies.
-        if (len(smps_peak_index) - 1) > np.argmax(smps_peak_heights):
-            smps_first_peak = smps_peak_index[np.argmax(smps_peak_heights)]
-            smps_next_peak = smps_peak_index[np.argmax(smps_peak_heights) + 1]
-        else:
-            smps_first_peak = smps_peak_index[np.argmax(smps_peak_heights) - 1]
-            smps_next_peak = smps_peak_index[np.argmax(smps_peak_heights)]
-
-        if (len(ccnc_peak_index) - 1) > np.argmax(ccnc_peak_heights):
-            ccnc_first_peak = ccnc_peak_index[np.argmax(ccnc_peak_heights)]
-            ccnc_next_peak = ccnc_peak_index[np.argmax(ccnc_peak_heights) + 1]
-        else:
-            ccnc_first_peak = ccnc_peak_index[np.argmax(ccnc_peak_heights) - 1]
-            ccnc_next_peak = ccnc_peak_index[np.argmax(ccnc_peak_heights)]
+            print([smps_first_peak, smps_next_peak],
+                  [all_pro3_smps_counts[scan_index][smps_first_peak],
+                   all_pro3_smps_counts[scan_index][smps_next_peak]])
+            print([ccnc_first_peak, ccnc_next_peak],
+                  [all_pro3_ccnc_counts[scan_index][ccnc_first_peak],
+                   all_pro3_ccnc_counts[scan_index][ccnc_next_peak]])
 
         # shift the SMPS first peak back by whatever is larger, 3% of the SMPS data size or 3 scans
         smps_first_peak -= max(3, int(len(all_pro3_smps_counts[curr_scan]) * 0.03))

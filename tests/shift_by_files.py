@@ -3,10 +3,17 @@ Run the shift algo by supplying a directory name
 """
 import datetime as dt
 import helper_functions as hf
+import logging
+import logging_config
 import numpy as np
 import os
 import re
 import shift_algo
+from algorithm import auto_shift
+
+# Set logger for this module
+logging_config.configure_logger_env()
+logger = logging.getLogger("controller")
 
 
 def parse_files(f):
@@ -48,15 +55,15 @@ def get_smps_counts(smps_dat, c2c):
     scan_start_times = smps_dat[0]
     # create an empy list of the length needed.
     # noinspection PyUnusedLocal
-    raw_smps_cts = [[] for j in range(len(scan_start_times))]
+    raw_smps_cts = [[] for k in range(len(scan_start_times))]
 
     start_line_index = 0
     end_line_index = len(smps_dat) - 1
     # Find where second data section begins
-    for j in range(3, len(smps_dat)):
+    for m in range(3, len(smps_dat)):
         # Find beginning of middle text section
-        if re.search('[a-zA-Z]', smps_dat[j][0]):
-            for k in range(j + 1, len(smps_dat)):
+        if re.search('[a-zA-Z]', smps_dat[m][0]):
+            for k in range(m + 1, len(smps_dat)):
                 # Find end of middle text section
                 if not re.search('[a-zA-Z]', smps_dat[k][0]):
                     start_line_index = k
@@ -69,14 +76,14 @@ def get_smps_counts(smps_dat, c2c):
     # Find values and update scans
     while True:
         curr_time = float(smps_dat[curr_line_index][0])
-        for j in range(0, len(scan_start_times)):
-            count = int(smps_dat[curr_line_index][j * 2 + 2])
-            count_by_scans[j] += count
+        for k in range(0, len(scan_start_times)):
+            count = int(smps_dat[curr_line_index][k * 2 + 2])
+            count_by_scans[k] += count
         if hf.are_floats_equal(curr_time, target_time) or curr_line_index == end_line_index:
             target_time += 1
-            for j in range(0, len(scan_start_times)):
+            for k in range(0, len(scan_start_times)):
                 # self.scans[j].add_to_raw_smps_counts(count_by_scans[j])
-                raw_smps_cts[j].append(count_by_scans[j] * c2c)
+                raw_smps_cts[k].append(count_by_scans[k] * c2c)
             count_by_scans = [0] * len(scan_start_times)
         curr_line_index += 1
         if curr_line_index >= end_line_index:
@@ -91,11 +98,11 @@ def get_ccnc_counts(ccnc_dat, smps_dat):
     :param list[list[str]] ccnc_dat: The raw CCNC data
     :param list[list[str]] smps_dat: The raw SMPS data
     :return: The raw CCNC counts
-    :rtype: list[float]
+    :rtype: list[list[float]]
     """
     scan_start_times = smps_dat[0]
     # noinspection PyUnusedLocal
-    raw_ccnc_cts = [[] for j in range(len(scan_start_times))]
+    raw_ccnc_cts = [[] for k in range(len(scan_start_times))]
     # Get the first position of CCNC count in the ccnc file
     scan_number = 0
     curr_scan_start_time = dt.datetime.strptime(scan_start_times[scan_number], "%H:%M:%S")
@@ -115,8 +122,8 @@ def get_ccnc_counts(ccnc_dat, smps_dat):
         finish_scanning_ccnc_dat = False
         duration = 135
         # we do one thing at a time
-        for j in range(duration + duration // 4):  # RESEARCH not evenly div by 4 - what's this?
-            curr_ccnc_index = ccnc_index + j
+        for k in range(duration + duration // 4):  # RESEARCH not evenly div by 4 - what's this?
+            curr_ccnc_index = ccnc_index + k
             # if we reach out of ccnc data bound
             if curr_ccnc_index >= len(ccnc_dat):
                 # stop scanning ccnc data
@@ -147,33 +154,94 @@ def get_ccnc_counts(ccnc_dat, smps_dat):
     return raw_ccnc_cts
 
 
-# Get files in directory
-directory = '/home/lilyheart/Dropbox/Classes/19.2.Chemics/TestData/O3 (150), VOC (150) TRIAL 6/Analysis'
+if __name__ == '__main__':
+    # Get files in directory
+    # directory = 'C:/Users/purpl/repos/TestData/O3 (150), VOC (150) TRIAL 6/Analysis'
+    directory = 'C:/Users/purpl/repos/TestData/Penn State 2019/Caryophyllene (150), Ozone (200), dry/ANALYSIS'
 
-# Mark the algo index and pref index
-# algo_index = [0, 0, 0, 12, 12, 0, 0, 0, 0, 0, 0, 0, 0, 12, 12, 0, 0, 0, 0, 13, 13, 0, 12, 12, 0, 12, 0, 0, 0,
-#               0, 0, 0, 12, 12, 12, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 12, 0, 0, 0, 0, 0, 0, 0, 0,
-#               0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 0]
-# pref_index = [0, 0, 0, 13, 13, 0, 0, 0, 0, 0, 0, 0, 0, 13, 13, 0, 0, 0, 0, 14, 14, 0, 13, 13, 0, 13, 0, 0, 0,
-#               0, 0, 0, 13, 13, 13, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 13, 0, 0, 0, 0, 0, 0, 0, 0,
-#               0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0]
+    # Mark the algo index and pref index
+    # algo_index = [0, 0, 0, 12, 12, 0, 0, 0, 0, 0, 0, 0, 0, 12, 12, 0, 0, 0, 0, 13, 13, 0, 12, 12, 0, 12, 0, 0, 0,
+    #               0, 0, 0, 12, 12, 12, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 12, 0, 0, 0, 0, 0, 0, 0, 0,
+    #               0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 0]
+    # pref_index = [0, 0, 0, 13, 13, 0, 0, 0, 0, 0, 0, 0, 0, 13, 13, 0, 0, 0, 0, 14, 14, 0, 13, 13, 0, 13, 0, 0, 0,
+    #               0, 0, 0, 13, 13, 13, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 13, 0, 0, 0, 0, 0, 0, 0, 0,
+    #               0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0]
 
-# Set filesnames for this dir
-filenames = os.listdir(directory)
-directory = os.path.abspath(directory)
-for i in range(len(filenames)):
-    filenames[i] = os.path.join(directory, filenames[i])
+    # Set filesnames for this dir
+    filenames = os.listdir(directory)
+    directory = os.path.abspath(directory)
+    for i in range(len(filenames)):
+        filenames[i] = os.path.join(directory, filenames[i])
 
-filenames.sort()
+    filenames.sort()
 
-experiment_date, ccnc_data, smps_data = parse_files(filenames)
-all_raw_smps_counts = get_smps_counts(smps_data, c2c=1.25)
-all_raw_ccnc_counts = get_ccnc_counts(ccnc_data, smps_data)
+    experiment_date, ccnc_data, smps_data = parse_files(filenames)
+    all_raw_smps_counts = get_smps_counts(smps_data, c2c=1.2)
+    all_raw_ccnc_counts = get_ccnc_counts(ccnc_data, smps_data)
+    all_raw_ccnc_counts = [[float(j) for j in i] for i in all_raw_ccnc_counts]
 
-all_pro1_smps_counts = np.asarray(all_raw_smps_counts).astype(float)
-all_pro1_ccnc_counts = np.asarray(all_raw_ccnc_counts).astype(float)
+    all_pro1_smps_counts = np.asarray(all_raw_smps_counts)
+    all_pro1_ccnc_counts = np.asarray(all_raw_ccnc_counts)
 
-debug = {"data": False, "peaks": False, "iter_details": False, "plot": False}
-index = None
+    scans = []
+    for i in range(len(all_raw_ccnc_counts)):
+        smps = np.asarray(all_pro1_smps_counts[i]).astype(float)
+        ccnc = np.asarray(all_pro1_ccnc_counts[i]).astype(float)
+        scans.append([smps, ccnc])
 
-shift_algo.process_autoshift(all_pro1_smps_counts, all_pro1_ccnc_counts, index=index, debug=debug)
+    scan_up_time = 0
+    scan_down_time = 0
+
+    for i in range(len(smps_data)):
+        if ''.join(smps_data[i][0].split()).lower() == "scanuptime(s)":
+            scan_up_time = int(smps_data[i][1])
+            scan_down_time = int(smps_data[i + 1][1])  # this is the retrace time
+            break
+
+    debug = {"data": False, "peaks": False, "iter_details": False, "plot": False}
+    scan_index = None
+
+    result1 = shift_algo.process_autoshift(all_pro1_smps_counts, all_pro1_ccnc_counts, index=scan_index, debug=debug)
+
+    result2 = []
+    if scan_index is None:
+        shift_factors = []
+        for i in range(len(scans)):
+            a_scan = scans[i]
+            smps = a_scan[0]
+            ccnc = a_scan[1]
+            shift_factors.append(auto_shift.get_auto_shift(smps, ccnc, scan_up_time, 0)[0])
+        median_shift = sorted(shift_factors)[(len(shift_factors) + 1) // 2]
+
+        for i in range(len(scans)):
+            a_scan = scans[i]
+            smps = a_scan[0]
+            ccnc = a_scan[1]
+            shift_factor, err_msg = auto_shift.get_auto_shift(smps, ccnc, scan_up_time, median_shift)
+            result2.append([shift_factor, err_msg])
+            for index, value in enumerate(err_msg):
+                if index == 0:
+                    logger.warn("get_auto_shift error on scan: " + str(i))
+                logger.warn("    (%d) %s" % (index, value))
+    else:
+        # noinspection PyTypeChecker
+        smps = scans[scan_index][0]
+        # noinspection PyTypeChecker
+        ccnc = scans[scan_index][1]
+        shift_factor, err_msg = auto_shift.get_auto_shift(smps, ccnc, scan_up_time, 0)
+        result2.append([shift_factor, err_msg])
+        for index, value in enumerate(err_msg):
+            if index == 0:
+                logger.warn("get_auto_shift error on scan: " + str(scan_index))
+            logger.warn("    (%d) %s" % (index, value))
+
+    for i in range(len(result2)):
+        if scan_index is None:
+            printstring = "Index: %2d" % i
+        else:
+            printstring = "Index: %2d" % scan_index
+        if result1.iloc[i][0] == result2[i][0]:
+            printstring += "  Match:    %3d" % result1.iloc[i][0]
+        else:
+            printstring += "  O: %3d N: %3d" % (result1.iloc[i][0], result2[i][0])
+        print(printstring)

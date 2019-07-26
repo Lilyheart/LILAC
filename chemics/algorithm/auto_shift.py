@@ -4,7 +4,6 @@ Version 2.0
 """
 import logging
 import numpy as np
-import scipy.signal
 
 import constants as const
 import helper_functions as hf
@@ -13,7 +12,7 @@ import helper_functions as hf
 logger = logging.getLogger("controller")
 
 
-def get_auto_shift(smps_count, ccnc_count):
+def get_auto_shift(smps_count, ccnc_count, scan_up_time, median_shift):
     """
     Determines shift values of CCNC and SMPS files and prints the results to the console
 
@@ -21,6 +20,8 @@ def get_auto_shift(smps_count, ccnc_count):
 
     :param ndarray smps_count:
     :param ndarray ccnc_count:
+    :param int scan_up_time:
+    :param int median_shift:
     """
     if sum(smps_count) == 0 or sum(ccnc_count) == 0:
         return 0, ["No SMPS and/or CCNC data"]
@@ -34,33 +35,10 @@ def get_auto_shift(smps_count, ccnc_count):
 
     smooth_ccnc_count = hf.smooth(ccnc_count, window_length=7, polyorder=2)
 
-    # Get peak information
-    # RESEARCH better peak method?
-    smps_peak_index, smps_peak_heights = scipy.signal.find_peaks(smooth_smps_count,
-                                                                 height=0, distance=20)
-    smps_peak_heights = smps_peak_heights.get("peak_heights", "")
-    ccnc_peak_index, ccnc_peak_heights = scipy.signal.find_peaks(smooth_ccnc_count,
-                                                                 height=0, distance=20)
-    ccnc_peak_heights = ccnc_peak_heights.get("peak_heights", "")
-
-    # Check there are at least two peaks in both datasets.
-    if len(smps_peak_index) < 2 or len(ccnc_peak_index) < 2:
-        return 0, error_messages
-
-    # determine peak indcies.
-    if (len(smps_peak_index) - 1) > np.argmax(smps_peak_heights):
-        smps_first_peak = smps_peak_index[np.argmax(smps_peak_heights)]
-        smps_next_peak = smps_peak_index[np.argmax(smps_peak_heights) + 1]
-    else:
-        smps_first_peak = smps_peak_index[np.argmax(smps_peak_heights) - 1]
-        smps_next_peak = smps_peak_index[np.argmax(smps_peak_heights)]
-
-    if (len(ccnc_peak_index) - 1) > np.argmax(ccnc_peak_heights):
-        ccnc_first_peak = ccnc_peak_index[np.argmax(ccnc_peak_heights)]
-        ccnc_next_peak = ccnc_peak_index[np.argmax(ccnc_peak_heights) + 1]
-    else:
-        ccnc_first_peak = ccnc_peak_index[np.argmax(ccnc_peak_heights) - 1]
-        ccnc_next_peak = ccnc_peak_index[np.argmax(ccnc_peak_heights)]
+    smps_first_peak = np.argmax(smooth_smps_count[0:scan_up_time])
+    smps_next_peak = np.argmax(smooth_smps_count[scan_up_time:]) + scan_up_time
+    ccnc_first_peak = np.argmax(smooth_ccnc_count[median_shift:(median_shift + scan_up_time)]) + median_shift
+    ccnc_next_peak = np.argmax(smooth_ccnc_count[(median_shift + scan_up_time):]) + scan_up_time + median_shift
 
     # Increase SMPS range to ensure enough values are captured.
     # RESEARCH magic numbers

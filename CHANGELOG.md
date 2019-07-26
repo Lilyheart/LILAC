@@ -18,6 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Ratio vs DD graph showing old data from previous valid scan
 
+### Changed
+- Autoshift peak recognition
+
 ## [2.2.2] - 2019-07-19
 ### Added
 - Sigmoid fit on single scan

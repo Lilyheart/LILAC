@@ -188,10 +188,24 @@ class Controller(object):
         :rtype:
         """
         self.view.init_progress_bar("Aligning SMPS and CCNC data...")
+        # Find the median shift factor of unadjusted shifts to get a general idea of the shift
+        shift_factors = []
         for i in range(len(self.scans)):
+            self.view.update_progress_bar(100 * (i + 1) // len(self.scans) // 2)
             a_scan = self.scans[i]
-            self.view.update_progress_bar(100 * (i + 1) // len(self.scans))
-            shift_factor, err_msg = auto_shift.get_auto_shift(a_scan.raw_smps_counts, a_scan.raw_ccnc_counts)
+            shift_factors.append(auto_shift.get_auto_shift(a_scan.raw_smps_counts,
+                                                           a_scan.raw_ccnc_counts,
+                                                           a_scan.scan_up_time, 0)[0])
+        median_shift = sorted(shift_factors)[(len(shift_factors) + 1) // 2]
+
+        # Using the approximate median shift factor, find actual shift values.
+        for i in range(len(self.scans)):
+            self.view.update_progress_bar(50 + (100 * (i + 1) // len(self.scans) // 2))
+            a_scan = self.scans[i]
+            shift_factor, err_msg = auto_shift.get_auto_shift(a_scan.raw_smps_counts,
+                                                              a_scan.raw_ccnc_counts,
+                                                              a_scan.scan_up_time,
+                                                              median_shift)
             for index, value in enumerate(err_msg):
                 if index == 0:
                     logger.warn("get_auto_shift error on scan: " + str(i))
