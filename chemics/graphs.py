@@ -228,6 +228,8 @@ class RatioOverDiameterGraph(FigureCanvas):
         self.normalized_conc.set_xdata(diameter_midpoints)
         self.normalized_conc.set_ydata(normalized_concs)
         # If there are correct charges data
+        self.ccn_cn_ratio_corrected_points.set_xdata([])
+        self.ccn_cn_ratio_corrected_points.set_ydata([])
         if len(corrected_ccnc) > 0 and len(corrected_smps) > 0:
             ratio_corrected = []
             for i in range(len(smps)):

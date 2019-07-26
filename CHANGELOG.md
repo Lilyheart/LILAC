@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ([#](https://gitlab.bucknell.edu/nrr004/Chemics/issues/))
 -->
 
+## [Unreleased]
+### Fixed
+- Ratio vs DD graph showing old data from previous valid scan
+
 ## [2.2.2] - 2019-07-19
 ### Added
 - Sigmoid fit on single scan
