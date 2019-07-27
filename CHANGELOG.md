@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ([#](https://gitlab.bucknell.edu/nrr004/Chemics/issues/))
 -->
 
-## [Unreleased]
+## [2.2.3] - 2019-07-26
 ### Fixed
 - Ratio vs DD graph showing old data from previous valid scan
 

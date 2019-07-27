@@ -46,7 +46,7 @@ class Scan(object):
         # TODO issues/45 combine status and code into one
         # DOCQUESTION / RESEARCH duration = scan_up_time + scan_down_time; end time is start_time+duration. Neccessary?
         # Controller#start.create_scans()
-        self.version = "2.2.2"
+        self.version = "2.2.3"
         self.status = 1
         self.status_code = 0
         self.sigmoid_status = None
