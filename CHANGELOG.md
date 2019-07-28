@@ -14,12 +14,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ([#](https://gitlab.bucknell.edu/nrr004/Chemics/issues/))
 -->
 
+
+## [Unreleased]
+### Changed
+- Updated entire code base to Python 3.6.8
+
+
 ## [2.2.3] - 2019-07-26
 ### Fixed
 - Ratio vs DD graph showing old data from previous valid scan
 
 ### Changed
 - Autoshift peak recognition
+
 
 ## [2.2.2] - 2019-07-19
 ### Added
@@ -35,6 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Percent Activation to show "Unknown" when unable to calculate
+
 
 ## [2.2.1] - 2019-07-18
 ### Added 
@@ -72,6 +80,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Updated end asymp for sigmoid to the minimum of 100 or the largest average SMPS diameter ([#62](https://gitlab.bucknell.edu/nrr004/Chemics/issues/62))
 
+
 ## [2.1.1] - 2019-07-09
 ### Added
 - The name of the folder is stored when opening a new or old project ([#11](https://gitlab.bucknell.edu/nrr004/Chemics/issues/11))
@@ -87,21 +96,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added hover details on Kappa chart ([#19 partial](https://gitlab.bucknell.edu/nrr004/Chemics/issues/19))
   - Hovering over a line tell you which kappa line
   - Hovering over a point tells you the DP50 and supersaturation
-    
+
 ### Fixed
 - Bug where end asymp truncates to 99.99 ([#29](https://gitlab.bucknell.edu/nrr004/Chemics/issues/29))
 - Bug where supersaturation did not display correctly on the Scan Information screen ([#2](https://gitlab.bucknell.edu/nrr004/Chemics/issues/2))
   - If more than one, will display both.  E.g. `0.2, 0.5`
-    
+
 ### Changed
 - Hid all side widgets with the exception of the Scan Information 
   widget on load.
 - Changes to Help menu ([#23 Partial](https://gitlab.bucknell.edu/nrr004/Chemics/issues/23))
   - New link to temporary user manual
   - New link to About window to display current version
-      
+
 ### Removed
 - Removed run reset code ([#53](https://gitlab.bucknell.edu/nrr004/Chemics/issues/53))
+
 
 ## [2.1.0] - 2019-06-21
 ### Added
@@ -120,4 +130,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Uncoded help menu items disabled ([#23 partial](https://gitlab.bucknell.edu/nrr004/Chemics/issues/23))
 - Select smoothing algorithm removed from opening new project. ([#41](https://gitlab.bucknell.edu/nrr004/Chemics/issues/41))
 - Smooth Data removed from Action dropdown menu ([#41](https://gitlab.bucknell.edu/nrr004/Chemics/issues/41))
-

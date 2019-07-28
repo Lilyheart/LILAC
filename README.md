@@ -23,52 +23,51 @@
 This uses the [vulture package](https://github.com/jendrikseipp/vulture).
 
 - [ ] From the CLI while in the top level folder, execture `vulture chemics/ configs/vulture_whitelist.py`
-
+    
 ## Programming Environment
-
+    
 ### Using requirements.txt
-
+    
 #### Conda
-
+    
 ##### Linux
-
+    
 ```bash
-conda create --name Chemics27 --file requirements-linux64.txt
+conda create --name Chemics37 --file requirements-linux64.txt
 ```
-
+    
 <!--
 ##### Windows
 
  TODO -->
-
+    
 ### Manually installing packages
 
 If using Anaconda, ensure the `conda-forge` channel has been added.
 
-Python version: **2.7.16**
+Python version: **3.6.8**
 
-#### Basic Packages
-- [ ] Cython:  0.28.5
-- [ ] matplotlib:  2.2.3
-- [ ] m2r:  0.2.1
-- [ ] numpy:  1.15.1
-- [ ] pandas:  0.23.4
-- [ ] PySide:  1.2.0
-- [ ] scipy:  1.1.0
-- [ ] sphinx:  1.8.5
-- [ ] sphinx_rtd_theme:  0.4.3
+#### Basic Packages required to run Chemics
+- [ ] Cython:  0.29.12
+- [ ] matplotlib:  3.1.1
+- [ ] numpy:  1.16.4
+- [ ] pandas:  0.24.2
+- [ ] PySide:  1.2.4 
+- [ ] scipy:  1.3.0
 
-#### Dev Specific [Depends on IDE Choice]:
-- [ ] bumpversion:  0.5.3
-- [ ] pycallgraph:  1.0.1 (--channel auto)
-- [ ] ipykernel:  4.10.0
-- [ ] python-language-server:  0.26.1
-- [ ] xlrd:  1.3.0
-- [ ] xlwt:  1.3.0
-
-#### Dev Specific [Code Testing etc]:
+#### Dev Specific [May also depend on IDE Choice]:
+##### Code Developement
+- [ ] ipykernel:  5.1.1
+- [ ] jupyter:  1.0.0
+- [ ] python-language-server:  0.28.0
 - [ ] vulture:  1.0
+- [ ] xlwt:  1.3.0
+##### Code Documentation
+- [ ] m2r:  0.2.1
+- [ ] pycallgraph:  1.0.1 ***(pip install pycallgraph)***
+- [ ] sphinx:  2.1.2
+- [ ] sphinx_rtd_theme:  0.4.3
+##### Executable Creation
+- [ ] bumpversion:  0.5.3
+- [ ] pyinstaller:  3.4
 
-#### Windows Specific:
-- [ ] pywin32:  223
-- [ ] pypiwin32:  223

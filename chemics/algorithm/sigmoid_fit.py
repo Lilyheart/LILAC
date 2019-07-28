@@ -180,7 +180,7 @@ def logistic_fit_func(xx, x_0, curve_max, k, y_0):
         try:
             eulers = -k * (xx - x_0)
             if isinstance(xx, pd.Series):
-                for i, v in eulers.items():
+                for i, v in list(eulers.items()):
                     eulers[i] = min(np.log(sys.float_info.max), v)
                     eulers[i] = max(np.log(sys.float_info.min), eulers[i])
             else:

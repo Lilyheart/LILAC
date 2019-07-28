@@ -11,9 +11,11 @@ import warnings
 def process_autoshift(smps_counts, ccnc_counts, scan_up_time, index=None, debug=None, weights=None):
     """
     Determines shift values of CCNC and SMPS files and prints the results to the console
+    # REVIEW Documentation
 
     :param ndarray smps_counts:
     :param ndarray ccnc_counts:
+    :param int scan_up_time:
     :param int|None index: The specific scan to look at
     :param dict|None debug: Dictioary of what things to print to console
     :param list[float]|None weights:

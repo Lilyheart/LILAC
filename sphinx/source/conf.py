@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-#
-# Configuration file for the Sphinx documentation builder.
-#
-# This file does only contain a selection of the most common options. For a
-# full list see the documentation:
-# http://www.sphinx-doc.org/en/master/config
-# TODO issues/7 http://www.sphinx-doc.org/en/1.6/ext/autosummary.html
+"""
+Configuration file for the Sphinx documentation builder.
+
+This file does only contain a selection of the most common options. For a
+full list see the documentation:
+http://www.sphinx-doc.org/en/master/config
+TODO issues/7 http://www.sphinx-doc.org/en/1.6/ext/autosummary.html
+"""
 
 # -- Path setup --------------------------------------------------------------
 
@@ -20,14 +21,15 @@ sys.path.insert(0, os.path.abspath('../../chemics/.'))
 
 # -- Project information -----------------------------------------------------
 
-project = u'Chemics'
-copyright = u'2019, Lily Romano'
-author = u'Lily Romano'
+project = 'Chemics'
+# noinspection PyShadowingBuiltins
+copyright = '2019, Lily Romano'
+author = 'Lily Romano'
 
 # The short X.Y version
-version = u''
+version = ''
 # The full version, including alpha/beta/rc tags
-release = u'2.1'
+release = '2.1'
 
 
 # -- General configuration ---------------------------------------------------
@@ -52,7 +54,7 @@ templates_path = ['_templates']
 # You can specify multiple suffix as a list of string:
 #
 # source_suffix = ['.rst', '.md']
-source_suffix = '.rst'
+source_suffix = ['.rst', '.md']
 
 # The master toctree document.
 master_doc = 'index'
@@ -117,10 +119,6 @@ html_static_path = ['_static']
 #
 # html_sidebars = {}
 
-# -- Options for m2r ---------------------------------------------
-
-source_suffix = ['.rst', '.md']
-
 
 # -- Options for HTMLHelp output ---------------------------------------------
 
@@ -152,8 +150,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'Chemics.tex', u'Chemics Documentation',
-     u'Lily Romano', 'manual'),
+    (master_doc, 'Chemics.tex', 'Chemics Documentation',
+     'Lily Romano', 'manual'),
 ]
 
 latex_toplevel_sectioning = "chapter"
@@ -163,7 +161,7 @@ latex_toplevel_sectioning = "chapter"
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'chemics', u'Chemics Documentation',
+    (master_doc, 'chemics', 'Chemics Documentation',
      [author], 1)
 ]
 
@@ -174,7 +172,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'Chemics', u'Chemics Documentation',
+    (master_doc, 'Chemics', 'Chemics Documentation',
      author, 'Chemics', 'One line description of project.',
      'Miscellaneous'),
 ]
@@ -202,7 +200,12 @@ epub_exclude_files = ['search.html']
 
 autodoc_member_order = 'bysource'
 
+
 # add custom files that are stored in _static
 def setup(app):
-    # app.add_javascript("custom.js")
+    """
+    Adds a style sheet to the app
+
+    :param Sphinx app: The Sphinx object
+    """
     app.add_stylesheet("custom.css")

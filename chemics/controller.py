@@ -3,6 +3,7 @@ This class handles most of the programs actions.
 """
 # External Packages
 import datetime as dt
+from io import StringIO
 import logging
 import math
 import numpy as np
@@ -10,8 +11,6 @@ import os
 import pandas as pd
 import pickle
 import re
-# noinspection PyCompatibility
-from StringIO import StringIO
 import time
 
 # Internal Packages
@@ -208,8 +207,8 @@ class Controller(object):
                                                               median_shift)
             for index, value in enumerate(err_msg):
                 if index == 0:
-                    logger.warn("get_auto_shift error on scan: " + str(i))
-                logger.warn("    (%d) %s" % (index, value))
+                    logger.warning("get_auto_shift error on scan: " + str(i))
+                logger.warning("    (%d) %s" % (index, value))
             self.scans[i].set_shift_factor(shift_factor)
             self.scans[i].generate_processed_data()
         self.view.close_progress_bar()
@@ -223,7 +222,7 @@ class Controller(object):
         :param str filename: The name to save the file as.  Can include directory structure,
                              be relative to cwd or absolute.
         """
-        import export_data
+        from . import export_data
         export_data.export_scans(self.scans, filename)
 
     def correct_charges(self):
@@ -255,6 +254,14 @@ class Controller(object):
         self.switch_to_scan(0)
 
     def auto_fit_one_sigmoid(self, scan_index):
+        """
+        # REVIEW Documentation
+
+        :param scan_index:
+        :type scan_index:
+        :return:
+        :rtype:
+        """
         a_scan = self.scans[scan_index]
         if a_scan.status_code == 0:
             try:
@@ -262,16 +269,16 @@ class Controller(object):
                 a_scan.sigmoid_status = True
             except NotImplementedError as e:
                 a_scan.sigmoid_status = False
-                logger.warn("Scan: %d - NotImplementedError: %s" % (scan_index, str(e)))
+                logger.warning("Scan: %d - NotImplementedError: %s" % (scan_index, str(e)))
             except OverflowError as e:
                 a_scan.sigmoid_status = False
-                logger.warn("Scan: %d - OverflowError: %s" % (scan_index, str(e)))
+                logger.warning("Scan: %d - OverflowError: %s" % (scan_index, str(e)))
             except RuntimeWarning as e:
                 a_scan.sigmoid_status = False
-                logger.warn("Scan: %d - RuntimeWarning Error: %s" % (scan_index, str(e)))
+                logger.warning("Scan: %d - RuntimeWarning Error: %s" % (scan_index, str(e)))
             except RuntimeError as e:
                 a_scan.sigmoid_status = False
-                logger.warn("Scan: %d - RuntimeError Error: %s" % (scan_index, str(e)))
+                logger.warning("Scan: %d - RuntimeError Error: %s" % (scan_index, str(e)))
 
     def cal_kappa(self):
         """
@@ -328,7 +335,7 @@ class Controller(object):
             apparent_kappa = (ss - (a - (a - b) / (c - d) * c)) / ((a - b) / (c - d))
             analytic_kappa = (4 * a_param ** 3) / (27 * (dp_50 * 0.000000001) ** 3 * math.log(ss / 100 + 1) ** 2)
             deviation_percentage = (apparent_kappa - analytic_kappa) / apparent_kappa * 100
-            if ss in self.kappa_calculate_dict.keys():
+            if ss in list(self.kappa_calculate_dict.keys()):
                 # REVIEW kset set kappa dict values, key = ss
                 self.kappa_calculate_dict[ss].append([scan_index, dp_50, apparent_kappa, activation,
                                                       analytic_kappa, deviation_percentage])
@@ -347,7 +354,7 @@ class Controller(object):
         # Calculate the kappa values for each supersaturation percentage. The values are average of all scans with the
         # same supersaturation        self.alpha_pinene_dict = {}
         # REVIEW kset use kappa dict
-        for a_key in self.kappa_calculate_dict.keys():
+        for a_key in list(self.kappa_calculate_dict.keys()):
             scan_list_at_ss = self.kappa_calculate_dict[a_key]
             temp_dp50_list = []
             dp_50s = []
@@ -855,7 +862,7 @@ class Controller(object):
                  self.valid_kappa_points,
                  self.save_name) = pickle.load(handle)
         except Exception as e:
-            logger.warn("Old project/run file attempted to load (%s)" % e)
+            logger.warning("Old project/run file attempted to load (%s)" % e)
             self.view.show_error_message("old project file")
             return
         # except TypeError as e:
@@ -899,7 +906,7 @@ class Controller(object):
         # TODO issues/20 issues/21 issues/22 issues/11
         data_to_export = []
         # REVIEW kset use kappa dist
-        for a_key in self.kappa_calculate_dict.keys():
+        for a_key in list(self.kappa_calculate_dict.keys()):
             a_scan = self.kappa_calculate_dict[a_key]
             for aSS in a_scan:
                 # REVIEW kset use valid_kappa_points

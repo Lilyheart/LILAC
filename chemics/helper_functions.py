@@ -59,7 +59,7 @@ def process_a_csv(file_path):
     :rtype: (str, list[list[str]])
     """
     # Open the file
-    with open(file_path, 'r') as csvFile:
+    with open(file_path) as csvFile:
         # Create a reader for the file
         reader = csv.reader(csvFile, delimiter=',')
         # Convert to list for easier processing
@@ -67,13 +67,13 @@ def process_a_csv(file_path):
         # Get the experiment_date
         date = csv_content[1][1]
         # Remove empty rows
-        csv_content = filter(None, csv_content)
+        csv_content = [_f for _f in csv_content if _f]
         # Remove the unnecessary processed_data - first four lines
         csv_content = csv_content[4:]  # TODO Magic Number - Make setting?  Look for Header row?
         # Process the csv
         for i in range(0, len(csv_content)):
             # Remove empty string in each row
-            csv_content[i] = filter(None, csv_content[i])
+            csv_content[i] = [_f for _f in csv_content[i] if _f]
         return date, csv_content
 
 
@@ -87,7 +87,7 @@ def process_tab_sep_files(file_path):
     :rtype: list[list[str]]
     """
     # Open the file
-    with open(file_path, 'r') as csv_file:
+    with open(file_path, encoding="ISO-8859-1") as csv_file:
         # Create a reader for the file
         reader = csv.reader(csv_file, delimiter='\t')
         # convert to list for easier processing
@@ -106,7 +106,7 @@ def process_tab_sep_files(file_path):
         txt_content = txt_content[0:1] + txt_content[2:]
         # Remove empty cells
         for i in range(0, len(txt_content)):
-            txt_content[i] = filter(None, txt_content[i])
+            txt_content[i] = [_f for _f in txt_content[i] if _f]
         return txt_content
 
 ########################
@@ -235,7 +235,7 @@ def smooth(a_list, window_length, polyorder):
     - The length of the filter window: 5
     - The order of the polynomial used to fit the samples: 2
 
-    :param list[float] a_list: The list to smooth
+    :param ndarray|list[float] a_list: The list to smooth
     :param int window_length: The length of the filter window (i.e. the number of coefficients).
                               `window_length` must be a positive odd integer. If `mode` is 'interp',
                               `window_length` must be less than or equal to the size of `x`.

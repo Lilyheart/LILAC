@@ -3,12 +3,11 @@ Initalizes and updates the graphs
 """
 # External Packages
 import math
+from io import StringIO
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-# noinspection PyCompatibility
-from StringIO import StringIO
 
 # Internal Packages
 import data.klines
@@ -426,7 +425,7 @@ class KappaGraph(FigureCanvas):
         y_invalid_ks = []
         # print valid_kappa_points
         # REVIEW kset use alpha pinene
-        for a_key in alpha_pinene_dict.keys():
+        for a_key in list(alpha_pinene_dict.keys()):
             for v in alpha_pinene_dict[a_key][-1]:
                 scan_index = v[0]
                 dp50 = v[1]
@@ -463,7 +462,7 @@ class KappaGraph(FigureCanvas):
         # COMBAKL Kappa
         x_valid_ks = []
         y_valid_ks = []
-        for a_key in alpha_pinene_dict.keys():
+        for a_key in list(alpha_pinene_dict.keys()):
             if not math.isnan(alpha_pinene_dict[a_key][0]):
                 x_valid_ks.append(alpha_pinene_dict[a_key][0])
                 y_valid_ks.append(a_key)

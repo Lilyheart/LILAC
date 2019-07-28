@@ -593,7 +593,7 @@ class DockerKappaWidget(Qg.QFrame):
         # REVIEW Documentation
         """
         # COMBAKL Kappa
-        for a_key in self.controller.kappa_calculate_dict.keys():
+        for a_key in list(self.controller.kappa_calculate_dict.keys()):
             a_scan = self.controller.kappa_calculate_dict[a_key]
             for aSS in a_scan:
                 ss = a_key

@@ -1,8 +1,14 @@
+"""
+# REVIEW Documentation
+"""
 import logging
 import logging.config
 
 
 def configure_logger_env():
+    """
+    # REVIEW Documentation
+    """
     logging.config.dictConfig({
         'version': 1,
         'formatters': {
@@ -46,6 +52,9 @@ def configure_logger_env():
 
 
 def configure_logger_frz(log_path):
+    """
+    # REVIEW Documentation
+    """
     logging.config.dictConfig({
         'version': 1,
         'formatters': {

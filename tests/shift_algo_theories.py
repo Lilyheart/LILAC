@@ -1,3 +1,6 @@
+"""
+Original ideas for the auto shifting
+"""
 import csv
 # import matplotlib.pyplot as plt
 import numpy as np
@@ -7,13 +10,13 @@ import scipy.signal
 import warnings
 
 # Load csv
-with open("testdata/2raw_smps.csv", 'r') as csvFile:
+with open("testdata/2raw_smps.csv") as csvFile:
     # Create a reader for the file
     reader = csv.reader(csvFile, delimiter=',')
     # Convert to list for easier processing
     all_raw_smps_counts = np.asarray(list(reader))
 
-with open("testdata/2raw_ccnc.csv", 'r') as csvFile:
+with open("testdata/2raw_ccnc.csv") as csvFile:
     # Create a reader for the file
     reader = csv.reader(csvFile, delimiter=',')
     # Convert to list for easier processing
@@ -37,7 +40,7 @@ goal_value = 21
 
 # pad_end = len(all_pro2_ccnc_counts[test_index]) - len(all_smps_counts[test_index])
 # print(all_pro2_ccnc_counts[test_index].shape[0])
-# print((np.pad(all_smps_counts[i], (0, pad_end), 'constant', constant_values=0)).shape[0])
+# print(np.pad(all_smps_counts[i], (0, pad_end), 'constant', constant_values=0)).shape[0])
 
 print("\n======== Testing scipy.signal.correlate on index %d (Need %d) ========\n" % (test_index, goal_value))
 
@@ -99,7 +102,6 @@ for i in range(0, len(all_smoothed_smps_counts)):
 
     smps_peak_heights = smps_peak_heights.get("peak_heights", "")
     ccnc_peak_heights = ccnc_peak_heights.get("peak_heights", "")
-
 
     # Check there are at least two peaks in both datasets.
     if len(smps_peak_index) < 2 or len(ccnc_peak_index) < 2:

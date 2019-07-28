@@ -112,7 +112,7 @@ class Scan(object):
         :return: The scan as a string.
         :rtype: str
         """
-        items = ("%s;%r" % (k, v) for k, v in self.__dict__.items())
+        items = ("%s;%r" % (k, v) for k, v in list(self.__dict__.items()))
         return "%s" % "\n".join(items)
 
     ###############
@@ -561,5 +561,5 @@ class Scan(object):
             try:
                 return round(((ccnc_uptime / smps_uptime) * (cpc_sample_flow_rate/(mean_sample_flow/1000))*100), 0)
             except Exception as e:
-                logger.warn("Scan (" + str(self.index) + "):" + str(e))
+                logger.warning("Scan (" + str(self.index) + "):" + str(e))
                 return "Unknown"

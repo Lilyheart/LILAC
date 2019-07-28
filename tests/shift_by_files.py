@@ -1,6 +1,7 @@
 """
 Run the shift algo by supplying a directory name
 """
+# External Packages
 import datetime as dt
 import helper_functions as hf
 import logging
@@ -8,7 +9,9 @@ import logging_config
 import numpy as np
 import os
 import re
-import shift_algo
+
+# Internal Packages
+from . import shift_algo
 from algorithm import auto_shift
 
 # Set logger for this module
@@ -221,8 +224,8 @@ if __name__ == '__main__':
             result2.append([shift_factor, err_msg])
             for index, value in enumerate(err_msg):
                 if index == 0:
-                    logger.warn("get_auto_shift error on scan: " + str(i))
-                logger.warn("    (%d) %s" % (index, value))
+                    logger.warning("get_auto_shift error on scan: " + str(i))
+                logger.warning("    (%d) %s" % (index, value))
     else:
         # noinspection PyTypeChecker
         smps = scans[scan_index][0]
@@ -232,13 +235,14 @@ if __name__ == '__main__':
         result2.append([shift_factor, err_msg])
         for index, value in enumerate(err_msg):
             if index == 0:
-                logger.warn("get_auto_shift error on scan: " + str(scan_index))
-            logger.warn("    (%d) %s" % (index, value))
+                logger.warning("get_auto_shift error on scan: " + str(scan_index))
+            logger.warning("    (%d) %s" % (index, value))
 
     for i in range(len(result2)):
         if scan_index is None:
             printstring = "Index: %2d" % i
         else:
+            # noinspection PyStringFormat
             printstring = "Index: %2d" % scan_index
         if result1.iloc[i][0] == result2[i][0]:
             printstring += "  Match:    %3d" % result1.iloc[i][0]
