@@ -4,15 +4,16 @@ Creates the various widgets that display in the docker section of the display
 # External Packages
 import datetime as dt
 import numpy as np
-import PySide.QtCore as Qc
-import PySide.QtGui as Qg
+import PySide2.QtCore as Qc
+import PySide2.QtGui as Qg
+import PySide2.QtWidgets as Qw
 
 # Internal Packages
 import custom.modal_dialogs as c_modal_dialogs
 import custom.widget as c_widget
 
 
-class DockerScanInformation(Qg.QFrame):
+class DockerScanInformation(Qw.QFrame):
     """
     Creates the docker widget (docker = left pane) that displays the scan information.
 
@@ -22,33 +23,33 @@ class DockerScanInformation(Qg.QFrame):
         super(self.__class__, self).__init__()
         self.controller = controller
         # set up the layout
-        form_layout = Qg.QFormLayout()
+        form_layout = Qw.QFormLayout()
         self.setContentsMargins(-10, -10, 0, -10)
         form_layout.setContentsMargins(30, 20, 20, 0)
         self.setAutoFillBackground(True)
         palette = Qg.QPalette()
         palette.setColor(Qg.QPalette.Background, Qc.Qt.white)
         self.setPalette(palette)
-        self.setFrameShape(Qg.QFrame.StyledPanel)
-        self.setFrameShadow(Qg.QFrame.Plain)
+        self.setFrameShape(Qw.QFrame.StyledPanel)
+        self.setFrameShadow(Qw.QFrame.Plain)
         ########################################
         # Top Section - Experiment Information
         # -- add a title
         form_layout.addRow(c_widget.TitleHLine("Experiment Information"))
         # -- add date
-        self.experiment_date = Qg.QLabel("-")
+        self.experiment_date = Qw.QLabel("-")
         self.experiment_date.setAlignment(Qc.Qt.AlignRight)
         form_layout.addRow("Date (m/d/y)", self.experiment_date)
         # -- add smps duration
-        self.scan_duration = Qg.QLabel("-")  # TODO issues/5 Does not update when loading a project
+        self.scan_duration = Qw.QLabel("-")  # TODO issues/5 Does not update when loading a project
         self.scan_duration.setAlignment(Qc.Qt.AlignRight)
         form_layout.addRow("Scan duration(s)", self.scan_duration)
         # -- add total numbe rof scan
-        self.num_scan = Qg.QLabel("-")
+        self.num_scan = Qw.QLabel("-")
         self.num_scan.setAlignment(Qc.Qt.AlignRight)
         form_layout.addRow("Number of scans", self.num_scan)
         # -- add Counts2ConcConv
-        self.counts_2_conc_conv = Qg.QLabel("-")
+        self.counts_2_conc_conv = Qw.QLabel("-")
         self.counts_2_conc_conv.setAlignment(Qc.Qt.AlignRight)
         form_layout.addRow("Counts2ConcConv", self.counts_2_conc_conv)  # DOCQUESTION Convert to complete sentence
         ########################################
@@ -67,11 +68,11 @@ class DockerScanInformation(Qg.QFrame):
         form_layout.addRow("Shift (s)", self.shift_selector)
         # -- add the buttons
         # ---- add show data action
-        self.show_data_button = Qg.QPushButton("Show Data")
+        self.show_data_button = Qw.QPushButton("Show Data")
         # noinspection PyUnresolvedReferences
         self.show_data_button.clicked.connect(self.show_data)  # RESEARCH connect unresolved ref
         # ---- add the enable/disable button
-        self.enable_disable_button = Qg.QPushButton("Disable scan")
+        self.enable_disable_button = Qw.QPushButton("Disable scan")
         # noinspection PyUnresolvedReferences
         self.enable_disable_button.clicked.connect(self.set_scan_enable_status)  # RESEARCH connect unresolved ref
         # form_layout.addRow(self.show_data_button, self.enable_disable_button)  # RESEARCH Put buttons on same line
@@ -82,24 +83,24 @@ class DockerScanInformation(Qg.QFrame):
         # -- add a title
         form_layout.addRow(c_widget.TitleHLine("Scan Details"))
         # -- add the scan time
-        self.scan_time = Qg.QLabel("-")
+        self.scan_time = Qw.QLabel("-")
         self.scan_time.setAlignment(Qc.Qt.AlignRight)
         form_layout.addRow("Scan Time (h:m:s)", self.scan_time)
         # -- add the supersaturation indicator
-        self.supersaturation = Qg.QLabel("-")
+        self.supersaturation = Qw.QLabel("-")
         self.supersaturation.setAlignment(Qc.Qt.AlignRight)
         form_layout.addRow("Supersaturation (%)", self.supersaturation)
         # -- add the activation indicator
-        self.activationpercent = Qg.QLabel("-%")
+        self.activationpercent = Qw.QLabel("-%")
         self.activationpercent.setAlignment(Qc.Qt.AlignRight)
         form_layout.addRow("Percent Activation", self.activationpercent)
         # -- add the status of the scan
-        self.scan_status = Qg.QLabel("-")
+        self.scan_status = Qw.QLabel("-")
         self.scan_status.setAlignment(Qc.Qt.AlignRight)
         form_layout.addRow("Scan status", self.scan_status)
         # -- add the status of the scan
         form_layout.addRow("Additional Info", None)
-        self.additional_information = Qg.QTextEdit("Welcome to Chemics!")
+        self.additional_information = Qw.QTextEdit("Welcome to Chemics!")
         self.additional_information.setReadOnly(True)
         self.additional_information.setAlignment(Qc.Qt.AlignLeft)
         form_layout.addRow(self.additional_information)
@@ -228,7 +229,7 @@ class DockerScanInformation(Qg.QFrame):
         if curr_ss is None:
             curr_ss = 0.0
         # noinspection PyCallByClass
-        ss = Qg.QInputDialog.getDouble(self, "Update Supersaturation", "What is the correct supersaturation level",
+        ss = Qw.QInputDialog.getDouble(self, "Update Supersaturation", "What is the correct supersaturation level",
                                        value=float(curr_ss), decimals=2)
         if ss[1]:
             curr_scan.true_super_sat = float(ss[0])
@@ -236,7 +237,7 @@ class DockerScanInformation(Qg.QFrame):
             self.supersaturation.setText(curr_scan.super_sat_label)
 
 
-class DockerSigmoidWidget(Qg.QFrame):
+class DockerSigmoidWidget(Qw.QFrame):
     """
     Creates the docker widget that appears on the left that shows scan information
 
@@ -251,29 +252,29 @@ class DockerSigmoidWidget(Qg.QFrame):
         self.dp_widgets = []
         self.curr_scan_index = self.controller.curr_scan_index
         # set up the layout
-        form_layout = Qg.QFormLayout()
+        form_layout = Qw.QFormLayout()
         self.setContentsMargins(-10, -10, 0, -10)
         form_layout.setContentsMargins(30, 20, 20, 0)
         self.setAutoFillBackground(True)
         palette = Qg.QPalette()
         palette.setColor(Qg.QPalette.Background, Qc.Qt.white)
         self.setPalette(palette)
-        self.setFrameShape(Qg.QFrame.StyledPanel)
-        self.setFrameShadow(Qg.QFrame.Plain)
+        self.setFrameShape(Qw.QFrame.StyledPanel)
+        self.setFrameShadow(Qw.QFrame.Plain)
         ########################################
         # Top Section - Experiment Information
         # -- add a title
         form_layout.addRow(c_widget.TitleHLine("Experiment Information"))
         # -- add date
-        self.experiment_date = Qg.QLabel("-")
+        self.experiment_date = Qw.QLabel("-")
         self.experiment_date.setAlignment(Qc.Qt.AlignRight)
         form_layout.addRow("Date (m/d/y)", self.experiment_date)
         # -- add the scan time
-        self.scan_time = Qg.QLabel("-")
+        self.scan_time = Qw.QLabel("-")
         self.scan_time.setAlignment(Qc.Qt.AlignRight)
         form_layout.addRow("Scan Time (h:m:s)", self.scan_time)
         # -- add the supersaturation indicator
-        self.supersaturation = Qg.QLabel("-")
+        self.supersaturation = Qw.QLabel("-")
         self.supersaturation.setAlignment(Qc.Qt.AlignRight)
         form_layout.addRow("Supersaturation (%)", self.supersaturation)
         ########################################
@@ -286,11 +287,11 @@ class DockerSigmoidWidget(Qg.QFrame):
         self.scan_selector.set_callback(self.scan_index_changed)
         form_layout.addRow("Scan number", self.scan_selector)
         # -- add the status of the scan
-        self.scan_status = Qg.QLabel("-")
+        self.scan_status = Qw.QLabel("-")
         self.scan_status.setAlignment(Qc.Qt.AlignRight)
         form_layout.addRow("Scan Status", self.scan_status)
         # -- add the status of the sigmoid
-        self.sigmoid_status = Qg.QLabel("-")
+        self.sigmoid_status = Qw.QLabel("-")
         self.sigmoid_status.setAlignment(Qc.Qt.AlignRight)
         form_layout.addRow("Sigmoid Fit Status", self.sigmoid_status)
         # -- add the params area
@@ -298,8 +299,8 @@ class DockerSigmoidWidget(Qg.QFrame):
         form_layout.addRow("Number of sigmoid lines", self.sigmoid_line_spinbox)
         self.sigmoid_line_spinbox.set_callback(self.num_sigmoids_changed)
         # -- Add the apply button
-        button_boxes = Qg.QDialogButtonBox()
-        self.apply_button = button_boxes.addButton("Apply", Qg.QDialogButtonBox.ApplyRole)
+        button_boxes = Qw.QDialogButtonBox()
+        self.apply_button = button_boxes.addButton("Apply", Qw.QDialogButtonBox.ApplyRole)
         self.apply_button.clicked.connect(self.apply_sigmoid_params)  # RESEARCH why no connect unresolved ref
         form_layout.addWidget(button_boxes)
         self.setLayout(form_layout)
@@ -424,7 +425,7 @@ class DockerSigmoidWidget(Qg.QFrame):
         # Update existing widgets
         self.sigmoid_line_spinbox.set_value(self.num_sigmoid_lines)
         # Create new sigmoid parameters widgets
-        params_group_box = Qg.QGroupBox("Parameter Set #" + str(self.num_sigmoid_lines))
+        params_group_box = Qw.QGroupBox("Parameter Set #" + str(self.num_sigmoid_lines))
         sig_mid = c_widget.LabeledDoubleSpinbox("Sigmoid Midpoint")  # QUESTION Better label wording
         sig_mid.set_maximum(maximum)
         sig_mid.set_value(np.exp(sigmoid_params[0]))
@@ -439,15 +440,15 @@ class DockerSigmoidWidget(Qg.QFrame):
         y_0 = c_widget.LabeledDoubleSpinbox("y_0")
         y_0.set_maximum(maximum)
         y_0.set_value(sigmoid_params[3])
-        v_layout = Qg.QVBoxLayout()
+        v_layout = Qw.QVBoxLayout()
         v_layout.addWidget(sig_mid)
         v_layout.addWidget(curve_max)
         v_layout.addWidget(log_grow_rate)
         # -- dp50
-        dp_50_label = Qg.QLabel("Dp50")
-        dp_50_box = Qg.QLineEdit(str(dp50s))
+        dp_50_label = Qw.QLabel("Dp50")
+        dp_50_box = Qw.QLineEdit(str(dp50s))
         dp_50_box.setReadOnly(True)
-        dp50_h_layout = Qg.QHBoxLayout()
+        dp50_h_layout = Qw.QHBoxLayout()
         dp50_h_layout.addWidget(dp_50_label)
         dp50_h_layout.addWidget(dp_50_box)
         v_layout.addLayout(dp50_h_layout)
@@ -474,7 +475,7 @@ class DockerSigmoidWidget(Qg.QFrame):
         self.controller.switch_to_scan(self.controller.curr_scan_index)
 
 
-class DockerKappaWidget(Qg.QFrame):
+class DockerKappaWidget(Qw.QFrame):
     """
     # REVIEW Documentation
 
@@ -489,40 +490,40 @@ class DockerKappaWidget(Qg.QFrame):
         self.controller = controller
         self.kappa_graph = kappa_graph
         # set up the layout
-        v_layout = Qg.QVBoxLayout()
+        v_layout = Qw.QVBoxLayout()
         self.setContentsMargins(-10, -10, 0, -10)
         v_layout.setContentsMargins(30, 20, 20, 0)
         self.setAutoFillBackground(True)
         palette = Qg.QPalette()
         palette.setColor(Qg.QPalette.Background, Qc.Qt.white)
         self.setPalette(palette)
-        self.setFrameShape(Qg.QFrame.StyledPanel)
-        self.setFrameShadow(Qg.QFrame.Plain)
+        self.setFrameShape(Qw.QFrame.StyledPanel)
+        self.setFrameShadow(Qw.QFrame.Plain)
         # Layout kappa values section
         # -- groupbox to control showing k lines
-        show_k_lines_groupbox = Qg.QGroupBox("Kappa lines")
-        self.show_all_lines_radio_button = Qg.QRadioButton("Show all lines")
+        show_k_lines_groupbox = Qw.QGroupBox("Kappa lines")
+        self.show_all_lines_radio_button = Qw.QRadioButton("Show all lines")
         # noinspection PyUnresolvedReferences
         self.show_all_lines_radio_button.clicked.connect(self.show_all_k_lines)  # RESEARCH connect unresolved ref
-        self.show_tight_lines_radio_button = Qg.QRadioButton("Show tight lines")
+        self.show_tight_lines_radio_button = Qw.QRadioButton("Show tight lines")
         # noinspection PyUnresolvedReferences
         self.show_tight_lines_radio_button.clicked.connect(self.show_tight_k_lines)  # RESEARCH connect unresolved ref
         self.show_all_lines_radio_button.setChecked(True)
-        h_layout = Qg.QHBoxLayout()
+        h_layout = Qw.QHBoxLayout()
         h_layout.addWidget(self.show_all_lines_radio_button)
         h_layout.addWidget(self.show_tight_lines_radio_button)
         show_k_lines_groupbox.setLayout(h_layout)
         v_layout.addWidget(show_k_lines_groupbox)
         # -- groupbox to control showing k points
-        show_k_points_groupbox = Qg.QGroupBox("Kappa values")
-        self.show_all_points_radio_button = Qg.QRadioButton("Show all Ks")
+        show_k_points_groupbox = Qw.QGroupBox("Kappa values")
+        self.show_all_points_radio_button = Qw.QRadioButton("Show all Ks")
         # noinspection PyUnresolvedReferences
         self.show_all_points_radio_button.clicked.connect(self.show_all_k_points)  # RESEARCH connect unresolved ref
-        self.show_ave_points_radio_button = Qg.QRadioButton("Show averge Ks")
+        self.show_ave_points_radio_button = Qw.QRadioButton("Show averge Ks")
         # noinspection PyUnresolvedReferences
         self.show_ave_points_radio_button.clicked.connect(self.show_ave_k_points)  # RESEARCH connect unresolved ref
         self.show_all_points_radio_button.setChecked(True)
-        h_layout = Qg.QHBoxLayout()
+        h_layout = Qw.QHBoxLayout()
         h_layout.addWidget(self.show_all_points_radio_button)
         h_layout.addWidget(self.show_ave_points_radio_button)
         show_k_points_groupbox.setLayout(h_layout)

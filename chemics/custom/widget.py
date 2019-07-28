@@ -2,15 +2,15 @@
 Creates small graphical objects used in other widgets and dialogs.
 """
 # External Packages
-import PySide.QtCore as Qc
-import PySide.QtGui as Qg
+import PySide2.QtCore as Qc
+import PySide2.QtWidgets as Qw
 
 
 ###########################
 # Small Graphical Widgets #
 ###########################
 
-class TitleHLine(Qg.QWidget):
+class TitleHLine(Qw.QWidget):
     """
     Creates a widget that can be used to create a title that is centered with a horizontal line on either side of it.
 
@@ -18,31 +18,31 @@ class TitleHLine(Qg.QWidget):
     """
     def __init__(self, title):
         super(self.__class__, self).__init__()
-        h_layout = Qg.QHBoxLayout()
+        h_layout = Qw.QHBoxLayout()
         h_layout.addWidget(HLineRaised())
-        h_layout.addWidget(Qg.QLabel(title))
+        h_layout.addWidget(Qw.QLabel(title))
         h_layout.addWidget(HLineRaised())
         self.setLayout(h_layout)
 
 
-class VLineSunk(Qg.QFrame):
+class VLineSunk(Qw.QFrame):
     """
     Creates a vertical line QFrame.
     """
     def __init__(self):
         super(VLineSunk, self).__init__()
-        self.setFrameShape(Qg.QFrame.VLine)
-        self.setFrameShadow(Qg.QFrame.Sunken)
+        self.setFrameShape(Qw.QFrame.VLine)
+        self.setFrameShadow(Qw.QFrame.Sunken)
 
 
-class HLineRaised(Qg.QFrame):
+class HLineRaised(Qw.QFrame):
     """
     Creates a widget that can be used to create a horizontal line
     """
     def __init__(self):
         super(HLineRaised, self).__init__()
-        self.setFrameShape(Qg.QFrame.HLine)
-        self.setFrameShadow(Qg.QFrame.Raised)
+        self.setFrameShape(Qw.QFrame.HLine)
+        self.setFrameShadow(Qw.QFrame.Raised)
 
 
 ############################
@@ -50,7 +50,7 @@ class HLineRaised(Qg.QFrame):
 ############################
 
 
-class ArrowSpinBox(Qg.QWidget):
+class ArrowSpinBox(Qw.QWidget):
     """
     Creates a widget that can be used to click forwards and backwards in a list or select a specific index
 
@@ -58,14 +58,14 @@ class ArrowSpinBox(Qg.QWidget):
     """
     def __init__(self, forward):
         super(self.__class__, self).__init__()
-        h_layout = Qg.QHBoxLayout()
-        self.content_box = Qg.QSpinBox()
-        self.content_box.setButtonSymbols(Qg.QAbstractSpinBox.NoButtons)
+        h_layout = Qw.QHBoxLayout()
+        self.content_box = Qw.QSpinBox()
+        self.content_box.setButtonSymbols(Qw.QAbstractSpinBox.NoButtons)
         self.content_box.setMinimumWidth(100)
         self.content_box.setAlignment(Qc.Qt.AlignCenter)
-        self.prev_button = Qg.QToolButton()
+        self.prev_button = Qw.QToolButton()
         self.prev_button.setArrowType(Qc.Qt.LeftArrow)
-        self.next_button = Qg.QToolButton()
+        self.next_button = Qw.QToolButton()
         self.next_button.setArrowType(Qc.Qt.RightArrow)
         if forward:
             Qc.QObject.connect(self.prev_button, Qc.SIGNAL('clicked()'), self.content_box.stepDown)
@@ -107,7 +107,7 @@ class ArrowSpinBox(Qg.QWidget):
         self.content_box.setRange(min_range, max_range)
 
 
-class LabeledDoubleSpinbox(Qg.QWidget):
+class LabeledDoubleSpinbox(Qw.QWidget):
     """
     Creates a widget that has a box for typing in a number on the left and up/down spinner buttons to the left to
     allow the user to adjust the values
@@ -117,9 +117,9 @@ class LabeledDoubleSpinbox(Qg.QWidget):
     def __init__(self, title):
         super(self.__class__, self).__init__()
         self.title = title
-        h_layout = Qg.QHBoxLayout()
-        label = Qg.QLabel(self.title)
-        self.content_box = Qg.QDoubleSpinBox()
+        h_layout = Qw.QHBoxLayout()
+        label = Qw.QLabel(self.title)
+        self.content_box = Qw.QDoubleSpinBox()
         self.content_box.setMinimumWidth(150)
         self.content_box.setAlignment(Qc.Qt.AlignCenter)
         self.content_box.setDecimals(4)
@@ -160,7 +160,7 @@ class LabeledDoubleSpinbox(Qg.QWidget):
         self.content_box.setValue(new_value)
 
 
-class KappaTableWidget(Qg.QTableWidget):
+class KappaTableWidget(Qw.QTableWidget):
     """
     # REVIEW Documentation
 
@@ -173,7 +173,7 @@ class KappaTableWidget(Qg.QTableWidget):
         self.kappa_docker = kappa_docker
         self.setColumnCount(5)
         self.setHorizontalHeaderLabels(["Scan", "Status", "ss", "Dp50", "Kappa Apparent"])
-        self.setSelectionBehavior(Qg.QTableWidget.SelectRows)
+        self.setSelectionBehavior(Qw.QTableWidget.SelectRows)
         # noinspection PyUnresolvedReferences
         self.itemClicked.connect(self.row_click)  # RESEARCH connect unresolved ref
         # noinspection PyUnresolvedReferences
@@ -205,10 +205,10 @@ class KappaTableWidget(Qg.QTableWidget):
         # COMBAKL Kappa
         self.insertRow(self.rowCount())
         current_row = self.rowCount() - 1
-        scan_index = Qg.QTableWidgetItem(str(int(scan_index)))
+        scan_index = Qw.QTableWidgetItem(str(int(scan_index)))
         scan_index.setFlags(Qc.Qt.ItemIsEnabled | Qc.Qt.ItemIsSelectable)
         scan_index.setTextAlignment(Qc.Qt.AlignCenter)
-        status_box = Qg.QTableWidgetItem()
+        status_box = Qw.QTableWidgetItem()
         if status:
             status_box.setCheckState(Qc.Qt.Checked)
             status_box.setText("Inc")
@@ -216,13 +216,13 @@ class KappaTableWidget(Qg.QTableWidget):
             status_box.setCheckState(Qc.Qt.Unchecked)
             status_box.setText("Exc")
         status_box.setTextAlignment(Qc.Qt.AlignCenter)
-        ss = Qg.QTableWidgetItem(str(ss))
+        ss = Qw.QTableWidgetItem(str(ss))
         ss.setFlags(Qc.Qt.ItemIsEnabled | Qc.Qt.ItemIsSelectable)
         ss.setTextAlignment(Qc.Qt.AlignCenter)
-        dp_50 = Qg.QTableWidgetItem(str(dp_50))
+        dp_50 = Qw.QTableWidgetItem(str(dp_50))
         dp_50.setFlags(Qc.Qt.ItemIsEnabled | Qc.Qt.ItemIsSelectable)
         dp_50.setTextAlignment(Qc.Qt.AlignCenter)
-        app_k = Qg.QTableWidgetItem(str(round(app_k, 2)))
+        app_k = Qw.QTableWidgetItem(str(round(app_k, 2)))
         app_k.setFlags(Qc.Qt.ItemIsEnabled | Qc.Qt.ItemIsSelectable)
         app_k.setTextAlignment(Qc.Qt.AlignCenter)
         self.setItem(current_row, 0, scan_index)
