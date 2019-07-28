@@ -25,6 +25,9 @@ This uses the [vulture package](https://github.com/jendrikseipp/vulture).
 - [ ] From the CLI while in the top level folder, execture `vulture chemics/ configs/vulture_whitelist.py`
     
 ## Programming Environment
+
+- [ ] Create Programming Environment
+- [ ] Create fast_dp file specific to your os.  Run from the chemics package folder `python fast_dp_setup.py build_ext --inplace`
     
 ### Using requirements.txt
     
@@ -71,3 +74,9 @@ Python version: **3.6.8**
 - [ ] bumpversion:  0.5.3
 - [ ] pyinstaller:  3.4
 
+## Problems?
+### Problems building fast_dp_calculator
+#### cl.exe missing [Windows]
+
+- [ ] Install [Build Tools for Visual Studio](https://visualstudio.microsoft.com/downloads/) (Tools for Visual Studio -> Build Tools)
+- [ ] Restart the computer.  This should add cl.exe into your `PATH`, otherwise you may need to manually add it.

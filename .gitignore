@@ -8,8 +8,12 @@
 /sphinx/build
 
 # cython
-/chemics/build/chemics_win/
-/chemics/dist/
+/chemics/build/temp*3.6/
 
-# Test Output
-/tests/testdata/*.chemics
+# OS Specific fast_dp_files
+fast_dp_calculator.c
+fast_dp_calculator.*.so
+
+# PyInstaller
+/chemics/build/chemics_win/
+/chemics/dist/chemics*.exe

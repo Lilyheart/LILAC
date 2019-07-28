@@ -19,6 +19,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Updated entire code base to Python 3.6.8
 
+### Removed
+- Complied fast_dp_calculator from repository so that developers are forced to build specific to their OS
+
 
 ## [2.2.3] - 2019-07-26
 ### Fixed
