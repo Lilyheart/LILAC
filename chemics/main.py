@@ -448,7 +448,7 @@ class MainView(Qw.QMainWindow):  # REVIEW Code Class
         """
         # TODO issues/23 https://gitlab.bucknell.edu/nrr004/Chemics/issues/23
         # noinspection PyCallByClass
-        Qw.QMessageBox.about(self, "About", "Chemics\n\nVersion 2.2.3")
+        Qw.QMessageBox.about(self, "About", "Chemics\n\nVersion 2.2.4")
 
     @staticmethod
     def open_user_manual():

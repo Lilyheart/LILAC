@@ -15,9 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -->
 
 
-## [Unreleased]
+## [2.2.4] - 2019-07-28
 ### Changed
 - Updated entire code base to Python 3.6.8
+- Updated to PySide2/QT5
 
 ### Removed
 - Complied fast_dp_calculator from repository so that developers are forced to build specific to their OS
