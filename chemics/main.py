@@ -211,7 +211,7 @@ class MainView(Qw.QMainWindow):  # REVIEW Code Class
         Opens data files and begins the scan alignment process
         """
         if isTest:  # TEST
-            open_dir = "../../TestData/Penn State 2019/Caryophyllene (150), Ozone (200), dry/ANALYSIS"
+            open_dir = "../../ChemicsTestData/Penn State 19 - Full Data Set/"
         else:
             open_dir = ""
         # noinspection PyCallByClass

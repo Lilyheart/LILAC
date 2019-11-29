@@ -222,7 +222,7 @@ class Controller(object):
         :param str filename: The name to save the file as.  Can include directory structure,
                              be relative to cwd or absolute.
         """
-        from . import export_data
+        import export_data
         export_data.export_scans(self.scans, filename)
 
     def correct_charges(self):

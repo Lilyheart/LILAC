@@ -25,6 +25,8 @@ def get_auto_shift(smps_count, ccnc_count, scan_up_time, median_shift):
     """
     if sum(smps_count) == 0 or sum(ccnc_count) == 0:
         return 0, ["No SMPS and/or CCNC data"]
+    if len(smps_count) > len(ccnc_count):
+        return 0, ["SMPS data longer than CCNC data"]
     # Initalize weight values
     high_smps_weight = const.HIGH_SMPS_WEIGHT
     high_ccnc_weight = const.HIGH_CCNC_WEIGHT

@@ -17,3 +17,7 @@ fast_dp_calculator.*.so
 # PyInstaller
 /chemics/build/chemics_win/
 /chemics/dist/chemics*.exe
+/chemics/dist/*.log*
+
+# Exported Scan Files
+*.xls
