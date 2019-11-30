@@ -32,7 +32,7 @@ import logging_config
 #      If frozen, do not show any testing features
 #      If running in nomal environment, preset folders and allow exporting of data
 if getattr(sys, 'frozen', False):  # we are running in a |PyInstaller| bundle
-    logging_config.configure_logger_frz("Chemicslog-" + datetime.datetime.now().strftime("%Y-%m-%d") + ".log")
+    logging_config.configure_logger_frz("Chemicslog-" + datetime.datetime.now().strftime("%Y-%m-%d--%H.%M") + ".log")
     isTest = False
 else:  # we are running in a normal Python environment
     logging_config.configure_logger_env()
@@ -448,7 +448,7 @@ class MainView(Qw.QMainWindow):  # REVIEW Code Class
         """
         # TODO issues/23 https://gitlab.bucknell.edu/nrr004/Chemics/issues/23
         # noinspection PyCallByClass
-        Qw.QMessageBox.about(self, "About", "Chemics\n\nVersion 2.2.4")
+        Qw.QMessageBox.about(self, "About", "Chemics\n\nVersion 2.2.5")
 
     @staticmethod
     def open_user_manual():

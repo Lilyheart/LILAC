@@ -15,6 +15,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -->
 
 
+## [2.2.5] - 2019-11-29
+### Added
+- Obtaining CPC sample flow rate
+- Using CPC sample flow rate to determine counts to concentration conversion rate.
+
+### Fixed
+- Error when last scan has more SMPS data than CCNC data.
+
+### Changed
+- Counts to concentration conversion rate determined by formula instead of prompting user
+- For activation: CPC sample flow rate obtained from SMPS data instead of using a default rate of 0.05 which could be incorrect
+
+
 ## [2.2.4] - 2019-07-28
 ### Changed
 - Updated entire code base to Python 3.6.8
