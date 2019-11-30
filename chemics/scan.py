@@ -51,6 +51,7 @@ class Scan(object):
         self.status_code = 0
         self.sigmoid_status = None
         self.counts_to_conc = 0.0
+        self.cpc_sample_flow = 0.05
         self.index = index
         self.start_time = None
         self.end_time = None
@@ -238,6 +239,14 @@ class Scan(object):
         :param float new_value: The counts_to_conc value
         """
         self.counts_to_conc = new_value
+
+    def set_cpc_sample_flow(self, new_value):
+        """
+        Sets the counts_to_conc value in the scan object.
+
+        :param float new_value: The counts_to_conc value
+        """
+        self.cpc_sample_flow = new_value
 
     def add_to_diameter_midpoints(self, new_data):
         """
@@ -548,9 +557,6 @@ class Scan(object):
         ccnc_uptime = sum(self.processed_ccnc_count_sums[0:self.scan_up_time])
         # Sum of SMPS counts (Section 4) during Uptime
         smps_uptime = round(sum(self.processed_smps_counts[0:self.scan_up_time]) / self.counts_to_conc, 0)
-        # CPC Sample Flow Rate (0.05)
-        # TODO Need to come from part of the file not scraped yet
-        cpc_sample_flow_rate = 0.05
         # Average Sample Flow (CCNC)
         mean_sample_flow = sum(self.processed_ccnc_sample_flow[0:self.scan_up_time])
         mean_sample_flow /= len((self.processed_ccnc_sample_flow[0:self.scan_up_time]))
@@ -559,7 +565,7 @@ class Scan(object):
             return "Unknown"
         else:
             try:
-                return round(((ccnc_uptime / smps_uptime) * (cpc_sample_flow_rate/(mean_sample_flow/1000))*100), 0)
+                return round(((ccnc_uptime / smps_uptime) * (self.cpc_sample_flow/(mean_sample_flow/1000))*100), 0)
             except Exception as e:
                 logger.warning("Scan (" + str(self.index) + "):" + str(e))
                 return "Unknown"

@@ -22,6 +22,9 @@ class TestInit(TestController):
     def test_counts_to_conc_conv(self):
         self.assertEqual(self.control.counts_to_conc_conv, 0)
 
+    def test_cpc_sample_flow(self):
+        self.assertEqual(self.control.cpc_sample_flow, 0.05)
+
     def test_data_files(self):
         self.assertEqual(self.control.data_files, None)
 

@@ -65,9 +65,13 @@ class Controller(object):
     # COMBAKL Kappa
     def __init__(self, view):
         self.view = view
+        # Variables consistent across scans
+        self.scan_up_time = None
+        self.scan_down_time = None
+        self.cpc_sample_flow = None
+        self.counts_to_conc_conv = None
         # Variables set with set_attributes_default method
         self.scans = None
-        self.counts_to_conc_conv = None
         self.data_files = None
         self.ccnc_data = None
         self.smps_data = None
@@ -111,6 +115,7 @@ class Controller(object):
         # DOCQUESTION What can be constants?
         self.scans = []
         self.counts_to_conc_conv = 0
+        self.cpc_sample_flow = 0.5
         self.data_files = None
         self.ccnc_data = None
         self.smps_data = None
@@ -150,11 +155,6 @@ class Controller(object):
         self.view.reset_view()
         # take in new data and rock on!
         self.data_files = data_files  # DOCQUESTION Allow adding additional files later?
-        # we can't do anything without having the Counts2ConcConv constant
-        self.counts_to_conc_conv = self.view.get_counts_to_conc_conv()
-        if self.counts_to_conc_conv is None:
-            return  # TODO issues/30 - No feedback to user currently, but with change, may be unneccessary
-        # great, now that we have the files, let's parse them
         self.view.init_progress_bar("Reading in SMPS and CCNC data files")
         # TODO issues/47 So many magic numbers in the following functions.  Find what can be constants.
         self.parse_files()
@@ -392,6 +392,12 @@ class Controller(object):
         - self.experiment_date from the first ccnc file record
         - ccnc_data from the csv file(s)
         - smps_data from the txt file
+        - Sets the counts_to_conc_conv value by finding the CPC Sample Flow(lpm) value
+        from the SMPS file and performs the following conversion to convert the liter per
+        minute measure into a second per CC value.
+
+        (1 minute / "CPC Sample Flow" L)  *  (60 seconds / 1 minute)  *  (1 L / 1000 cc)
+
         """
         ccnc_csv_files = []  # Should be hourly files  # TODO issues/25 Add error handling
         smps_txt_files = []  # Should be one file  # TODO issues/25 Add error handling
@@ -409,6 +415,19 @@ class Controller(object):
         self.experiment_date, self.ccnc_data = hf.process_csv_files(ccnc_csv_files)
         self.smps_data = hf.process_tab_sep_files(smps_txt_files)
 
+        # Obtain data that is consistant across scans
+        # Determine scan duration which is the sum of the scan up time and the retrace time.
+        # -- Find first scan up time  # DOCQUESTION Assume ALWAYS the same?
+        for i in range(len(self.smps_data)):
+            if ''.join(self.smps_data[i][0].split()).lower() == "scanuptime(s)":
+                self.scan_up_time = int(self.smps_data[i][1])
+                self.scan_down_time = int(self.smps_data[i + 1][1])  # this is the retrace time
+                self.cpc_sample_flow = float(self.smps_data[i + 8][1])
+                break
+        # DOCQUESTION Which leads to always assuming this is same
+        self.scan_duration = self.scan_up_time + self.scan_down_time
+        self.counts_to_conc_conv = (1.0/self.cpc_sample_flow) * (3/50)
+
     def create_scans(self):
         """
         Creates the scans objects and updates via the following scan methods:
@@ -418,18 +437,9 @@ class Controller(object):
         - :class:`~scan.Scan.set_up_time` From the SMPS file
         - :class:`~scan.Scan.set_down_time` From the SMPS file (retrace time)
         - :class:`~scan.Scan.set_duration` Scan up time + Scan down time
-        - :class:`~scan.Scan.set_counts_2_conc` As obtained from the user earlier
+        - :class:`~scan.Scan.set_counts_2_conc` As calculated earlier
+        - :class:`~scan.Scan.set_cpc_sample_flow` from the SMPS file
         """
-        # Determine scan duration which is the sum of the scan up time and the retrace time.
-        scan_down_time = 0
-        scan_up_time = 0
-        # -- Find first scan up time  # DOCQUESTION Assume ALWAYS the same?
-        for i in range(len(self.smps_data)):
-            if ''.join(self.smps_data[i][0].split()).lower() == "scanuptime(s)":
-                scan_up_time = int(self.smps_data[i][1])
-                scan_down_time = int(self.smps_data[i + 1][1])  # this is the retrace time
-                break
-        self.scan_duration = scan_up_time + scan_down_time  # DOCQUESTION Which leads to always assuming this is same
         # Get a list of all the start times
         scan_start_times = self.smps_data[0]  # TODO issues/4 Affected by the changed to storing the AIM Scan #
         # For each scan time
@@ -444,10 +454,11 @@ class Controller(object):
             # Set Scan values
             a_scan.set_start_time(start_time)
             a_scan.set_end_time(end_time)
-            a_scan.set_up_time(scan_up_time)
-            a_scan.set_down_time(scan_down_time)
+            a_scan.set_up_time(self.scan_up_time)
+            a_scan.set_down_time(self.scan_down_time)
             a_scan.set_duration(self.scan_duration)
             a_scan.set_counts_2_conc(self.counts_to_conc_conv)
+            a_scan.set_cpc_sample_flow(self.cpc_sample_flow)
 
     def get_normalized_concentration(self):
         """
