@@ -181,7 +181,7 @@ class SelectParamsKappaDialog(Qw.QDialog):
         form_layout.addWidget(button_boxes)
         self.setLayout(form_layout)
 
-    def apply(self):
+    def apply(self):    # FIXME HERE is where the kappa module
         """
         # REVIEW Documentation
         """

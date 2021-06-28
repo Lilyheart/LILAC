@@ -167,7 +167,7 @@ class KappaTableWidget(Qw.QTableWidget):
     :param kappa_docker:
     :type kappa_docker:
     """
-    def __init__(self, kappa_docker):
+    def __init__(self, kappa_docker):   # FIXME error appending scans
         # COMBAKL Kappa
         super(self.__class__, self).__init__()
         self.kappa_docker = kappa_docker

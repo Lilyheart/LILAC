@@ -4,6 +4,7 @@ Creates the various widgets that display in the docker section of the display
 # External Packages
 import datetime as dt
 import numpy as np
+import pandas as pd
 import PySide2.QtCore as Qc
 import PySide2.QtGui as Qg
 import PySide2.QtWidgets as Qw
@@ -594,9 +595,15 @@ class DockerKappaWidget(Qw.QFrame):
         # REVIEW Documentation
         """
         # COMBAKL Kappa
+
+        # Clear data from table
+        self.kappa_data_table.setRowCount(0)
+
         for a_key in list(self.controller.kappa_calculate_dict.keys()):
+            print("key: " + str(a_key))
             a_scan = self.controller.kappa_calculate_dict[a_key]
             for aSS in a_scan:
+                print("aSS: " + str(aSS))
                 ss = a_key
                 scan_index = aSS[0]
                 dp_50 = aSS[1]

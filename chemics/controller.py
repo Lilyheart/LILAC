@@ -209,7 +209,7 @@ class Controller(object):
                 if index == 0:
                     logger.warning("get_auto_shift error on scan: " + str(i))
                 logger.warning("    (%d) %s" % (index, value))
-            self.scans[i].set_shift_factor(shift_factor)
+            self.scans[i].set_shift_factor(shift_factor + 1)    # Edit adding + 1 to shift_factor
             self.scans[i].generate_processed_data()
         self.view.close_progress_bar()
         self.post_align_sanity_check()
@@ -280,7 +280,7 @@ class Controller(object):
                 a_scan.sigmoid_status = False
                 logger.warning("Scan: %d - RuntimeError Error: %s" % (scan_index, str(e)))
 
-    def cal_kappa(self):
+    def cal_kappa(self):    # FIXME Here are the steps after clicking apply
         """
         # REVIEW Documentation
         """
@@ -312,6 +312,9 @@ class Controller(object):
                 dp_50 = a_scan.dp50[j]
                 # REVIEW kset Create ss_and_dps
                 ss_and_dps.append([i, ss, dp_50, activation])
+
+        # Clear dictionary before appending scans data
+        self.kappa_calculate_dict = {}  # EDIT Fixes issue #3
         for i in range(len(ss_and_dps)):
             # REVIEW kset Create use ss_and_dps
             scan_index = float(ss_and_dps[i][0])
