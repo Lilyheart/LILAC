@@ -1,0 +1,1157 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Secondary Code &mdash; Chemics 2.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Custom Widgets and Dialogs" href="custwidgets.html" />
+    <link rel="prev" title="Main Code" href="main.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Chemics
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/general.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../general/general.html#faq">FAQ</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getstarted/installing.html">System Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getstarted/installing.html#how-to-install">How to Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getstarted/using.html">How to use Chemics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/using.html#preparing-the-data">Preparing the Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/using.html#starting-a-new-project">Starting a new project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/using.html#opening-a-previous-project">Opening a previous project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/using.html#aligning-scans">Aligning Scans</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/using.html#saving-a-project">Saving a project</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">The Code Base</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id1">[2.2.5] - 2019-11-29</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#added">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#fixed">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#changed">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id2">[2.2.4] - 2019-07-28</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id3">Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#removed">Removed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id4">[2.2.3] - 2019-07-26</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id5">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id6">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id7">[2.2.2] - 2019-07-19</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id8">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id9">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id10">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id11">[2.2.1] - 2019-07-18</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id12">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id14">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id16">Removed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id17">[2.2.0] - 2019-07-17</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id18">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id20">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id22">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id26">[2.1.2] - 2019-07-10</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id27">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id28">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id30">[2.1.1] - 2019-07-09</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id31">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id38">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id41">Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id43">Removed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id45">[2.1.0] - 2019-06-21</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id46">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id48">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id51">Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id52">Removed</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="main.html">Main Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="main.html#module-main">main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="main.html#module-controller">controller module</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Secondary Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-scan">scan module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-graphs">graphs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-helper_functions">helper_functions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-fast_dp_calculator">fast_dp_calculator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fast-dp-setup-module">fast_dp_setup module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="custwidgets.html">Custom Widgets and Dialogs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="custwidgets.html#module-custom.docker_widget">custom.docker_widget module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custwidgets.html#module-custom.central_widget">custom.central_widget module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custwidgets.html#module-custom.modal_dialogs">custom.modal_dialogs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custwidgets.html#module-custom.widget">custom.widget module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="constants.html">Constant values</a></li>
+</ul>
+
+            
+          
+    <a href="py-modindex.html">All Modules</a>
+    <a href="genindex.html">Code Index</a>
+  
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Chemics</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Secondary Code</li>
+    
+    
+
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="secondary-code">
+<h1>Secondary Code<a class="headerlink" href="#secondary-code" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-scan">
+<span id="scan-module"></span><h2>scan module<a class="headerlink" href="#module-scan" title="Permalink to this headline">¶</a></h2>
+<p>This class creates a scan object stores the data from a single scan.</p>
+<dl class="class">
+<dt id="scan.Scan">
+<em class="property">class </em><code class="sig-prename descclassname">scan.</code><code class="sig-name descname">Scan</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class creates a scan object stores the data from a single scan.</p>
+<p>Raw: Original Data
+Processed: Data after shifts are processed
+Corrected: Data after charge corrections
+Cleaned: Data after sigmoid cleaning</p>
+<p>The following variables are stored:  # RESEARCH Confirm variable descriptions</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>status</strong>: status of the scan</p></li>
+<li><p><strong>status_code</strong>: The reason why the scan is not good</p></li>
+<li><p><strong>counts_to_conc</strong>: the flow rate</p></li>
+<li><p><strong>index</strong>: the scan #</p></li>
+<li><p><strong>start_time</strong>: what time the scan starts. Format is hh:mm:ss</p></li>
+<li><p><strong>end_time</strong>: what time the scan ends. Format is hh:mm:ss</p></li>
+<li><p><strong>duration</strong>: duration of the scan</p></li>
+<li><p><strong>scan_up_time</strong>: up and down scan time. Very useful to align the data</p></li>
+<li><p><strong>scan_down_time</strong>:</p></li>
+<li><p>etc… # REVIEW Documentation</p></li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – The scan number from the SMPS file.  # TODO issues/4 [Current is sequential #s from zero]</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="scan.Scan.is_valid">
+<code class="sig-name descname">is_valid</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.is_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retuns if the scan is valid or not.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if status == 1, otherwise False</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.compare_smps">
+<code class="sig-name descname">compare_smps</code><span class="sig-paren">(</span><em class="sig-param">another_scan</em><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.compare_smps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compares a scan to another scan by using the two-tailed p-value of Pearson’s correlation coefficient
+as well as Kolmogorov-Smirnov statistic on the smps counts to determine if the scan have the same distribution.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.pearsonr.html">Pearsons Correlation Coefficient</a></p></li>
+<li><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ks_2samp.html">Kolmogorov-Smirnov statistic on 2 samples</a></p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>another_scan</strong> (<a class="reference internal" href="#scan.Scan" title="scan.Scan"><em>Scan</em></a>) – a scan object to compare to this one</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns true if the correlation coefficient p-value is less than 0.05 <strong>and</strong> the Kolmogorov-Smirnov
+statistic is greater than 0.05</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.get_status_code_descript">
+<code class="sig-name descname">get_status_code_descript</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.get_status_code_descript" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a string value explaining the status code of the current scan</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The status code of the current scan.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.set_start_time">
+<code class="sig-name descname">set_start_time</code><span class="sig-paren">(</span><em class="sig-param">start_time</em><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.set_start_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the start_time value in the scan object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>start_time</strong> (<em>datetime.datetime</em>) – The time the scan started.  From the smps file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.set_end_time">
+<code class="sig-name descname">set_end_time</code><span class="sig-paren">(</span><em class="sig-param">end_time</em><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.set_end_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the end_time value in the scan object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>end_time</strong> (<em>datetime.datetime</em>) – The end time of the scan.  Typically the start time plus the duration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.set_up_time">
+<code class="sig-name descname">set_up_time</code><span class="sig-paren">(</span><em class="sig-param">up_time</em><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.set_up_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the scan_up_time value in the scan object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>up_time</strong> (<em>int</em>) – The scan up time from the smps file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.set_down_time">
+<code class="sig-name descname">set_down_time</code><span class="sig-paren">(</span><em class="sig-param">down_time</em><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.set_down_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the scan_down_time value in the scan object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>down_time</strong> (<em>int</em>) – The scan down time from the retrace time in the smps file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.set_duration">
+<code class="sig-name descname">set_duration</code><span class="sig-paren">(</span><em class="sig-param">duration</em><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.set_duration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the duration value in the scan object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>duration</strong> (<em>int</em>) – The duration of the scan. Typically this is scan_up_time + scan_down_time.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.set_counts_2_conc">
+<code class="sig-name descname">set_counts_2_conc</code><span class="sig-paren">(</span><em class="sig-param">new_value</em><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.set_counts_2_conc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the counts_to_conc value in the scan object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_value</strong> (<em>float</em>) – The counts_to_conc value</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.set_cpc_sample_flow">
+<code class="sig-name descname">set_cpc_sample_flow</code><span class="sig-paren">(</span><em class="sig-param">new_value</em><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.set_cpc_sample_flow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the counts_to_conc value in the scan object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_value</strong> (<em>float</em>) – The counts_to_conc value</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.add_to_diameter_midpoints">
+<code class="sig-name descname">add_to_diameter_midpoints</code><span class="sig-paren">(</span><em class="sig-param">new_data</em><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.add_to_diameter_midpoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the new_data value to the diameter_midpoints list in the scan object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_data</strong> (<em>str|int|float</em>) – The diameter_midpoints to add to the list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.add_to_raw_normalized_concs">
+<code class="sig-name descname">add_to_raw_normalized_concs</code><span class="sig-paren">(</span><em class="sig-param">new_data</em><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.add_to_raw_normalized_concs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the new_data value to the raw_normalized_concs list in the scan object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_data</strong> (<em>str|int|float</em>) – The raw_normalized_concs to add to the list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.add_to_raw_smps_counts">
+<code class="sig-name descname">add_to_raw_smps_counts</code><span class="sig-paren">(</span><em class="sig-param">new_data</em><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.add_to_raw_smps_counts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multiplies the new_data by counts_to_conc and adds the result to the raw_smps_counts list in the scan object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_data</strong> (<em>int</em>) – The raw_smps_counts to add to the list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.add_to_ave_smps_diameters">
+<code class="sig-name descname">add_to_ave_smps_diameters</code><span class="sig-paren">(</span><em class="sig-param">new_data</em><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.add_to_ave_smps_diameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the new_data value to the ave_smps_diameters list in the scan object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_data</strong> (<em>float</em>) – The ave_smps_diameters to add to the list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.add_to_raw_t1s_t2s_t3s">
+<code class="sig-name descname">add_to_raw_t1s_t2s_t3s</code><span class="sig-paren">(</span><em class="sig-param">t1</em>, <em class="sig-param">t2</em>, <em class="sig-param">t3</em><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.add_to_raw_t1s_t2s_t3s" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the three temperaturs values to the t1, t2 and t3 lists in the scan object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t1</strong> (<em>str|int|float</em>) – The raw t1 value.</p></li>
+<li><p><strong>t2</strong> (<em>str|int|float</em>) – The raw t1 value.</p></li>
+<li><p><strong>t3</strong> (<em>str|int|float</em>) – The raw t1 value.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.set_status">
+<code class="sig-name descname">set_status</code><span class="sig-paren">(</span><em class="sig-param">status</em><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.set_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the status value in the scan object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>status</strong> (<em>int</em>) – The updated status</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.set_status_code">
+<code class="sig-name descname">set_status_code</code><span class="sig-paren">(</span><em class="sig-param">code</em><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.set_status_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the status_code value in the scan object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>code</strong> (<em>int</em>) – The updated status code</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.add_to_raw_super_sats">
+<code class="sig-name descname">add_to_raw_super_sats</code><span class="sig-paren">(</span><em class="sig-param">ss</em><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.add_to_raw_super_sats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the new_data value to the raw_super_sats list in the scan object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ss</strong> (<em>str|int|float</em>) – The raw supersaturation value to add to the list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.add_to_raw_ccnc_counts">
+<code class="sig-name descname">add_to_raw_ccnc_counts</code><span class="sig-paren">(</span><em class="sig-param">new_count_data</em>, <em class="sig-param">new_count_sum</em>, <em class="sig-param">new_sample_flow</em><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.add_to_raw_ccnc_counts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the new_data value to the raw_ccnc_counts list in the scan object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_count_data</strong> (<em>str|int|float</em>) – The raw_ccnc_count to add to the list</p></li>
+<li><p><strong>new_count_sum</strong> (<em>int</em>) – The raw_ccnc_count to add to the list</p></li>
+<li><p><strong>new_sample_flow</strong> (<em>str|int|float</em>) – The raw_ccnc_count to add to the list</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.add_to_raw_ave_ccnc_sizes">
+<code class="sig-name descname">add_to_raw_ave_ccnc_sizes</code><span class="sig-paren">(</span><em class="sig-param">new_data</em><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.add_to_raw_ave_ccnc_sizes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the new_data value to the raw_ave_ccnc_sizes list in the scan object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_data</strong> (<em>str|int|float</em>) – The ave_ccnc_size to add to the list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.set_shift_factor">
+<code class="sig-name descname">set_shift_factor</code><span class="sig-paren">(</span><em class="sig-param">factor</em><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.set_shift_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the factor is lless then that length of number of CCNC raw data points, it sets the shift factor to the
+value provided.  Otherwise it sets the shift factor to zero.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>factor</strong> (<em>int</em>) – The number of data points to shift data so that the SMPS data and the CCNC data align.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.set_sigmoid_params">
+<code class="sig-name descname">set_sigmoid_params</code><span class="sig-paren">(</span><em class="sig-param">params</em><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.set_sigmoid_params" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>params</strong> (<em># REVIEW Documentation</em>) – # REVIEW Documentation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.pre_align_self_test">
+<code class="sig-name descname">pre_align_self_test</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.pre_align_self_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compares the length of the smps data and if it’s not in the same as the duration, invalidates the scan</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.post_align_self_test">
+<code class="sig-name descname">post_align_self_test</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.post_align_self_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks for invalid scans.  Currently tests for:</p>
+<ul class="simple">
+<li><p>Error in supersaturation</p></li>
+<li><p>Standard devations in the three tempuratures greater than 1</p></li>
+<li><p>Checks for uniform values in temperatures by comparing the first value to all the values</p></li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.do_basic_trans">
+<code class="sig-name descname">do_basic_trans</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.do_basic_trans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert lists to numpy arrays.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.generate_processed_data">
+<code class="sig-name descname">generate_processed_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.generate_processed_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Processing SMPS is straightforward.</p>
+<p>Processing CCNC is based on the shift factor.</p>
+<ul class="simple">
+<li><p>If there is a negative shift factor, insert zeros before the CCNC data.</p></li>
+<li><p>If there is a positive shift factor, drop the beginning rows by the shift factor.</p></li>
+<li><p>If there is not enough data, then zeros are added to the end.</p></li>
+<li><p>Processed data is then truncated to match the length of duration.</p></li>
+</ul>
+<p>Finally the <a class="reference internal" href="#scan.Scan.post_align_self_test" title="scan.Scan.post_align_self_test"><code class="xref py py-class docutils literal notranslate"><span class="pre">post_align_self_test</span></code></a> is processed to verify validity of scan.</p>
+<p>Original data is stored seperately to ensure no data loss when shifting.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.correct_charges">
+<code class="sig-name descname">correct_charges</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.correct_charges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Corrects the charges for the scan by resolving zeros to small values and correcting the charges via
+<a class="reference internal" href="#module-fast_dp_calculator" title="fast_dp_calculator"><code class="xref py py-class docutils literal notranslate"><span class="pre">fast_dp_calculator</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.fit_sigmoids">
+<code class="sig-name descname">fit_sigmoids</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.fit_sigmoids" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scan.Scan.get_activation">
+<code class="sig-name descname">get_activation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scan.Scan.get_activation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the activation percentage for each scan on the fly.
+Updates each time a new shift value is selected</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The activation percentage.  If an exception occurs, returns <cite>“Unknown”</cite></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str|int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-graphs">
+<span id="graphs-module"></span><h2>graphs module<a class="headerlink" href="#module-graphs" title="Permalink to this headline">¶</a></h2>
+<p>Initalizes and updates the graphs</p>
+<dl class="class">
+<dt id="graphs.ConcOverTimeRawDataGraph">
+<em class="property">class </em><code class="sig-prename descclassname">graphs.</code><code class="sig-name descname">ConcOverTimeRawDataGraph</code><a class="headerlink" href="#graphs.ConcOverTimeRawDataGraph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.backends.backend_qt5agg.FigureCanvasQTAgg</span></code></p>
+<p>Creates and updates the Raw SMPS and CCNC concentration over time graph.</p>
+<dl class="method">
+<dt id="graphs.ConcOverTimeRawDataGraph.update_graph">
+<code class="sig-name descname">update_graph</code><span class="sig-paren">(</span><em class="sig-param">a_scan</em><span class="sig-paren">)</span><a class="headerlink" href="#graphs.ConcOverTimeRawDataGraph.update_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the graph with the data in the scan provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>a_scan</strong> (<a class="reference internal" href="#scan.Scan" title="scan.Scan"><em>Scan</em></a>) – The scan object to update the graph with</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="graphs.ConcOverTimeRawDataGraph.staticMetaObject">
+<code class="sig-name descname">staticMetaObject</code><em class="property"> = &lt;PySide2.QtCore.QMetaObject object&gt;</em><a class="headerlink" href="#graphs.ConcOverTimeRawDataGraph.staticMetaObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="graphs.ConcOverTimeSmoothGraph">
+<em class="property">class </em><code class="sig-prename descclassname">graphs.</code><code class="sig-name descname">ConcOverTimeSmoothGraph</code><a class="headerlink" href="#graphs.ConcOverTimeSmoothGraph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.backends.backend_qt5agg.FigureCanvasQTAgg</span></code></p>
+<p>Creates and updates the Smoothed SMPS and CCNC concentration over scan time graph.</p>
+<dl class="method">
+<dt id="graphs.ConcOverTimeSmoothGraph.update_graph">
+<code class="sig-name descname">update_graph</code><span class="sig-paren">(</span><em class="sig-param">a_scan</em><span class="sig-paren">)</span><a class="headerlink" href="#graphs.ConcOverTimeSmoothGraph.update_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the graph with the data in the scan provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>a_scan</strong> (<a class="reference internal" href="#scan.Scan" title="scan.Scan"><em>Scan</em></a>) – The scan object to update the graph with</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="graphs.ConcOverTimeSmoothGraph.staticMetaObject">
+<code class="sig-name descname">staticMetaObject</code><em class="property"> = &lt;PySide2.QtCore.QMetaObject object&gt;</em><a class="headerlink" href="#graphs.ConcOverTimeSmoothGraph.staticMetaObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="graphs.TemperatureGraph">
+<em class="property">class </em><code class="sig-prename descclassname">graphs.</code><code class="sig-name descname">TemperatureGraph</code><a class="headerlink" href="#graphs.TemperatureGraph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.backends.backend_qt5agg.FigureCanvasQTAgg</span></code></p>
+<p>Creates and updates the Temperature over scan time graph.</p>
+<dl class="method">
+<dt id="graphs.TemperatureGraph.update_graph">
+<code class="sig-name descname">update_graph</code><span class="sig-paren">(</span><em class="sig-param">a_scan</em><span class="sig-paren">)</span><a class="headerlink" href="#graphs.TemperatureGraph.update_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the graph with the data in the scan provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>a_scan</strong> (<a class="reference internal" href="#scan.Scan" title="scan.Scan"><em>Scan</em></a>) – The scan object to update the graph with</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="graphs.TemperatureGraph.staticMetaObject">
+<code class="sig-name descname">staticMetaObject</code><em class="property"> = &lt;PySide2.QtCore.QMetaObject object&gt;</em><a class="headerlink" href="#graphs.TemperatureGraph.staticMetaObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="graphs.RatioOverDiameterGraph">
+<em class="property">class </em><code class="sig-prename descclassname">graphs.</code><code class="sig-name descname">RatioOverDiameterGraph</code><a class="headerlink" href="#graphs.RatioOverDiameterGraph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.backends.backend_qt5agg.FigureCanvasQTAgg</span></code></p>
+<p>Creates and updates the CCNC/SMPS over Dry Diameter graph.</p>
+<dl class="method">
+<dt id="graphs.RatioOverDiameterGraph.update_graph">
+<code class="sig-name descname">update_graph</code><span class="sig-paren">(</span><em class="sig-param">a_scan</em><span class="sig-paren">)</span><a class="headerlink" href="#graphs.RatioOverDiameterGraph.update_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the graph with the data in the scan provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>a_scan</strong> (<a class="reference internal" href="#scan.Scan" title="scan.Scan"><em>Scan</em></a>) – The scan object to update the graph with</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="graphs.RatioOverDiameterGraph.staticMetaObject">
+<code class="sig-name descname">staticMetaObject</code><em class="property"> = &lt;PySide2.QtCore.QMetaObject object&gt;</em><a class="headerlink" href="#graphs.RatioOverDiameterGraph.staticMetaObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="graphs.KappaGraph">
+<em class="property">class </em><code class="sig-prename descclassname">graphs.</code><code class="sig-name descname">KappaGraph</code><a class="headerlink" href="#graphs.KappaGraph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.backends.backend_qt5agg.FigureCanvasQTAgg</span></code></p>
+<p># REVIEW Documentation</p>
+<dl class="method">
+<dt id="graphs.KappaGraph.update_tight_klines">
+<code class="sig-name descname">update_tight_klines</code><span class="sig-paren">(</span><em class="sig-param">alpha_pinene_dict</em><span class="sig-paren">)</span><a class="headerlink" href="#graphs.KappaGraph.update_tight_klines" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>alpha_pinene_dict</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphs.KappaGraph.update_all_klines">
+<code class="sig-name descname">update_all_klines</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#graphs.KappaGraph.update_all_klines" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphs.KappaGraph.graph_klines">
+<code class="sig-name descname">graph_klines</code><span class="sig-paren">(</span><em class="sig-param">kline_start_column</em>, <em class="sig-param">kline_end_column</em><span class="sig-paren">)</span><a class="headerlink" href="#graphs.KappaGraph.graph_klines" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kline_start_column</strong> – </p></li>
+<li><p><strong>kline_end_column</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphs.KappaGraph.update_all_kappa_points">
+<code class="sig-name descname">update_all_kappa_points</code><span class="sig-paren">(</span><em class="sig-param">alpha_pinene_dict</em>, <em class="sig-param">valid_kappa_points</em><span class="sig-paren">)</span><a class="headerlink" href="#graphs.KappaGraph.update_all_kappa_points" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>alpha_pinene_dict</strong> – </p></li>
+<li><p><strong>valid_kappa_points</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphs.KappaGraph.update_average_kappa_points">
+<code class="sig-name descname">update_average_kappa_points</code><span class="sig-paren">(</span><em class="sig-param">alpha_pinene_dict</em><span class="sig-paren">)</span><a class="headerlink" href="#graphs.KappaGraph.update_average_kappa_points" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>alpha_pinene_dict</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="graphs.KappaGraph.staticMetaObject">
+<code class="sig-name descname">staticMetaObject</code><em class="property"> = &lt;PySide2.QtCore.QMetaObject object&gt;</em><a class="headerlink" href="#graphs.KappaGraph.staticMetaObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-helper_functions">
+<span id="helper-functions-module"></span><h2>helper_functions module<a class="headerlink" href="#module-helper_functions" title="Permalink to this headline">¶</a></h2>
+<p>Functions and classes that are used by other parts of the application</p>
+<dl class="function">
+<dt id="helper_functions.process_csv_files">
+<code class="sig-prename descclassname">helper_functions.</code><code class="sig-name descname">process_csv_files</code><span class="sig-paren">(</span><em class="sig-param">file_path</em><span class="sig-paren">)</span><a class="headerlink" href="#helper_functions.process_csv_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a list of csv files into a single python list.  Each data point is stored as a str.  Each row if items is
+stored as a list.  All the rows are stores a list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The date from the first record in the first csv followed by the contents of the all the cvs files as a list</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(str, list[list[str]])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="helper_functions.process_a_csv">
+<code class="sig-prename descclassname">helper_functions.</code><code class="sig-name descname">process_a_csv</code><span class="sig-paren">(</span><em class="sig-param">file_path</em><span class="sig-paren">)</span><a class="headerlink" href="#helper_functions.process_a_csv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a csv file into a python list.  Each data point is stored as a str.  Each row if items is stored as a list.
+All the rows are stores a list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – The full path name to the csv file to process</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The date from the first record in the first csv followed by the contents of the cvs file as a list</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(str, list[list[str]])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="helper_functions.process_tab_sep_files">
+<code class="sig-prename descclassname">helper_functions.</code><code class="sig-name descname">process_tab_sep_files</code><span class="sig-paren">(</span><em class="sig-param">file_path</em><span class="sig-paren">)</span><a class="headerlink" href="#helper_functions.process_tab_sep_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a tab seperated value file into a python list.  Each data point is stored as a str.  Each row if items is
+stored as a list.  All the rows are stores a list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – The full path name to the txt file to process</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The contents of the text file as a list</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[list[str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="helper_functions.are_floats_equal">
+<code class="sig-prename descclassname">helper_functions.</code><code class="sig-name descname">are_floats_equal</code><span class="sig-paren">(</span><em class="sig-param">a</em>, <em class="sig-param">b</em>, <em class="sig-param">err=0.01</em><span class="sig-paren">)</span><a class="headerlink" href="#helper_functions.are_floats_equal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compares two float to see if they are equal within an error value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>float</em>) – First value to compare</p></li>
+<li><p><strong>b</strong> (<em>float</em>) – Second value to compare</p></li>
+<li><p><strong>err</strong> – Amount of allowable differences with a default of 0.01.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if the absolute value of (a - b) is less than err, otherwise False</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="helper_functions.safe_div">
+<code class="sig-prename descclassname">helper_functions.</code><code class="sig-name descname">safe_div</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="headerlink" href="#helper_functions.safe_div" title="Permalink to this definition">¶</a></dt>
+<dd><p>Divides to values and returns a value safely.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>int|float</em>) – The numerator</p></li>
+<li><p><strong>y</strong> (<em>int|float</em>) – The denominator</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>if the denominator is zero, returns 0, otherwise returns x / y</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int|float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="helper_functions.normalize_dndlogdp_list">
+<code class="sig-prename descclassname">helper_functions.</code><code class="sig-name descname">normalize_dndlogdp_list</code><span class="sig-paren">(</span><em class="sig-param">a_list</em><span class="sig-paren">)</span><a class="headerlink" href="#helper_functions.normalize_dndlogdp_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalize the data is a_list by finding the max value of the values in the list while ignoring the first 5 values.
+The assumption is that the first few data points are probably not quite right so normalization is only based
+on the max of later points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>a_list</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – A list of values to normalize</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The normalized list</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[float]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="helper_functions.fill_zeros_to_begin">
+<code class="sig-prename descclassname">helper_functions.</code><code class="sig-name descname">fill_zeros_to_begin</code><span class="sig-paren">(</span><em class="sig-param">a_list</em>, <em class="sig-param">fill_amount</em><span class="sig-paren">)</span><a class="headerlink" href="#helper_functions.fill_zeros_to_begin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appends zero to the beginning of a list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a_list</strong> (<em>list</em>) – The list to add zeros in front of</p></li>
+<li><p><strong>fill_amount</strong> (<em>int</em>) – The number of zeros to add</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The new list with zeros added to the front.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="helper_functions.fill_zeros_to_end">
+<code class="sig-prename descclassname">helper_functions.</code><code class="sig-name descname">fill_zeros_to_end</code><span class="sig-paren">(</span><em class="sig-param">a_list</em>, <em class="sig-param">length_to_fill</em><span class="sig-paren">)</span><a class="headerlink" href="#helper_functions.fill_zeros_to_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appends zero to the end of a list to make the list the desired length.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a_list</strong> (<em>list</em>) – The list to add zeros to the end of</p></li>
+<li><p><strong>length_to_fill</strong> (<em>int</em>) – The length the list should be.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The new list with zeros added to the back.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="helper_functions.resolve_zeros">
+<code class="sig-prename descclassname">helper_functions.</code><code class="sig-name descname">resolve_zeros</code><span class="sig-paren">(</span><em class="sig-param">a_list</em><span class="sig-paren">)</span><a class="headerlink" href="#helper_functions.resolve_zeros" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change all zeros in the list to a very small number (<a class="reference internal" href="constants.html#constants.EPSILON" title="constants.EPSILON"><code class="xref py py-class docutils literal notranslate"><span class="pre">EPSILON</span></code></a>)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>a_list</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – the input list with zeros</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a new list with all zeros replaced with <a class="reference internal" href="constants.html#constants.EPSILON" title="constants.EPSILON"><code class="xref py py-class docutils literal notranslate"><span class="pre">EPSILON</span></code></a></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[float]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="helper_functions.resolve_small_ccnc_vals">
+<code class="sig-prename descclassname">helper_functions.</code><code class="sig-name descname">resolve_small_ccnc_vals</code><span class="sig-paren">(</span><em class="sig-param">ccnc_vals</em><span class="sig-paren">)</span><a class="headerlink" href="#helper_functions.resolve_small_ccnc_vals" title="Permalink to this definition">¶</a></dt>
+<dd><p>If there are less than 4 CCNC values, remove the values and change them to a very small number
+(<a class="reference internal" href="constants.html#constants.EPSILON" title="constants.EPSILON"><code class="xref py py-class docutils literal notranslate"><span class="pre">EPSILON</span></code></a>)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ccnc_vals</strong> (<em>list</em><em>[</em><em>list</em><em>[</em><em>float</em><em>]</em><em>|float</em><em>]</em>) – The processed_ccnc_counts</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The updated processed_ccnc_counts</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[list[float]|float]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="helper_functions.smooth">
+<code class="sig-prename descclassname">helper_functions.</code><code class="sig-name descname">smooth</code><span class="sig-paren">(</span><em class="sig-param">a_list</em>, <em class="sig-param">window_length</em>, <em class="sig-param">polyorder</em><span class="sig-paren">)</span><a class="headerlink" href="#helper_functions.smooth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes a list and smooths it using a Savitzky-Golay filter.  If an error occurs, the original list is returned.</p>
+<p>Filter settings are:</p>
+<ul class="simple">
+<li><p>The length of the filter window: 5</p></li>
+<li><p>The order of the polynomial used to fit the samples: 2</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a_list</strong> (<em>ndarray|list</em><em>[</em><em>float</em><em>]</em>) – The list to smooth</p></li>
+<li><p><strong>window_length</strong> (<em>int</em>) – The length of the filter window (i.e. the number of coefficients).
+<cite>window_length</cite> must be a positive odd integer. If <cite>mode</cite> is ‘interp’,
+<cite>window_length</cite> must be less than or equal to the size of <cite>x</cite>.</p></li>
+<li><p><strong>polyorder</strong> (<em>int</em>) – The order of the polynomial used to fit the samples.
+<cite>polyorder</cite> must be less than <cite>window_length</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The smoothed list if it could be smoothed</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="helper_functions.get_correct_num">
+<code class="sig-prename descclassname">helper_functions.</code><code class="sig-name descname">get_correct_num</code><span class="sig-paren">(</span><em class="sig-param">a_list</em>, <em class="sig-param">number</em>, <em class="sig-param">bigger=True</em><span class="sig-paren">)</span><a class="headerlink" href="#helper_functions.get_correct_num" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a_list</strong> – </p></li>
+<li><p><strong>number</strong> – </p></li>
+<li><p><strong>bigger</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-fast_dp_calculator">
+<span id="fast-dp-calculator-module"></span><h2>fast_dp_calculator module<a class="headerlink" href="#module-fast_dp_calculator" title="Permalink to this headline">¶</a></h2>
+<p>The fast_dp_calculator is written in cython to speed up the execution speed.</p>
+<dl class="function">
+<dt id="fast_dp_calculator.calculate_fraction">
+<code class="sig-prename descclassname">fast_dp_calculator.</code><code class="sig-name descname">calculate_fraction</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fast_dp_calculator.calculate_fraction" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a_list</strong> (<em>ndarray</em>) – # REVIEW Documentation</p></li>
+<li><p><strong>charge_number</strong> (<em>int</em>) – # REVIEW Documentation</p></li>
+<li><p><strong>coef_list</strong> (<em>ndarray</em>) – # REVIEW Documentation</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p># REVIEW Documentation</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="fast_dp_calculator.correct_charges">
+<code class="sig-prename descclassname">fast_dp_calculator.</code><code class="sig-name descname">correct_charges</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fast_dp_calculator.correct_charges" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>particle_diameter_list</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – The average smps dp.  The ave_smps_dp variable from the <a class="reference internal" href="#scan.Scan" title="scan.Scan"><code class="xref py py-class docutils literal notranslate"><span class="pre">Scan</span></code></a> class object.</p></li>
+<li><p><strong>cn_list</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – The smps variable from the <a class="reference internal" href="#scan.Scan" title="scan.Scan"><code class="xref py py-class docutils literal notranslate"><span class="pre">Scan</span></code></a> class object.</p></li>
+<li><p><strong>ccn_list</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – The ccnc variable from the <a class="reference internal" href="#scan.Scan" title="scan.Scan"><code class="xref py py-class docutils literal notranslate"><span class="pre">Scan</span></code></a> class object.</p></li>
+<li><p><strong>cn_fixed_list</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – The corrected_smps variable from the <a class="reference internal" href="#scan.Scan" title="scan.Scan"><code class="xref py py-class docutils literal notranslate"><span class="pre">Scan</span></code></a> class object.</p></li>
+<li><p><strong>ccn_fixed_list</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – The corrected_ccnc variable from the <a class="reference internal" href="#scan.Scan" title="scan.Scan"><code class="xref py py-class docutils literal notranslate"><span class="pre">Scan</span></code></a> class object.</p></li>
+<li><p><strong>g_cn_list</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – The prev_smps variable from the <a class="reference internal" href="#scan.Scan" title="scan.Scan"><code class="xref py py-class docutils literal notranslate"><span class="pre">Scan</span></code></a> class object.</p></li>
+<li><p><strong>g_ccn_list</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – The prev_ccnc variable from the <a class="reference internal" href="#scan.Scan" title="scan.Scan"><code class="xref py py-class docutils literal notranslate"><span class="pre">Scan</span></code></a> class object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Updated versions of all the lists send to the method in the same order
+(particle_diameter_list, cn_list, ccn_list, cn_fixed_list, ccn_fixed_list, g_cn_list, g_ccn_list).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(list[float], list[float], list[float], list[float], list[float], list[float], list[float])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="fast_dp_calculator.find_dp">
+<code class="sig-prename descclassname">fast_dp_calculator.</code><code class="sig-name descname">find_dp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fast_dp_calculator.find_dp" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>double dp</strong> (<em>long</em>) – # REVIEW Documentation</p></li>
+<li><p><strong>lambda_air</strong> (<em>double</em>) – # REVIEW Documentation</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – # REVIEW Documentation</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p># REVIEW Documentation</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>double</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="fast-dp-setup-module">
+<h2>fast_dp_setup module<a class="headerlink" href="#fast-dp-setup-module" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="fast_dp_calculator.setup">
+<code class="sig-prename descclassname">fast_dp_calculator.</code><code class="sig-name descname">setup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fast_dp_calculator.setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds the fast_dp_calculator cython file into a c file.  To build the c file, enter the following into the command
+line in the same folder as this file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python fast_dp_setup.py build_ext --inplace
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="custwidgets.html" class="btn btn-neutral float-right" title="Custom Widgets and Dialogs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="main.html" class="btn btn-neutral float-left" title="Main Code" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Lily Romano
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,315 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>How to use Chemics &mdash; Chemics 2.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Changelog" href="../code/changelog.html" />
+    <link rel="prev" title="System Requirements" href="installing.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Chemics
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/general.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../general/general.html#faq">FAQ</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installing.html">System Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing.html#how-to-install">How to Install</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">How to use Chemics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#preparing-the-data">Preparing the Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#starting-a-new-project">Starting a new project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#opening-a-previous-project">Opening a previous project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#aligning-scans">Aligning Scans</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#saving-a-project">Saving a project</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">The Code Base</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../code/changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../code/changelog.html#id1">[2.2.5] - 2019-11-29</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#added">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#fixed">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#changed">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../code/changelog.html#id2">[2.2.4] - 2019-07-28</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#id3">Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#removed">Removed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../code/changelog.html#id4">[2.2.3] - 2019-07-26</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#id5">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#id6">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../code/changelog.html#id7">[2.2.2] - 2019-07-19</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#id8">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#id9">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#id10">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../code/changelog.html#id11">[2.2.1] - 2019-07-18</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#id12">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#id14">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#id16">Removed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../code/changelog.html#id17">[2.2.0] - 2019-07-17</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#id18">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#id20">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#id22">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../code/changelog.html#id26">[2.1.2] - 2019-07-10</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#id27">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#id28">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../code/changelog.html#id30">[2.1.1] - 2019-07-09</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#id31">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#id38">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#id41">Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#id43">Removed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../code/changelog.html#id45">[2.1.0] - 2019-06-21</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#id46">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#id48">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#id51">Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code/changelog.html#id52">Removed</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../code/main.html">Main Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../code/main.html#module-main">main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code/main.html#module-controller">controller module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../code/secondary.html">Secondary Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../code/secondary.html#module-scan">scan module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code/secondary.html#module-graphs">graphs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code/secondary.html#module-helper_functions">helper_functions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code/secondary.html#module-fast_dp_calculator">fast_dp_calculator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code/secondary.html#fast-dp-setup-module">fast_dp_setup module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../code/custwidgets.html">Custom Widgets and Dialogs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../code/custwidgets.html#module-custom.docker_widget">custom.docker_widget module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code/custwidgets.html#module-custom.central_widget">custom.central_widget module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code/custwidgets.html#module-custom.modal_dialogs">custom.modal_dialogs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../code/custwidgets.html#module-custom.widget">custom.widget module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../code/constants.html">Constant values</a></li>
+</ul>
+
+            
+          
+    <a href="py-modindex.html">All Modules</a>
+    <a href="genindex.html">Code Index</a>
+  
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Chemics</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>How to use Chemics</li>
+    
+    
+
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="how-to-use-chemics">
+<h1>How to use Chemics<a class="headerlink" href="#how-to-use-chemics" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="preparing-the-data">
+<h2>Preparing the Data<a class="headerlink" href="#preparing-the-data" title="Permalink to this headline">¶</a></h2>
+<p>TODO</p>
+</div>
+<div class="section" id="starting-a-new-project">
+<h2>Starting a new project<a class="headerlink" href="#starting-a-new-project" title="Permalink to this headline">¶</a></h2>
+<p>TODO</p>
+</div>
+<div class="section" id="opening-a-previous-project">
+<h2>Opening a previous project<a class="headerlink" href="#opening-a-previous-project" title="Permalink to this headline">¶</a></h2>
+<p>TODO</p>
+</div>
+<div class="section" id="aligning-scans">
+<h2>Aligning Scans<a class="headerlink" href="#aligning-scans" title="Permalink to this headline">¶</a></h2>
+<p>TODO</p>
+</div>
+<div class="section" id="saving-a-project">
+<h2>Saving a project<a class="headerlink" href="#saving-a-project" title="Permalink to this headline">¶</a></h2>
+<p>TODO</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../code/changelog.html" class="btn btn-neutral float-right" title="Changelog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="installing.html" class="btn btn-neutral float-left" title="System Requirements" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Lily Romano
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

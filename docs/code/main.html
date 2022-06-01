@@ -1,0 +1,1059 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Main Code &mdash; Chemics 2.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Secondary Code" href="secondary.html" />
+    <link rel="prev" title="Changelog" href="changelog.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Chemics
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+    
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/general.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../general/general.html#faq">FAQ</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getstarted/installing.html">System Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getstarted/installing.html#how-to-install">How to Install</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getstarted/using.html">How to use Chemics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/using.html#preparing-the-data">Preparing the Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/using.html#starting-a-new-project">Starting a new project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/using.html#opening-a-previous-project">Opening a previous project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/using.html#aligning-scans">Aligning Scans</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getstarted/using.html#saving-a-project">Saving a project</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">The Code Base</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id1">[2.2.5] - 2019-11-29</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#added">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#fixed">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#changed">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id2">[2.2.4] - 2019-07-28</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id3">Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#removed">Removed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id4">[2.2.3] - 2019-07-26</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id5">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id6">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id7">[2.2.2] - 2019-07-19</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id8">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id9">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id10">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id11">[2.2.1] - 2019-07-18</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id12">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id14">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id16">Removed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id17">[2.2.0] - 2019-07-17</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id18">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id20">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id22">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id26">[2.1.2] - 2019-07-10</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id27">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id28">Changed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id30">[2.1.1] - 2019-07-09</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id31">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id38">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id41">Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id43">Removed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id45">[2.1.0] - 2019-06-21</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id46">Added</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id48">Fixed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id51">Changed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id52">Removed</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Main Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-main">main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-controller">controller module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="secondary.html">Secondary Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="secondary.html#module-scan">scan module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="secondary.html#module-graphs">graphs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="secondary.html#module-helper_functions">helper_functions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="secondary.html#module-fast_dp_calculator">fast_dp_calculator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="secondary.html#fast-dp-setup-module">fast_dp_setup module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="custwidgets.html">Custom Widgets and Dialogs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="custwidgets.html#module-custom.docker_widget">custom.docker_widget module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custwidgets.html#module-custom.central_widget">custom.central_widget module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custwidgets.html#module-custom.modal_dialogs">custom.modal_dialogs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custwidgets.html#module-custom.widget">custom.widget module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="constants.html">Constant values</a></li>
+</ul>
+
+            
+          
+    <a href="py-modindex.html">All Modules</a>
+    <a href="genindex.html">Code Index</a>
+  
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Chemics</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Main Code</li>
+    
+    
+
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="main-code">
+<h1>Main Code<a class="headerlink" href="#main-code" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-main">
+<span id="main-module"></span><h2>main module<a class="headerlink" href="#module-main" title="Permalink to this headline">¶</a></h2>
+<p>The main entry point of the program</p>
+<dl class="class">
+<dt id="main.MainView">
+<em class="property">class </em><code class="sig-prename descclassname">main.</code><code class="sig-name descname">MainView</code><span class="sig-paren">(</span><em class="sig-param">main_app</em><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PySide2.QtWidgets.QMainWindow</span></code></p>
+<p>Initialzes the main window of the program.</p>
+<dl class="method">
+<dt id="main.MainView.create_menus">
+<code class="sig-name descname">create_menus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.create_menus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the menu bar for the main view</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>file_menu</strong> - Qw.QMenu object that allows the user to open and save files and projects.</p></li>
+<li><p><strong>action_menu</strong> - Qw.QMenu object that allows the user to preform actions on the data</p></li>
+<li><p><strong>window_menu</strong> -  Qw.QMenu object that allows the user to turn windows on and off</p></li>
+<li><p><strong>help_menu</strong> - Qw.QMenu object that allows the user to access settings and help information</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.set_menu_bar_by_stage">
+<code class="sig-name descname">set_menu_bar_by_stage</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.set_menu_bar_by_stage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables and Disables file menu items based on the stage that the <a class="reference internal" href="#controller.Controller" title="controller.Controller"><code class="xref py py-class docutils literal notranslate"><span class="pre">Controller</span></code></a> is in.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.open_files">
+<code class="sig-name descname">open_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.open_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens data files and begins the scan alignment process</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.open_project">
+<code class="sig-name descname">open_project</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.open_project" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens a previously saved project and load the information that was stored at the time.</p>
+<p>See <a class="reference internal" href="#controller.Controller.save_project" title="controller.Controller.save_project"><code class="xref py py-class docutils literal notranslate"><span class="pre">save_project</span></code></a> in the Controller class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.save_project">
+<code class="sig-name descname">save_project</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.save_project" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the current open project to the disk</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.save_project_as">
+<code class="sig-name descname">save_project_as</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.save_project_as" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows the user to select a save name and saves the current open project to the disk</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.export_project_data">
+<code class="sig-name descname">export_project_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.export_project_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exports the final kappa project data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.closeEvent">
+<code class="sig-name descname">closeEvent</code><span class="sig-paren">(</span><em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.closeEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overwrites base closeEvent function to execute the <a class="reference internal" href="#main.MainView.exit_run" title="main.MainView.exit_run"><code class="xref py py-class docutils literal notranslate"><span class="pre">exit_run</span></code></a> method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.exit_run">
+<code class="sig-name descname">exit_run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.exit_run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays the dialog box asing if the user wishes to truly exit the program.  The
+QT app is quit if the user selects yes.  Otherwise, no action is taken.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.export_scans">
+<code class="sig-name descname">export_scans</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.export_scans" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.preview_all_scans">
+<code class="sig-name descname">preview_all_scans</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.preview_all_scans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cycles through the scan starting from zero and then returns to the scan on when triggered</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.show_auto_align_dialog">
+<code class="sig-name descname">show_auto_align_dialog</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.show_auto_align_dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows the auto align dialog box.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The result of the dialog execution</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.correct_charges">
+<code class="sig-name descname">correct_charges</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.correct_charges" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.correct_charges_one">
+<code class="sig-name descname">correct_charges_one</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.correct_charges_one" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.show_auto_fit_sigmoid_dialog">
+<code class="sig-name descname">show_auto_fit_sigmoid_dialog</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.show_auto_fit_sigmoid_dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows the dialog box that asked the usef if they want to let the program fit the sigmoid line automatically.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.auto_fit_sigmoid_one">
+<code class="sig-name descname">auto_fit_sigmoid_one</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.auto_fit_sigmoid_one" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows the dialog box that asked the usef if they want to let the program fit the sigmoid line automatically.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.show_kappa_params_dialog">
+<code class="sig-name descname">show_kappa_params_dialog</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.show_kappa_params_dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows the kappa parameters dialog box.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.show_setting_dialog">
+<code class="sig-name descname">show_setting_dialog</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.show_setting_dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows the settings dialog box.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.open_about">
+<code class="sig-name descname">open_about</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.open_about" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows dialog box that displays current Chemics version.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.open_user_manual">
+<em class="property">static </em><code class="sig-name descname">open_user_manual</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.open_user_manual" title="Permalink to this definition">¶</a></dt>
+<dd><p>Launches a webpage that shows the user manual as well as the code documentation</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.create_left_docker">
+<code class="sig-name descname">create_left_docker</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.create_left_docker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the left docker screen and adds menu options to the Window menu bar section</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>scaninfo_docker</strong> - Qw.QDockWidget object that represents the Scan Information screen</p></li>
+<li><p><strong>scan_docker_widget</strong> - c_dock_widget.DockerScanInformation object that contains the lay out for the
+Scan Information screen</p></li>
+<li><p><strong>sigmoid_docker</strong> - Qw.QDockWidget object that represents the Sigmoid Parameters screen</p></li>
+<li><p><strong>sigmoid_docker_widget</strong> - c_dock_widget.DockerSigmoidWidget object that contains the lay out for the
+Sigmoid Parameters screen</p></li>
+<li><p><strong>kappa_docker</strong> - Qw.QDockWidget object that represents the Kappa Values screen</p></li>
+<li><p><strong>kappa_docker_widget</strong> - c_dock_widget.DockerKappaWidget object that contains the lay out for the Kappa
+Values screen</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.create_central_widget">
+<code class="sig-name descname">create_central_widget</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.create_central_widget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the central widget that appear in the main area.
+The central widget includes the widgets for the align scans and kappa sections.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>stacked_central_widget</strong> - Qw.QStackedWidget object that represents where the center widgets appear</p></li>
+<li><p><strong>central_widget_alignscan</strong> - c_central_widget.CentralWidgetScans object that represents
+the four graphs that are displayed during the alignment phase</p></li>
+<li><p><strong>central_widget_kappa</strong> - c_central_widget.CentralWidgetKappa object that represents the kappa graph.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.switch_central_widget">
+<code class="sig-name descname">switch_central_widget</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.switch_central_widget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Toggles graph display in middle of screen between Alighment Graphs and Kappa Graphs</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.create_progress_bar">
+<code class="sig-name descname">create_progress_bar</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.create_progress_bar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a progress bar dialog object that can be used when neccessary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A process bar dialog object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Qg.QProgressDialog</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.init_progress_bar">
+<code class="sig-name descname">init_progress_bar</code><span class="sig-paren">(</span><em class="sig-param">task_name</em><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.init_progress_bar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens the progress bar dialog with desired name and tags a PySide.QtCore.Slot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>task_name</strong> (<em>str</em>) – The label to show on the progress bar</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.update_progress_bar">
+<code class="sig-name descname">update_progress_bar</code><span class="sig-paren">(</span><em class="sig-param">percentage</em><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.update_progress_bar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the progress bar and tags a PySide.QtCore.Slot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>percentage</strong> (<em>int</em>) – The value to update the bar to.  This should be a number 0 to 100</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.close_progress_bar">
+<code class="sig-name descname">close_progress_bar</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.close_progress_bar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the progress bar and tags a PySide.QtCore.Slot.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.show_error_message">
+<em class="property">static </em><code class="sig-name descname">show_error_message</code><span class="sig-paren">(</span><em class="sig-param">err_type</em><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.show_error_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows an error message dialog box</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>err_type</strong> (<em>str</em>) – The type of error</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.show_information_message">
+<em class="property">static </em><code class="sig-name descname">show_information_message</code><span class="sig-paren">(</span><em class="sig-param">title=None</em>, <em class="sig-param">text=None</em>, <em class="sig-param">subtext=None</em><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.show_information_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows an informational message dialog box</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>title</strong> (<em>str</em>) – The title of message</p></li>
+<li><p><strong>text</strong> (<em>str</em>) – The top text of message</p></li>
+<li><p><strong>subtext</strong> (<em>str</em>) – The bottom text of message</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.get_counts_to_conc_conv">
+<code class="sig-name descname">get_counts_to_conc_conv</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.get_counts_to_conc_conv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a dialog box to the user to obtain the Counts2ConcConv value</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.show_auto_manual_fit_sigmoid_dialog">
+<code class="sig-name descname">show_auto_manual_fit_sigmoid_dialog</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.show_auto_manual_fit_sigmoid_dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows the Auto or Manual fit sigmoid dialog.  If the manual button is clicked, program performs no calcuations.
+If the Auto button is click, the <code class="xref py py-class docutils literal notranslate"><span class="pre">auto_fit_sigmoid</span></code> from the Controller class is
+processed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.show_sigmoid_docker">
+<code class="sig-name descname">show_sigmoid_docker</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.show_sigmoid_docker" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.reset_view">
+<code class="sig-name descname">reset_view</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.reset_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Utlizing the window_menu triggers, activates the scaninfo_docker and disables the sigmoid_docker
+and kappa_docker.  Sets the center widget to display the alignscans widget.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.update_experiment_info">
+<code class="sig-name descname">update_experiment_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.update_experiment_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the experiment information by running the code in the
+<a class="reference internal" href="custwidgets.html#custom.docker_widget.DockerScanInformation.update_experiment_info" title="custom.docker_widget.DockerScanInformation.update_experiment_info"><code class="xref py py-class docutils literal notranslate"><span class="pre">update_experiment_info</span></code></a> method of the
+<a class="reference internal" href="custwidgets.html#custom.docker_widget.DockerScanInformation" title="custom.docker_widget.DockerScanInformation"><code class="xref py py-class docutils literal notranslate"><span class="pre">DockerScanInformation</span></code></a> custom docker_widget.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.update_scan_info_and_graphs">
+<code class="sig-name descname">update_scan_info_and_graphs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.update_scan_info_and_graphs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the graphs, scan information docker widget and sigmoid docker widget</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.update_kappa_graph">
+<code class="sig-name descname">update_kappa_graph</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.update_kappa_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the the kappa graph.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.switch_to_kappa_view">
+<code class="sig-name descname">switch_to_kappa_view</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.switch_to_kappa_view" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="main.MainView.set_font">
+<code class="sig-name descname">set_font</code><span class="sig-paren">(</span><em class="sig-param">font</em>, <em class="sig-param">size</em><span class="sig-paren">)</span><a class="headerlink" href="#main.MainView.set_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the font and font size desired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>font</strong> (<em>PySide.QtGui.QFont</em>) – The new font style.</p></li>
+<li><p><strong>size</strong> (<em>int</em>) – The new font size</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="main.MainView.staticMetaObject">
+<code class="sig-name descname">staticMetaObject</code><em class="property"> = &lt;PySide2.QtCore.QMetaObject object&gt;</em><a class="headerlink" href="#main.MainView.staticMetaObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-controller">
+<span id="controller-module"></span><h2>controller module<a class="headerlink" href="#module-controller" title="Permalink to this headline">¶</a></h2>
+<p>This class handles most of the programs actions.</p>
+<dl class="class">
+<dt id="controller.Controller">
+<em class="property">class </em><code class="sig-prename descclassname">controller.</code><code class="sig-name descname">Controller</code><span class="sig-paren">(</span><em class="sig-param">view</em><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class handles the functionalities of the program.</p>
+<p>Stores the following variables:</p>
+<ul class="simple">
+<li><p><strong>scans</strong>: A list of all scans</p></li>
+<li><p><strong>counts_to_conc_conv</strong>:</p></li>
+<li><p><strong>data_files</strong>:</p></li>
+<li><p><strong>ccnc_data</strong>: Data from the Cloud Condensation Nuclei Counter</p></li>
+<li><p><strong>smps_data</strong>: Data from the Scanning Mobility Particle Sizer</p></li>
+<li><p><strong>experiment_date</strong>: The date of experiment</p></li>
+<li><p><strong>smooth_method</strong>: The smoothing method</p></li>
+<li><p><strong>base_shift_factor</strong>: The base shift factor. Very useful for auto alignment.</p></li>
+<li><p><strong>curr_scan_index</strong>: Index of the current scan</p></li>
+<li><p><strong>b_limits</strong>: limits of the variable b</p></li>
+<li><p><strong>asym_limits</strong>: threshold for top assym</p></li>
+<li><p><strong>stage</strong>: The stage the program is in</p></li>
+<li><p><strong>save_name</strong>:</p></li>
+<li><p><strong>project_folder</strong>:</p></li>
+<li><p><strong>sigma</strong>:</p></li>
+<li><p><strong>temp</strong>:</p></li>
+<li><p><strong>dd_1</strong>:</p></li>
+<li><p><strong>i_kappa_1</strong>:</p></li>
+<li><p><strong>dd_2</strong>:</p></li>
+<li><p><strong>i_kappa_2</strong>:</p></li>
+<li><p><strong>solubility</strong>:</p></li>
+<li><p><strong>kappa_excel</strong>:</p></li>
+<li><p><strong>valid_kappa_points</strong>: whether kappa point is included in ave k calc (format is (dp,ss))</p></li>
+<li><p><strong>alpha_pinene_dict</strong>:</p></li>
+<li><p><strong>kappa_calculate_dict</strong>:</p></li>
+</ul>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>This has unit tests</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>view</strong> (<a class="reference internal" href="#main.MainView" title="main.MainView"><em>MainView</em></a>) – The main view of the program which is creating this controller.</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="controller.Controller.set_attributes_default">
+<code class="sig-name descname">set_attributes_default</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.set_attributes_default" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a subset of the controller variables to their original default values.  This method runs when the
+controller is first initlized and when a new project is started.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>This has unit tests</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.start">
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><em class="sig-param">data_files</em><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts a new project by processing the following methods:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#controller.Controller.parse_files" title="controller.Controller.parse_files"><code class="xref py py-class docutils literal notranslate"><span class="pre">parse_files</span></code></a></p></li>
+<li><p><a class="reference internal" href="#controller.Controller.create_scans" title="controller.Controller.create_scans"><code class="xref py py-class docutils literal notranslate"><span class="pre">create_scans</span></code></a></p></li>
+<li><p><a class="reference internal" href="#controller.Controller.get_normalized_concentration" title="controller.Controller.get_normalized_concentration"><code class="xref py py-class docutils literal notranslate"><span class="pre">get_normalized_concentration</span></code></a></p></li>
+<li><p><a class="reference internal" href="#controller.Controller.get_smps_counts" title="controller.Controller.get_smps_counts"><code class="xref py py-class docutils literal notranslate"><span class="pre">get_smps_counts</span></code></a></p></li>
+<li><p><a class="reference internal" href="#controller.Controller.get_ccnc_counts" title="controller.Controller.get_ccnc_counts"><code class="xref py py-class docutils literal notranslate"><span class="pre">get_ccnc_counts</span></code></a></p></li>
+<li><p><a class="reference internal" href="#controller.Controller.do_basic_trans" title="controller.Controller.do_basic_trans"><code class="xref py py-class docutils literal notranslate"><span class="pre">do_basic_trans</span></code></a></p></li>
+<li><p><a class="reference internal" href="#controller.Controller.pre_align_sanity_check" title="controller.Controller.pre_align_sanity_check"><code class="xref py py-class docutils literal notranslate"><span class="pre">pre_align_sanity_check</span></code></a></p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data_files</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – The full path names of the filed selected in the new project from files dialog box</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.auto_align_scans">
+<code class="sig-name descname">auto_align_scans</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.auto_align_scans" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.correct_charges">
+<code class="sig-name descname">correct_charges</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.correct_charges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Correct the charges of all the scans.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.auto_fit_sigmoids">
+<code class="sig-name descname">auto_fit_sigmoids</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.auto_fit_sigmoids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Automatically fits the sigmoid lines and updates the display.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.auto_fit_one_sigmoid">
+<code class="sig-name descname">auto_fit_one_sigmoid</code><span class="sig-paren">(</span><em class="sig-param">scan_index</em><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.auto_fit_one_sigmoid" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>scan_index</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.cal_kappa">
+<code class="sig-name descname">cal_kappa</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.cal_kappa" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.calculate_all_kappa_values">
+<code class="sig-name descname">calculate_all_kappa_values</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.calculate_all_kappa_values" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.calculate_average_kappa_values">
+<code class="sig-name descname">calculate_average_kappa_values</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.calculate_average_kappa_values" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.parse_files">
+<code class="sig-name descname">parse_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.parse_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes the list of data_files stored in the controller and determines:</p>
+<ul class="simple">
+<li><p>self.experiment_date from the first ccnc file record</p></li>
+<li><p>ccnc_data from the csv file(s)</p></li>
+<li><p>smps_data from the txt file</p></li>
+<li><p>Sets the counts_to_conc_conv value by finding the CPC Sample Flow(lpm) value</p></li>
+</ul>
+<p>from the SMPS file and performs the following conversion to convert the liter per
+minute measure into a second per CC value.</p>
+<p>(1 minute / “CPC Sample Flow” L)  *  (60 seconds / 1 minute)  *  (1 L / 1000 cc)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.create_scans">
+<code class="sig-name descname">create_scans</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.create_scans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the scans objects and updates via the following scan methods:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="secondary.html#scan.Scan.set_start_time" title="scan.Scan.set_start_time"><code class="xref py py-class docutils literal notranslate"><span class="pre">set_start_time</span></code></a> From the SMPS file</p></li>
+<li><p><a class="reference internal" href="secondary.html#scan.Scan.set_end_time" title="scan.Scan.set_end_time"><code class="xref py py-class docutils literal notranslate"><span class="pre">set_end_time</span></code></a> Start time + Duration</p></li>
+<li><p><a class="reference internal" href="secondary.html#scan.Scan.set_up_time" title="scan.Scan.set_up_time"><code class="xref py py-class docutils literal notranslate"><span class="pre">set_up_time</span></code></a> From the SMPS file</p></li>
+<li><p><a class="reference internal" href="secondary.html#scan.Scan.set_down_time" title="scan.Scan.set_down_time"><code class="xref py py-class docutils literal notranslate"><span class="pre">set_down_time</span></code></a> From the SMPS file (retrace time)</p></li>
+<li><p><a class="reference internal" href="secondary.html#scan.Scan.set_duration" title="scan.Scan.set_duration"><code class="xref py py-class docutils literal notranslate"><span class="pre">set_duration</span></code></a> Scan up time + Scan down time</p></li>
+<li><p><a class="reference internal" href="secondary.html#scan.Scan.set_counts_2_conc" title="scan.Scan.set_counts_2_conc"><code class="xref py py-class docutils literal notranslate"><span class="pre">set_counts_2_conc</span></code></a> As calculated earlier</p></li>
+<li><p><a class="reference internal" href="secondary.html#scan.Scan.set_cpc_sample_flow" title="scan.Scan.set_cpc_sample_flow"><code class="xref py py-class docutils literal notranslate"><span class="pre">set_cpc_sample_flow</span></code></a> from the SMPS file</p></li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.get_normalized_concentration">
+<code class="sig-name descname">get_normalized_concentration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.get_normalized_concentration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the scans objects via the following scan methods:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="secondary.html#scan.Scan.add_to_diameter_midpoints" title="scan.Scan.add_to_diameter_midpoints"><code class="xref py py-class docutils literal notranslate"><span class="pre">add_to_diameter_midpoints</span></code></a>  The diameter midpoints</p></li>
+<li><p><a class="reference internal" href="secondary.html#scan.Scan.add_to_raw_normalized_concs" title="scan.Scan.add_to_raw_normalized_concs"><code class="xref py py-class docutils literal notranslate"><span class="pre">add_to_raw_normalized_concs</span></code></a>  # RESEARCH In English?</p></li>
+</ul>
+</div></blockquote>
+<p>Normalized flow_rate is also called dN/dLogDp, which is the notation used in the graph. For further information
+see <a class="reference external" href="https://www.tsi.com/getmedia/1621329b-f410-4dce-992b-e21e1584481a/PR-001-RevA_Aerosol-Statistics-AppNote?ext=.pdf">tsi documentation</a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.get_smps_counts">
+<code class="sig-name descname">get_smps_counts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.get_smps_counts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the scans objects via the following scan methods:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="secondary.html#scan.Scan.add_to_raw_smps_counts" title="scan.Scan.add_to_raw_smps_counts"><code class="xref py py-class docutils literal notranslate"><span class="pre">add_to_raw_smps_counts</span></code></a>  The SMPS Counts</p></li>
+<li><p><a class="reference internal" href="secondary.html#scan.Scan.add_to_ave_smps_diameters" title="scan.Scan.add_to_ave_smps_diameters"><code class="xref py py-class docutils literal notranslate"><span class="pre">add_to_ave_smps_diameters</span></code></a>  The average SMPS diameters across all scans</p></li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.get_ccnc_counts">
+<code class="sig-name descname">get_ccnc_counts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.get_ccnc_counts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the scans objects via the following scan methods:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="secondary.html#scan.Scan.set_status" title="scan.Scan.set_status"><code class="xref py py-class docutils literal notranslate"><span class="pre">set_status</span></code></a> Based on status of scan  # REVIEW - Add reasons to documentation</p></li>
+<li><p><a class="reference internal" href="secondary.html#scan.Scan.set_status_code" title="scan.Scan.set_status_code"><code class="xref py py-class docutils literal notranslate"><span class="pre">set_status_code</span></code></a> Based on status of scan  # REVIEW - Add reasons to documentation</p></li>
+<li><p><a class="reference internal" href="secondary.html#scan.Scan.add_to_raw_super_sats" title="scan.Scan.add_to_raw_super_sats"><code class="xref py py-class docutils literal notranslate"><span class="pre">add_to_raw_super_sats</span></code></a>  The supersaturation values</p></li>
+<li><p><a class="reference internal" href="secondary.html#scan.Scan.add_to_raw_ccnc_counts" title="scan.Scan.add_to_raw_ccnc_counts"><code class="xref py py-class docutils literal notranslate"><span class="pre">add_to_raw_ccnc_counts</span></code></a>  The CCNC counts</p></li>
+<li><p><a class="reference internal" href="secondary.html#scan.Scan.add_to_raw_ave_ccnc_sizes" title="scan.Scan.add_to_raw_ave_ccnc_sizes"><code class="xref py py-class docutils literal notranslate"><span class="pre">add_to_raw_ave_ccnc_sizes</span></code></a>  The average CCNC size</p></li>
+<li><p><a class="reference internal" href="secondary.html#scan.Scan.add_to_raw_t1s_t2s_t3s" title="scan.Scan.add_to_raw_t1s_t2s_t3s"><code class="xref py py-class docutils literal notranslate"><span class="pre">add_to_raw_t1s_t2s_t3s</span></code></a>  The temperature values</p></li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.do_basic_trans">
+<code class="sig-name descname">do_basic_trans</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.do_basic_trans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform basic transformation before aligning the smps and ccnc data.
+See scan’s method <a class="reference internal" href="secondary.html#scan.Scan.do_basic_trans" title="scan.Scan.do_basic_trans"><code class="xref py py-class docutils literal notranslate"><span class="pre">do_basic_trans</span></code></a> for more details.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.pre_align_sanity_check">
+<code class="sig-name descname">pre_align_sanity_check</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.pre_align_sanity_check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Completes the sanity check which checks:</p>
+<ul class="simple">
+<li><p>Length of the smps data sync with duration via <a class="reference internal" href="secondary.html#scan.Scan.pre_align_self_test" title="scan.Scan.pre_align_self_test"><code class="xref py py-class docutils literal notranslate"><span class="pre">pre_align_self_test</span></code></a></p></li>
+<li><p>The distribution of a scan with the next two</p></li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.post_align_sanity_check">
+<code class="sig-name descname">post_align_sanity_check</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.post_align_sanity_check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Currently an empty method.  May preform additional functions in the future.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.set_kappa_point_state">
+<code class="sig-name descname">set_kappa_point_state</code><span class="sig-paren">(</span><em class="sig-param">ss</em>, <em class="sig-param">dp</em>, <em class="sig-param">state</em><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.set_kappa_point_state" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ss</strong> – </p></li>
+<li><p><strong>dp</strong> – </p></li>
+<li><p><strong>state</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.set_scan_index">
+<code class="sig-name descname">set_scan_index</code><span class="sig-paren">(</span><em class="sig-param">new_index</em><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.set_scan_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the current index in the controller</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_index</strong> (<em>int</em>) – The new index</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.switch_to_scan">
+<code class="sig-name descname">switch_to_scan</code><span class="sig-paren">(</span><em class="sig-param">index</em><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.switch_to_scan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switches the controller to activate a specific scan and updates the view appropriately</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – The index of the scan in the <cite>self.scans[]</cite> list to activate</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.preview_scans">
+<code class="sig-name descname">preview_scans</code><span class="sig-paren">(</span><em class="sig-param">timer</em><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.preview_scans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cycles through the scan starting from zero and then returns to the scan on when triggered</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>timer</strong> (<em>Union</em><em>[</em><em>int</em><em>,</em><em>float</em><em>]</em>) – The length of time between scans.  The actual sleep time requested will be this
+value minus 0.5 as there is an inherent delay when switching</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.get_project_name">
+<code class="sig-name descname">get_project_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.get_project_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes the absolute project folder path and returns the last folder as the project name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The parent folder name</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.set_save_name">
+<code class="sig-name descname">set_save_name</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.set_save_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the savename of the file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name to save the file as</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.set_sigma">
+<code class="sig-name descname">set_sigma</code><span class="sig-paren">(</span><em class="sig-param">sigma</em><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.set_sigma" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sigma</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.set_temp">
+<code class="sig-name descname">set_temp</code><span class="sig-paren">(</span><em class="sig-param">temp</em><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.set_temp" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>temp</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.set_dd_1">
+<code class="sig-name descname">set_dd_1</code><span class="sig-paren">(</span><em class="sig-param">dd_1</em><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.set_dd_1" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dd_1</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.set_dd_2">
+<code class="sig-name descname">set_dd_2</code><span class="sig-paren">(</span><em class="sig-param">dd_2</em><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.set_dd_2" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dd_2</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.set_i_kappa_1">
+<code class="sig-name descname">set_i_kappa_1</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.set_i_kappa_1" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.set_i_kappa_2">
+<code class="sig-name descname">set_i_kappa_2</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.set_i_kappa_2" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.set_solubility">
+<code class="sig-name descname">set_solubility</code><span class="sig-paren">(</span><em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.set_solubility" title="Permalink to this definition">¶</a></dt>
+<dd><p># REVIEW Documentation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.save_project">
+<code class="sig-name descname">save_project</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.save_project" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stores the following variables.</p>
+<ul class="simple">
+<li><p>self.scans</p></li>
+<li><p>self.counts_to_conc_conv</p></li>
+<li><p>self.data_files</p></li>
+<li><p>self.ccnc_data</p></li>
+<li><p>self.smps_data</p></li>
+<li><p>self.experiment_date</p></li>
+<li><p>self.base_shift_factor</p></li>
+<li><p>self.b_limits</p></li>
+<li><p>self.asym_limits</p></li>
+<li><p>self.kappa_calculate_dict</p></li>
+<li><p>self.alpha_pinene_dict</p></li>
+<li><p>self.stage</p></li>
+<li><p>self.valid_kappa_points</p></li>
+<li><p>self.save_name</p></li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.load_project">
+<code class="sig-name descname">load_project</code><span class="sig-paren">(</span><em class="sig-param">project_file</em><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.load_project" title="Permalink to this definition">¶</a></dt>
+<dd><p>Begins a project with new project files</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>project_file</strong> (<em>unicode</em>) – The project file to reopen</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="controller.Controller.export_project_data">
+<code class="sig-name descname">export_project_data</code><span class="sig-paren">(</span><em class="sig-param">export_filename</em><span class="sig-paren">)</span><a class="headerlink" href="#controller.Controller.export_project_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Export the Kappa data to csv.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>export_filename</strong> (<em>str</em>) – The file name to export the file to</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="secondary.html" class="btn btn-neutral float-right" title="Secondary Code" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="changelog.html" class="btn btn-neutral float-left" title="Changelog" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Lily Romano
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
